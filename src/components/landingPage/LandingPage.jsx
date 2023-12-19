@@ -1,5 +1,5 @@
 import "./LandingPage.css";
-import Navbar from "../navbar/Navbar";
+import Navbar from "./navbar/Navbar";
 import { useNavigate } from "react-router-dom";
 import dashboardImage from '../../../assets/dashboard.png'; //
 

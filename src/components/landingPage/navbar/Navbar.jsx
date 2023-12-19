@@ -1,4 +1,4 @@
-import logo from '../../../assets/zenvibe.png';
+import logo from '../../../../assets/zenvibe.png';
 
 function Navbar() {
     return (
