@@ -1,9 +1,8 @@
  // Corrected import statement
  import { useState } from 'react';
  import { useNavigate } from 'react-router-dom';
-import logo from './assets/zenvibe.png';
-import './assets/zenvibe.png';
-import './auth.css'
+import logo from '../../../assets/zenvibe.png';
+import '../auth/auth.css'
 
 function AuthPage() {
     const navigate = useNavigate();

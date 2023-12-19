@@ -1,0 +1,10 @@
+.protected-page {
+    display: flex;
+}
+
+.dashboard-container {
+    flex-grow: 1; /* Take up remaining space */
+    padding: 1rem;
+}
+
+/* Adjust .dashboard-content as needed */
