@@ -1,0 +1,44 @@
+.main-content-holder {
+    display: flex;
+    gap: 20px;
+ 
+    max-height: calc(100vh - 40px);
+    margin-left: 60px; /* Left margin based on sidebar width */
+}
+
+.content-grid-one, .content-grid-two {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 30px; /* Space between items in each column */
+}
+
+
+.placeholder {
+    padding: 40px; /* Increased padding */
+    min-height: 130px; /* Increased minimum height */
+    text-align: center;
+    border-radius: 20px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5); /* More pronounced shadow */
+    border: 2px solid #5d05058c; /* Subtle border */
+    color: white;
+    font-size: 1.2rem; /* Larger font size */
+    display: flex;
+    align-items: center; /* Vertical centering */
+    justify-content: center; /* Horizontal centering */
+    background-color: #0e0e0e; /* Slightly different background for contrast */
+}
+
+.subgrid-two {
+    display: flex;
+    gap: 20px; /* Space between nested items */
+    width: 600px; /* Adjust as needed */
+}
+
+.content-grid-one {
+    flex: 1.5; /* Larger portion of available space */
+}
+
+.content-grid-two {
+    flex: 1; /* Standard portion of available space */
+}
