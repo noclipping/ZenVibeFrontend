@@ -9,7 +9,8 @@ const ContentMain = () => {
             <div className="placeholder">Progress Report Placeholder</div>
         </div>
         <div className="content-grid-two">
-            <div className="placeholder">Diet Plan Placeholder</div>
+            <div className="placeholder">Weight Goal</div>
+            <div className="placeholder">Exercise Routine Placeholder</div>
             <div className="grid-two-item">
               <div className="subgrid-two">
                 <div className="placeholder">Exercise Routine Placeholder</div>

@@ -1,9 +1,9 @@
 .main-content-holder {
     display: flex;
     gap: 20px;
-    overflow: hidden;
+ 
     max-height: calc(100vh - 40px);
-    margin-left: 60px; /* Adjust this value based on the width of your side nav */
+    margin-left: 60px; /* Left margin based on sidebar width */
 }
 
 .content-grid-one, .content-grid-two {
@@ -16,7 +16,7 @@
 
 .placeholder {
     padding: 40px; /* Increased padding */
-    min-height: 175px; /* Increased minimum height */
+    min-height: 130px; /* Increased minimum height */
     text-align: center;
     border-radius: 20px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5); /* More pronounced shadow */
@@ -26,7 +26,7 @@
     display: flex;
     align-items: center; /* Vertical centering */
     justify-content: center; /* Horizontal centering */
-    background-color: #1b1b1b; /* Slightly different background for contrast */
+    background-color: #0e0e0e; /* Slightly different background for contrast */
 }
 
 .subgrid-two {
