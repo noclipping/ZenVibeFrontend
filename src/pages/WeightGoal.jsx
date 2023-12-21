@@ -1,6 +1,12 @@
-function WeightGoalPage() {
-    return <div>Weight Goal Page Content</div>;
-  }
-  
-  export default WeightGoalPage;
-  
+import WeightLog from "../components/FeaturePage/WeightLog/WeightLog";
+
+
+function WeightGoal() {
+    return (
+        <div className="App">
+            <WeightLog />
+        </div>
+    );
+}
+
+export default WeightGoal;
