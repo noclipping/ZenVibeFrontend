@@ -11,7 +11,7 @@ export const SidebarData = [
   },
   {
     title: 'Weight Goal',
-    path: '/weight',
+    path: '/weight-goal',
     icon: <IoIcons.IoIosPaper />,
     cName: 'nav-text'
   },

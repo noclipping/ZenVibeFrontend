@@ -7,7 +7,7 @@ import logo from '../../../../assets/zenvibe.png';
 import "./SideNav.css";
 
 function SideNav() {
-  const [sidebar, setSidebar] = useState(true); // Set to true for the sidebar to be open by default
+  const [sidebar, setSidebar] = useState(true);
 
   const showSidebar = () => setSidebar(!sidebar);
 
@@ -28,6 +28,7 @@ function SideNav() {
             {SidebarData.map((item, index) => {
               return (
                 <li key={index} className={item.cName}>
+                  {/* The Link component is used for navigation */}
                   <Link to={item.path}>
                     {item.icon}
                     <span>{item.title}</span>
