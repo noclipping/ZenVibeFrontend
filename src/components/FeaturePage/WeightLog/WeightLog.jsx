@@ -1,9 +1,11 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
-import { Chart, registerables } from 'chart.js';
+import { useState, useEffect } from 'react';
+import { Line } from 'react-chartjs-2';
+import Chart from 'chart.js/auto'; // Import Chart from 'chart.js/auto'
 import annotationPlugin from 'chartjs-plugin-annotation';
 import '../../FeaturePage/WeightLog/WeightLog.css'; // Adjust the path as needed
 
-Chart.register(...registerables, annotationPlugin);
+// Register the annotation plugin
+Chart.register(annotationPlugin);
 
 function WeightLog() {
     const [weight, setWeight] = useState('');
@@ -21,62 +23,10 @@ function WeightLog() {
         ],
     });
 
-    const chartRef = useRef(null);
-    const chartInstance = useRef(null);
-
-    const updateChart = useCallback(() => {
-        if (chartInstance.current) {
-            chartInstance.current.destroy();
-        }
-
-        const ctx = chartRef.current.getContext('2d');
-        const goalValue = parseFloat(weightGoal); // Ensure it's a number
-        const annotations = goalValue ? {
-            line1: {
-                type: 'line',
-                yMin: goalValue,
-                yMax: goalValue,
-                borderColor: 'red',
-                borderWidth: 2,
-                label: {
-                    content: 'Weight Goal: ' + goalValue + ' lb',
-                    enabled: true,
-                    position: 'start',
-                },
-            },
-        } : {};
-
-        chartInstance.current = new Chart(ctx, {
-            type: 'line',
-            data: weightData,
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: false,
-                    },
-                },
-                elements: {
-                    line: {
-                        tension: 0.4,
-                    },
-                    point: {
-                        radius: 5,
-                    },
-                },
-                plugins: {
-                    annotation: {
-                        annotations: annotations,
-                    },
-                },
-            },
-        });
-    }, [weightData, weightGoal]);
-
     useEffect(() => {
         localStorage.setItem('weightGoal', weightGoal);
         localStorage.setItem('weightData', JSON.stringify(weightData));
-        updateChart();
-    }, [weightData, weightGoal, updateChart]);
+    }, [weightData, weightGoal]);
 
     const handleWeightSubmit = (e) => {
         e.preventDefault();
@@ -97,7 +47,6 @@ function WeightLog() {
     const handleGoalSubmit = (e) => {
         e.preventDefault();
         setWeightGoal(e.target.previousElementSibling.value); // Set weight goal from input
-        updateChart(); // Update the chart to show the goal line
     };
 
     const clearData = () => {
@@ -116,13 +65,46 @@ function WeightLog() {
                 },
             ],
         });
-        updateChart();
+    };
+
+    const chartOptions = {
+        scales: {
+            y: {
+                beginAtZero: false,
+            },
+        },
+        elements: {
+            line: {
+                tension: 0.4,
+            },
+            point: {
+                radius: 5,
+            },
+        },
+        plugins: {
+            annotation: {
+                annotations: {
+                    line1: weightGoal ? {
+                        type: 'line',
+                        yMin: parseFloat(weightGoal),
+                        yMax: parseFloat(weightGoal),
+                        borderColor: 'red',
+                        borderWidth: 2,
+                        label: {
+                            content: 'Weight Goal: ' + weightGoal + ' lb',
+                            enabled: true,
+                            position: 'start',
+                        },
+                    } : null,
+                },
+            },
+        },
     };
 
     return (
         <div className="weight-log-container">
             <div className="weight-log-chart">
-                <canvas ref={chartRef} />
+                <Line data={weightData} options={chartOptions} />
             </div>
             <form onSubmit={handleWeightSubmit} className="weight-log-form">
                 <input 

@@ -34,7 +34,7 @@
 
 .weight-log-form button {
     padding: 10px 25px;
-    background-color: #8B0000; /* Medical red color */
+    background-color: #0e2853; /* Medical red color */
     color: white;
     border: none;
     border-radius: 15px;
@@ -43,7 +43,7 @@
 }
 
 .weight-log-form button:hover {
-    background-color: #700000; /* Darker shade for hover */
+    background-color: #201f1f;
 }
 
 /* Chart area */
@@ -62,15 +62,18 @@
 
 .clear-data-button {
     padding: 10px 20px;
-    background-color: #FF4136; /* Red color for clear button */
+    background-color: #8f0b04; /* Red color for clear button */
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 10px;
     cursor: pointer;
-    margin-top: 20px; /* Spacing from the forms */
+    margin-top: 30px; /* Spacing from the forms */
+    margin-bottom: 15px;
+    width: 200px;
+
     transition: background-color 0.3s;
 }
 
 .clear-data-button:hover {
-    background-color: #C1301C; /* Darker shade on hover */
+    background-color: #201f1f; /* Darker shade on hover */
 }
