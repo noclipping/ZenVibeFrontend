@@ -1,0 +1,23 @@
+.main-content-holder {
+    display: grid;
+    gap: 20px;
+    padding: 40px;
+    padding-bottom: 30px;
+    border-radius: 30px;
+    margin-left: 75px;
+
+}
+
+.content-grid-one {
+    display: grid;
+    grid-template-columns: 2fr; /* Full width for the chart */
+    gap: 20px;
+}
+
+.chart-container {
+    background-color: #1e1d1da5; /* Light background for chart container */
+    border-radius: 30px;
+    margin-left: 1px;
+    padding: 20px;
+    height: auto; /* Adjust height as needed */
+}
