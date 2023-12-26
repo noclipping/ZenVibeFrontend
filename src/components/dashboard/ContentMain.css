@@ -1,10 +1,10 @@
 .main-content-holder {
     display: grid;
     gap: 20px;
-    padding: 40px;
-    padding-bottom: 30px;
+    padding: 70px;
     border-radius: 30px;
-    margin-left: 75px;
+    margin-left: 250px;
+  
 
 }
 
@@ -17,7 +17,7 @@
 .chart-container {
     background-color: #1e1d1da5; /* Light background for chart container */
     border-radius: 30px;
-    margin-left: 1px;
-    padding: 20px;
-    height: auto; /* Adjust height as needed */
+    margin-right: 1px;
+    padding: 10px;
+    width: 1000px;
 }
