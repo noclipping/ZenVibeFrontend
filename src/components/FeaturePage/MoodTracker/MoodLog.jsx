@@ -113,18 +113,17 @@ function MoodLog() {
       <form onSubmit={handleMoodSubmit} className="mood-log-form">
         <div>
           <label>
-            Mood:
             <select value={mood} onChange={(e) => setMood(e.target.value)} required>
               <option value="">Select Mood</option>
               <option value="Happy">Happy</option>
               <option value="Sad">Sad</option>
+              <option value="Anxious">Neutral</option>
               <option value="Anxious">Anxious</option>
             </select>
           </label>
         </div>
         <div>
           <label>
-            Intensity:
             <input
               type="number"
               value={intensity}
