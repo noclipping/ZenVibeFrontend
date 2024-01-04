@@ -41,7 +41,6 @@ function AuthPage() {
                 console.log(document.cookie); // Check cookies here
                 throw new Error(`Login failed: ${response.statusText}`);
             }
-
             setError(''); // Clear any previous errors
             navigate('/protected'); // Navigate to the protected route after login
         } catch (err) {
