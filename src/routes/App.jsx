@@ -21,7 +21,7 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
 
         {/* Protected Page: Only accessible to logged-in users */}
-        <Route path="/protected" element={<ProtectedPage />} />
+        <Route path="/protected/:id" element={<ProtectedPage />} />
 
         {/* Additional Features: Other pages like WeightGoal and MoodTracker */}
         <Route path="/weight-goal" element={<WeightGoal />} />
