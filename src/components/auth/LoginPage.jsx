@@ -32,7 +32,7 @@ function LoginPage() {
                 throw new Error(`Login failed: ${response.statusText}`);
             }
             setError(''); // Clear any previous errors
-            navigate('/protected'); // Navigate to the protected route after login
+            navigate('/protected/:id'); // Navigate to the protected route after login
         } catch (err) {
             setError(err.message);
         }

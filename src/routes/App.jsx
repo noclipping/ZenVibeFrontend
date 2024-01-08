@@ -7,6 +7,7 @@ import MoodTracker from "../../src/pages/MoodTracker";
 import LoginPage from "../components/auth/LoginPage";
 import RegisterPage from "../components/auth/RegisterPage";
 
+
 function App() {
   return (
     <Router>
@@ -22,10 +23,10 @@ function App() {
 
         {/* Protected Page: Only accessible to logged-in users */}
         <Route path="/protected/:id" element={<ProtectedPage />} />
-
+        
         {/* Additional Features: Other pages like WeightGoal and MoodTracker */}
-        <Route path="/weight-goal" element={<WeightGoal />} />
-        <Route path="/mood" element={<MoodTracker />} />
+        <Route path="/weight-goal/:id" element={<WeightGoal />} />
+        <Route path="/mood/:id" element={<MoodTracker />} />
       </Routes>
     </Router>
   );

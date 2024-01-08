@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { useParams } from "react-router-dom"; // Use this if you're passing the user ID via URL parameters
 import { Chart, registerables } from "chart.js";
 import annotationPlugin from "chartjs-plugin-annotation";
 import "../../FeaturePage/WeightLog/WeightLog.css"; // Adjust the path as needed
@@ -7,11 +8,10 @@ Chart.register(...registerables, annotationPlugin);
 
 function WeightLog() {
   const [weight, setWeight] = useState("");
-  const [weightGoal, setWeightGoal] = useState(
-    localStorage.getItem("weightGoal") || ""
-  );
+  const [weightGoal, setWeightGoal] = useState("");
+  const [originalWeight, setOriginalWeight] = useState("");
   const [weightData, setWeightData] = useState({
-    labels: [],
+    labels: ["Start"],
     datasets: [
       {
         label: "Weight (lb)",
@@ -25,54 +25,59 @@ function WeightLog() {
 
   const chartRef = useRef(null);
   const chartInstance = useRef(null);
+  const { id } = useParams(); // Assuming you're passing the user ID as a URL parameter
 
-  // Retrieve the user's ID from session storage or another client-side storage
-  const userId = sessionStorage.getItem("userId");
-
-  // Fetch initial weight data when the component mounts
+  // Fetch user data and initial weight data when the component mounts
   useEffect(() => {
-    const fetchInitialWeightData = async () => {
-      if (!userId) {
+    const fetchUserData = async () => {
+      if (!id) {
         console.error("No user ID available.");
         return;
       }
 
       try {
-        const response = await fetch(`http://localhost:3000/weight/${userId}`, {
+        // Fetch user profile
+        const userResponse = await fetch(`http://localhost:3000/user/${id}`, {
           method: "GET",
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("token"),
-          },
           credentials: "include",
         });
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+        if (!userResponse.ok) {
+          throw new Error(`HTTP error! status: ${userResponse.status}`);
         }
+        const userData = await userResponse.json();
+        setOriginalWeight(userData.original_weight);
+        setWeightGoal(userData.goal_weight);
 
-        const data = await response.json();
-        if (data && data.length > 0) {
-          const transformedData = {
-            labels: data.map((entry, index) => `Day ${index + 1}`),
-            datasets: [
-              {
-                label: "Weight (lb)",
-                data: data.map((entry) => entry.weight),
-                borderColor: "#FFFFFF",
-                pointBackgroundColor: "#FF0000",
-                pointBorderColor: "#FF0000",
-              },
-            ],
-          };
-          setWeightData(transformedData);
+        // Fetch weight entries
+        const weightResponse = await fetch(`http://localhost:3000/weight/${id}`, {
+          method: "GET",
+          credentials: "include",
+        });
+        if (!weightResponse.ok) {
+          throw new Error(`HTTP error! status: ${weightResponse.status}`);
         }
+        const weightEntries = await weightResponse.json();
+        const chartLabels = weightEntries.length ? weightEntries.map((entry, index) => `Day ${index + 1}`) : ["Start"];
+        const chartData = weightEntries.length ? weightEntries.map(entry => entry.weight) : [userData.original_weight];
+
+        setWeightData({
+          labels: chartLabels,
+          datasets: [{
+            label: "Weight (lb)",
+            data: chartData,
+            borderColor: "#FFFFFF",
+            pointBackgroundColor: "#FF0000",
+            pointBorderColor: "#FF0000",
+          }],
+        });
+
       } catch (error) {
-        console.error("Fetching initial weight data failed: " + error.message);
+        console.error("Fetching data failed: " + error.message);
       }
     };
 
-    fetchInitialWeightData();
-  }, [userId]);
+    fetchUserData();
+  }, [id]);
 
   // Update the chart when weightData or weightGoal changes
   useEffect(() => {
@@ -125,46 +130,59 @@ function WeightLog() {
     });
   }, [weightData, weightGoal]);
 
-  const handleWeightSubmit = (e) => {
+  const handleWeightSubmit = async (e) => {
     e.preventDefault();
     const newEntry = parseFloat(weight);
-    if (!isNaN(newEntry)) {
+    if (!isNaN(newEntry) && id) {
       const dayCount = weightData.labels.length + 1;
       setWeightData((prevData) => ({
         ...prevData,
         labels: [...prevData.labels, `Day ${dayCount}`],
-        datasets: [
-          {
-            ...prevData.datasets[0],
-            data: [...prevData.datasets[0].data, newEntry],
-          },
-        ],
+        datasets: [{
+          ...prevData.datasets[0],
+          data: [...prevData.datasets[0].data, newEntry],
+        }],
       }));
       setWeight("");
+
+      // Send new weight entry to server
+      try {
+        const response = await fetch(`http://localhost:3000/weight/${id}`, {
+          method: "POST",
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ weight: newEntry }),
+          credentials: "include",
+        });
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+      } catch (error) {
+        console.error("Submitting new weight entry failed: " + error.message);
+      }
     }
   };
 
   const handleGoalSubmit = (e) => {
     e.preventDefault();
-    setWeightGoal(e.target.previousElementSibling.value); // Set weight goal from input
+    const newGoal = e.target.previousElementSibling.value; // Get weight goal from input
+    if (!isNaN(parseFloat(newGoal))) {
+      setWeightGoal(newGoal);
+      localStorage.setItem("weightGoal", newGoal); // Store the new goal in local storage
+    }
   };
 
   const clearData = () => {
     localStorage.removeItem("weightGoal");
-    // Assuming weightData is stored in localStorage
-    localStorage.removeItem("weightData");
     setWeightGoal("");
     setWeightData({
-      labels: [],
-      datasets: [
-        {
-          label: "Weight (lb)",
-          data: [],
-          borderColor: "#FFFFFF",
-          pointBackgroundColor: "#FF0000",
-          pointBorderColor: "#FF0000",
-        },
-      ],
+      labels: ["Start"],
+      datasets: [{
+        label: "Weight (lb)",
+        data: [originalWeight],
+        borderColor: "#FFFFFF",
+        pointBackgroundColor: "#FF0000",
+        pointBorderColor: "#FF0000",
+      }],
     });
   };
 

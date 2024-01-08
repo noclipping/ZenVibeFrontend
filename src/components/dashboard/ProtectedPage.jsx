@@ -1,5 +1,8 @@
 import ContentMain from './ContentMain';
 import "./ProtectedPage.css"; 
+import UserProfile from './UserProfile/UserProfile';
+
+
 
 
 function ProtectedPage() {
@@ -7,7 +10,8 @@ function ProtectedPage() {
 
     <div className="protected-page">
       <div className="dashboard-container">
-        <ContentMain /> {}
+        <ContentMain /> 
+        <UserProfile />
       </div>
     </div>
   );

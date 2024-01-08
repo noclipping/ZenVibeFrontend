@@ -44,7 +44,7 @@ function RegisterPage() {
             }
 
             setError(''); // Clear any previous errors
-            navigate('/protected'); // Navigate to the protected route after registration
+            navigate('/protected/:id'); // Navigate to the protected route after registration
         } catch (err) {
             setError(err.message);
         }
