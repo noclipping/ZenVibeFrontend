@@ -43,8 +43,9 @@ function RegisterPage() {
                 throw new Error(`Registration failed: ${response.statusText}`);
             }
 
+            const data = await response.json(); // Get the response data
             setError(''); // Clear any previous errors
-            navigate('/protected/:id'); // Navigate to the protected route after registration
+            navigate(`/protected/${data.id}`); // Navigate to the protected route with the user ID
         } catch (err) {
             setError(err.message);
         }
