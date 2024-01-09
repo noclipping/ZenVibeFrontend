@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import logo from '../../../assets/zenvibe.png'; // Update the path as necessary
 import '../auth/auth.css'; // Update the path as necessary
-import { Link } from 'react-router-dom'; 
 
 function LoginPage() {
     const navigate = useNavigate();
@@ -31,8 +30,10 @@ function LoginPage() {
             if (!response.ok) {
                 throw new Error(`Login failed: ${response.statusText}`);
             }
+
+            const data = await response.json(); // Get the response data
             setError(''); // Clear any previous errors
-            navigate('/protected/:id'); // Navigate to the protected route after login
+            navigate(`/protected/${data.id}`); // Navigate to the protected route with the user ID
         } catch (err) {
             setError(err.message);
         }
@@ -63,10 +64,8 @@ function LoginPage() {
                 <div className="button-container">
                     <button type="submit">Login</button>
                 </div>
-                 {/* Add a link to navigate to the RegisterPage */}
-            <p>Dont have an account? <Link to="/register">Sign up</Link></p>
-            <p>Wait take me back!  <Link to="/">Home</Link></p>
-        
+                <p>Dont have an account? <Link to="/register">Sign up</Link></p>
+                <p>Wait take me back! <Link to="/">Home</Link></p>
             </form>
         </div>
     );
