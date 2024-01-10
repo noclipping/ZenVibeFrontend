@@ -7,6 +7,7 @@
     min-height: 100vh;
     color: rgba(255, 255, 255, 0.87);
     font-family: 'Montserrat', sans-serif;
+    font-size: 0.8rem;
     width: 100%; /* Ensure full width */
 }
 

@@ -45,7 +45,6 @@ function LoginPage() {
 
             {/* Login Form */}
             <form className="auth-form" onSubmit={handleLogin}>
-                <h1>ZenVibe Login</h1>
                 <img src={logo} alt="ZenVibe Logo" className="auth-logo" />
                 <input
                     type="text"
@@ -65,7 +64,6 @@ function LoginPage() {
                     <button type="submit">Login</button>
                 </div>
                 <p>Dont have an account? <Link to="/register">Sign up</Link></p>
-                <p>Wait take me back! <Link to="/">Home</Link></p>
             </form>
         </div>
     );

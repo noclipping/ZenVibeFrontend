@@ -1,13 +1,17 @@
-import WeightGoal from "../../pages/WeightGoal";
+import WeightLog from "../FeaturePage/WeightLog/WeightLog";
+import MoodLog from "../FeaturePage/MoodTracker/MoodLog";
 import "./ContentMain.css";
 
 const ContentMain = () => {
   return (
     <div className="main-content-holder">
       <div className="chart-container">
-        <WeightGoal />
+      <WeightLog showInputs={false} />
       </div>
-      {/* Additional components or placeholders can go here if needed */}
+      <div className="chart-container">
+        <MoodLog />
+      </div>
+      {/* Additional components can be added here */}
     </div>
   );
 };

@@ -1,23 +1,17 @@
 .main-content-holder {
-    display: grid;
-    gap: 20px;
-    padding: 70px;
-    border-radius: 30px;
-    margin-left: 250px;
-  
-
+    display: flex;
+    flex-direction: column; /* Keep items stacked vertically */
+    gap: 30px; /* Increase space between items for clarity */
+    padding: 50px; /* Adjust padding for a cleaner look */
+    margin-left: 400px; /* Adjust based on your sidebar width */
+    align-items: center; /* Center items horizontally */
+    width: 1000px; /* Adjust width based on sidebar */
+    max-width: 2000px; /* Max width for larger screens */
+    margin: 100px; /* Center the holder on the page */
+    margin-right: 200px;
 }
-
-.content-grid-one {
-    display: grid;
-    grid-template-columns: 2fr; /* Full width for the chart */
-    gap: 20px;
-}
-
-.chart-container {
-    background-color: #1e1d1da5; /* Light background for chart container */
-    border-radius: 30px;
-    margin-right: 1px;
-    padding: 10px;
-    width: 1000px;
+/* For the canvas (chart) specifically */
+.chart-container canvas {
+    width: 100% !important; /* Ensure it takes the full width */
+    height: auto !important; /* Maintain aspect ratio */
 }
