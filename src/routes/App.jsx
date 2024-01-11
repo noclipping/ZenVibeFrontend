@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LandingPage from "../components/landingPage/LandingPage";
 import ProtectedPage from "../components/dashboard/ProtectedPage";
 import WeightGoal from "../../src/pages/WeightGoal";
+import Activity from "../pages/Activity";
 import MoodTracker from "../../src/pages/MoodTracker";
 import LoginPage from "../components/auth/LoginPage";
 import RegisterPage from "../components/auth/RegisterPage";
@@ -26,6 +27,7 @@ function App() {
         
         {/* Additional Features: Other pages like WeightGoal and MoodTracker */}
         <Route path="/weight-goal/:id" element={<WeightGoal />} />
+        <Route path="/activity/:id" element={<Activity />} />
         <Route path="/mood/:id" element={<MoodTracker />} />
       </Routes>
     </Router>

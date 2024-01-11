@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { Chart, registerables } from "chart.js";
 import annotationPlugin from "chartjs-plugin-annotation";
 import "../../FeaturePage/WeightLog/WeightLog.css";
@@ -10,6 +10,7 @@ function WeightLog() {
     const [weight, setWeight] = useState("");
     const [weightGoal, setWeightGoal] = useState("");
     const [originalWeight, setOriginalWeight] = useState("");
+    const [showForm, setShowForm] = useState(true)
     const [weightData, setWeightData] = useState({
         labels: ["Start"],
         datasets: [
@@ -26,6 +27,7 @@ function WeightLog() {
     const chartRef = useRef(null);
     const chartInstance = useRef(null);
     const { id } = useParams();
+    const location = useLocation()
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -47,10 +49,15 @@ function WeightLog() {
                 });
                 const weightEntries = await weightResponse.json();
 
+
                 setOriginalWeight(userData.original_weight);
                 setWeightGoal(userData.goal_weight);
 
                 updateChartData(weightEntries, userData.original_weight);
+
+                const isWeightGoalPage = location.pathname.startsWith('/weight-goal/') && location.pathname.split('/').pop() === id
+                setShowForm(isWeightGoalPage)
+
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
@@ -61,7 +68,9 @@ function WeightLog() {
 
     const updateChartData = (weightEntries, initialWeight) => {
         const chartLabels = weightEntries.map((entry, index) => `Day ${index + 1}`);
+        //     const chartLabels = weightEntries.map((entry, index) => new Date(entry.date));
         const chartData = weightEntries.map(entry => entry.weight);
+        // console.log(entry.weight, "this")
 
         setWeightData({
             labels: ["Start", ...chartLabels],
@@ -112,6 +121,8 @@ function WeightLog() {
     const handleWeightSubmit = async (e) => {
         e.preventDefault();
         if (!isNaN(parseFloat(weight)) && id) {
+
+
             try {
                 const response = await fetch(`http://localhost:3000/weight/${id}`, {
                     method: "POST",
@@ -119,15 +130,20 @@ function WeightLog() {
                     body: JSON.stringify({ weight }),
                     credentials: "include",
                 });
+                console.log(response)
                 if (response.ok) {
                     const newEntry = await response.json();
                     updateChartData([...weightData.datasets[0].data, newEntry.weight], originalWeight);
+                } else {
+                    const errorResponse = await response.json()
+                    console.error('Error Response:', errorResponse)
                 }
                 setWeight("");
             } catch (error) {
                 console.error("Error submitting weight:", error);
             }
         }
+
     };
 
     const handleGoalSubmit = (e) => {
@@ -158,15 +174,21 @@ function WeightLog() {
             <div className="weight-log-chart">
                 <canvas ref={chartRef} />
             </div>
-            <form onSubmit={handleWeightSubmit} className="weight-log-form">
-                <input type="number" value={weight} onChange={e => setWeight(e.target.value)} placeholder="Enter weight (lb)" required />
-                <button type="submit">Log Weight</button>
-            </form>
-            <form onSubmit={handleGoalSubmit} className="weight-log-form">
-                <input type="number" value={weightGoal} onChange={e => setWeightGoal(e.target.value)} placeholder="Set weight goal (lb)" required />
-                <button type="submit">Set Goal</button>
-            </form>
-            <button onClick={clearData} className="clear-data-button">Clear Data</button>
+
+            {showForm && (
+                <div>
+                    <form onSubmit={handleWeightSubmit} className="weight-log-form">
+                        <input type="number" value={weight} onChange={e => setWeight(e.target.value)} placeholder="Enter weight (lb)" required />
+                        <button type="submit">Log Weight</button>
+                    </form>
+                    <form onSubmit={handleGoalSubmit} className="weight-log-form">
+                        <input type="number" value={weightGoal} onChange={e => setWeightGoal(e.target.value)} placeholder="Set weight goal (lb)" required />
+                        <button type="submit">Set Goal</button>
+                    </form>
+                    <button onClick={clearData} className="clear-data-button">Clear Data</button>
+                </div>
+            )}
+
         </div>
     );
 }

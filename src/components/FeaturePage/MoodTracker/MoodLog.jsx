@@ -55,7 +55,9 @@ function MoodLog() {
       label: `${entry.mood} on ${new Date(entry.date).toLocaleDateString()}`,
       data: [{ x: new Date(entry.date), y: entry.intensity }],
       backgroundColor: getMoodColor(entry.mood),
+      
     })),
+    
   };
 
   const scatterOptions = {
