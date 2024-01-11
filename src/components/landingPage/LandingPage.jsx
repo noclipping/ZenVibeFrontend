@@ -7,7 +7,7 @@ function LandingPage() {
   const navigate = useNavigate();
 
   const handleGetStartedClick = () => {
-    navigate("/auth");
+    navigate("/login");
   };
 
   return (

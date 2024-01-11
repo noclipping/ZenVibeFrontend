@@ -1,14 +1,16 @@
-import ContentMain from './ContentMain'; // Import ContentMain
-import SideNav from "./sidebar/SideNav"; // Update with the correct path
-import "./ProtectedPage.css"; // Your existing or new CSS file for ProtectedPage
-
+import ContentMain from './ContentMain';
+import "./ProtectedPage.css"; 
+import UserProfile from './UserProfile/UserProfile';
+import SideNav from './sidebar/SideNav';
 
 function ProtectedPage() {
   return (
+
     <div className="protected-page">
-      <SideNav />
       <div className="dashboard-container">
-        <ContentMain /> {/* Include ContentMain component here */}
+        <SideNav />
+        <ContentMain /> 
+        <UserProfile />
       </div>
     </div>
   );

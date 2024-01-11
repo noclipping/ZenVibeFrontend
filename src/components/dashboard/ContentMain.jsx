@@ -1,25 +1,19 @@
-import './ContentMain.css'; // Your CSS file for styling
+import WeightLog from "../FeaturePage/WeightLog/WeightLog";
+import MoodLog from "../FeaturePage/MoodTracker/MoodLog";
+import "./ContentMain.css";
 
 const ContentMain = () => {
   return (
     <div className="main-content-holder">
-        <div className="content-grid-one">
-            <div className="placeholder">Health Metrics Placeholder</div>
-            <div className="placeholder">Goal Tracker Placeholder</div>
-            <div className="placeholder">Progress Report Placeholder</div>
-        </div>
-        <div className="content-grid-two">
-            <div className="placeholder">Weight Goal</div>
-            <div className="placeholder">Exercise Routine Placeholder</div>
-            <div className="grid-two-item">
-              <div className="subgrid-two">
-                <div className="placeholder">Exercise Routine Placeholder</div>
-                <div className="placeholder">User Settings Placeholder</div>
-              </div>
-            </div>
-        </div>
+      <div className="chart-container">
+      <WeightLog showInputs={false} />
+      </div>
+      <div className="chart-container">
+        <MoodLog />
+      </div>
+      {/* Additional components can be added here */}
     </div>
-  )
-}
+  );
+};
 
 export default ContentMain;
