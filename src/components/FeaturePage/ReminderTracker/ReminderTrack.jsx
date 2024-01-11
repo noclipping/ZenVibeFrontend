@@ -1,28 +1,35 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 
 function ReminderTrack() {
     const [reminders, setReminders] = useState([]);
-    const [newReminder, setNewReminder] = useState({ title: '', description: '', reminder_date: '' });
+    const [newReminder, setNewReminder] = useState({ 
+        title: '', 
+        description: '', 
+        reminder_date: ''
+    });
     const { id } = useParams();
 
-    useEffect(() => {
-        fetchReminders();
-    }, [id]);
-
-    const fetchReminders = async () => {
+    // Define fetchReminders function with useCallback
+    const fetchReminders = useCallback(async () => {
         try {
             const response = await fetch(`http://localhost:3000/reminder/${id}`, {
                 method: 'GET',
                 credentials: 'include',
             });
-            if (!response.ok) throw new Error('Failed to fetch reminders');
+            if (!response.ok) {
+                throw new Error('Failed to fetch reminders');
+            }
             const data = await response.json();
             setReminders(data);
         } catch (error) {
             console.error('Fetch Reminders Error:', error);
         }
-    };
+    }, [id]);
+
+    useEffect(() => {
+        fetchReminders();
+    }, [fetchReminders]);
 
     const handleCreateReminder = async (event) => {
         event.preventDefault();
@@ -33,7 +40,9 @@ function ReminderTrack() {
                 body: JSON.stringify(newReminder),
                 credentials: 'include',
             });
-            if (!response.ok) throw new Error('Failed to create reminder');
+            if (!response.ok) {
+                throw new Error('Failed to create reminder');
+            }
             await fetchReminders();
             setNewReminder({ title: '', description: '', reminder_date: '' });
         } catch (error) {
@@ -41,7 +50,8 @@ function ReminderTrack() {
         }
     };
 
-    // Define delete and update functions here
+    // Define functions for delete and update operations (placeholders)
+    // Add these functions based on your application's logic
 
     return (
         <div>
@@ -56,9 +66,25 @@ function ReminderTrack() {
             ))}
 
             <form onSubmit={handleCreateReminder}>
-                <input type="text" value={newReminder.title} onChange={(e) => setNewReminder({ ...newReminder, title: e.target.value })} placeholder="Title" required />
-                <textarea value={newReminder.description} onChange={(e) => setNewReminder({ ...newReminder, description: e.target.value })} placeholder="Description" required />
-                <input type="date" value={newReminder.reminder_date} onChange={(e) => setNewReminder({ ...newReminder, reminder_date: e.target.value })} required />
+                <input 
+                    type="text" 
+                    value={newReminder.title} 
+                    onChange={(e) => setNewReminder({ ...newReminder, title: e.target.value })} 
+                    placeholder="Title" 
+                    required 
+                />
+                <textarea 
+                    value={newReminder.description} 
+                    onChange={(e) => setNewReminder({ ...newReminder, description: e.target.value })} 
+                    placeholder="Description" 
+                    required 
+                />
+                <input 
+                    type="date" 
+                    value={newReminder.reminder_date} 
+                    onChange={(e) => setNewReminder({ ...newReminder, reminder_date: e.target.value })} 
+                    required 
+                />
                 <button type="submit">Add Reminder</button>
             </form>
         </div>

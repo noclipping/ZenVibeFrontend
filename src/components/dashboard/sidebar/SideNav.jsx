@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom"; // Import useNavigate for redirection
 import * as FaIcons from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { SidebarData } from "./SidebarData";
+import { SidebarData } from "../../dashboard/sidebar/SidebarData";
 import { IconContext } from "react-icons";
 import logo from "../../../../assets/zenvibe.png"; // Update the path as necessary
 import "./SideNav.css";
