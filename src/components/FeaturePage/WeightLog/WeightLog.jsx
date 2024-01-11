@@ -1,37 +1,42 @@
 import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
-import PropTypes from "prop-types";
 import { Chart, registerables } from "chart.js";
 import annotationPlugin from "chartjs-plugin-annotation";
 import "../../FeaturePage/WeightLog/WeightLog.css";
 
-// Register Chart.js and its plugins
+// Registering Chart.js and its plugins globally
 Chart.register(...registerables, annotationPlugin);
 
-function WeightLog({ showInputs }) {
-  // State hooks for managing weight data and chart
+// Function to calculate BMI using weight in pounds and height in feet and inches
+function calculateBMI(weightInPounds, heightFeet, heightInches) {
+  const weightInKg = weightInPounds / 2.20462; // Convert weight to kilograms
+  const heightInMeters = (heightFeet * 0.3048) + (heightInches * 0.0254); // Convert height to meters
+  return weightInKg / (heightInMeters ** 2); // BMI formula
+}
+
+function WeightLog() {
+  // State hooks for managing various data and BMI
   const [weight, setWeight] = useState("");
   const [weightGoal, setWeightGoal] = useState("");
-  const [originalWeight, setOriginalWeight] = useState("");
+  const [heightFeet, setHeightFeet] = useState(0);
+  const [heightInches, setHeightInches] = useState(0);
+  const [BMI, setBMI] = useState(0);
   const [weightData, setWeightData] = useState({
     labels: ["Start"],
-    datasets: [
-      {
-        label: "Weight (lb)",
-        data: [],
-        borderColor: "#FFFFFF",
-        pointBackgroundColor: "#FF0000",
-        pointBorderColor: "#FF0000",
-      },
-    ],
+    datasets: [{
+      label: "Weight (lb)",
+      data: [],
+      borderColor: "#FFFFFF",
+      pointBackgroundColor: "#FF0000",
+      pointBorderColor: "#FF0000",
+    }],
   });
-  // State hooks for managing weight data and chart
+
   const chartRef = useRef(null);
   const chartInstance = useRef(null);
-  // Getting user ID from URL parameters
-  const { id } = useParams();
+  const { id } = useParams(); // Getting user ID from URL parameters
 
-  // Fetch user data and weight entries on component mount
+  // Fetching user data and weight entries on component mount
   useEffect(() => {
     const fetchUserData = async () => {
       if (!id) {
@@ -40,22 +45,27 @@ function WeightLog({ showInputs }) {
       }
 
       try {
+        // Fetching user data from API
         const userResponse = await fetch(`http://localhost:3000/user/${id}`, {
           method: "GET",
           credentials: "include",
         });
         const userData = await userResponse.json();
-        const weightResponse = await fetch(
-          `http://localhost:3000/weight/${id}`,
-          {
-            method: "GET",
-            credentials: "include",
-          }
-        );
+
+        // Fetching weight entries from API
+        const weightResponse = await fetch(`http://localhost:3000/weight/${id}`, {
+          method: "GET",
+          credentials: "include",
+        });
         const weightEntries = await weightResponse.json();
 
-        setOriginalWeight(userData.original_weight);
+        // Setting states with fetched data
         setWeightGoal(userData.goal_weight);
+        setHeightFeet(userData.feet);
+        setHeightInches(userData.inches);
+        setBMI(calculateBMI(userData.original_weight, userData.feet, userData.inches));
+
+        // Updating chart data with weight entries
         updateChartData(weightEntries, userData.original_weight);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -65,25 +75,23 @@ function WeightLog({ showInputs }) {
     fetchUserData();
   }, [id]);
 
-  // Function to update the chart data
+  // Function to update chart data
   const updateChartData = (weightEntries, initialWeight) => {
     const chartLabels = weightEntries.map((entry, index) => `Day ${index + 1}`);
-    const chartData = weightEntries.map((entry) => entry.weight);
+    const chartData = weightEntries.map(entry => entry.weight);
     setWeightData({
       labels: ["Start", ...chartLabels],
-      datasets: [
-        {
-          label: "Weight (lb)",
-          data: [initialWeight, ...chartData],
-          borderColor: "#FFFFFF",
-          pointBackgroundColor: "#FF0000",
-          pointBorderColor: "#FF0000",
-        },
-      ],
+      datasets: [{
+        label: "Weight (lb)",
+        data: [initialWeight, ...chartData],
+        borderColor: "#FFFFFF",
+        pointBackgroundColor: "#FF0000",
+        pointBorderColor: "#FF0000",
+      }],
     });
   };
 
-  // Effect hook to update chart whenever weight data changes
+  // Updating chart when weight data changes
   useEffect(() => {
     if (chartInstance.current) {
       chartInstance.current.destroy();
@@ -91,23 +99,24 @@ function WeightLog({ showInputs }) {
 
     const ctx = chartRef.current.getContext("2d");
     const goalValue = parseFloat(weightGoal);
-    const annotations = goalValue
-      ? {
-          line1: {
-            type: "line",
-            yMin: goalValue,
-            yMax: goalValue,
-            borderColor: "red",
-            borderWidth: 2,
-            label: {
-              content: `Weight Goal: ${goalValue} lb`,
-              enabled: true,
-              position: "start",
-            },
-          },
-        }
-      : {};
 
+    // Configuring annotations for goal line
+    const annotations = goalValue ? {
+      line1: {
+        type: "line",
+        yMin: goalValue,
+        yMax: goalValue,
+        borderColor: "red",
+        borderWidth: 2,
+        label: {
+          content: `Weight Goal: ${goalValue} lb`,
+          enabled: true,
+          position: "start",
+        },
+      },
+    } : {};
+
+    // Initializing the chart with updated data
     chartInstance.current = new Chart(ctx, {
       type: "line",
       data: weightData,
@@ -119,63 +128,62 @@ function WeightLog({ showInputs }) {
     });
   }, [weightData, weightGoal]);
 
-  // Function to handle weight submission
+  // Handling weight submission
   const handleWeightSubmit = async (e) => {
     e.preventDefault();
-    if (!isNaN(parseFloat(weight)) && id) {
+    const newEntryWeight = parseFloat(weight);
+    if (!isNaN(newEntryWeight) && id) {
       try {
-        const today = new Date().toISOString().split("T")[0];
-        const payload = {
-          weight: parseFloat(weight),
-          entry_date: today,
-        };
+        // Sending POST request to API
         const response = await fetch(`http://localhost:3000/weight/${id}`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
+          body: JSON.stringify({ weight: newEntryWeight, entry_date: new Date().toISOString().split("T")[0] }),
           credentials: "include",
         });
-        if (!response.ok) {
+
+        if (response.ok) {
+          const newWeightEntry = await response.json();
+
+          // Updating chart data with new entry
+          const updatedData = [...weightData.datasets[0].data, newWeightEntry.weight];
+          const updatedLabels = [...weightData.labels, `Day ${weightData.labels.length}`];
+
+          setWeightData({
+            ...weightData,
+            labels: updatedLabels,
+            datasets: [{
+              ...weightData.datasets[0],
+              data: updatedData,
+            }],
+          });
+
+          // Updating BMI with new weight entry
+          setBMI(calculateBMI(newWeightEntry.weight, heightFeet, heightInches));
+          setWeight("");
+        } else {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-        const newEntry = await response.json();
-        updateChartData(
-          [...weightData.datasets[0].data, newEntry.weight],
-          originalWeight
-        );
-        setWeight("");
       } catch (error) {
-        console.error("Error submitting weight!:", error.message);
+        console.error("Error submitting weight:", error);
       }
     }
   };
 
-  // Function to handle weight goal submission
-  const handleGoalSubmit = (e) => {
-    e.preventDefault();
-    if (!isNaN(parseFloat(weightGoal))) {
-      setWeightGoal(e.target.previousElementSibling.value);
-      localStorage.setItem("weightGoal", e.target.previousElementSibling.value);
+  //created function for BMI categories for user notification 
+  function getBMICategory(bmi) {
+    if (bmi < 18.5) {
+      return "Underweight";
+    } else if (bmi >= 18.5 && bmi <= 24.9) {
+      return "Normal weight";
+    } else if (bmi >= 25 && bmi <= 29.9) {
+      return "Overweight";
+    } else {
+      return "Obesity";
     }
-  };
+  }
 
-  // Function to clear data from local storage and state
-  const clearData = () => {
-    localStorage.removeItem("weightGoal");
-    setWeightGoal("");
-    setWeightData({
-      labels: ["Start"],
-      datasets: [
-        {
-          label: "Weight (lb)",
-          data: [originalWeight],
-          borderColor: "#FFFFFF",
-          pointBackgroundColor: "#FF0000",
-          pointBorderColor: "#FF0000",
-        },
-      ],
-    });
-  };
+  
 
   // JSX for rendering the component
   return (
@@ -183,40 +191,23 @@ function WeightLog({ showInputs }) {
       <div className="weight-log-chart">
         <canvas ref={chartRef} />
       </div>
-      {showInputs && (
-        <>
-          <form onSubmit={handleWeightSubmit} className="weight-log-form">
-            <input
-              type="number"
-              value={weight}
-              onChange={(e) => setWeight(e.target.value)}
-              placeholder="Enter weight (lb)"
-              required
-            />
-            <button type="submit">Log Weight</button>
-          </form>
-          <form onSubmit={handleGoalSubmit} className="weight-log-form">
-            <input
-              type="number"
-              value={weightGoal}
-              onChange={(e) => setWeightGoal(e.target.value)}
-              placeholder="Set weight goal (lb)"
-              required
-            />
-            <button type="submit">Set Goal</button>
-          </form>
-          <button onClick={clearData} className="clear-data-button">
-            Clear Data
-          </button>
-        </>
-      )}
+      <form onSubmit={handleWeightSubmit} className="weight-log-form">
+        <input
+          type="number"
+          value={weight}
+          onChange={(e) => setWeight(e.target.value)}
+          placeholder="Enter weight (lb)"
+          required
+        />
+        <button type="submit">Log Weight</button>
+      </form>
+      <div className="bmi-display">
+      <p>Current BMI: {BMI.toFixed(2)} ({getBMICategory(BMI)})</p>
+      {BMI > 24.9 && <p>Your BMI indicates that you might be overweight. Consider consulting a healthcare professional for advice.</p>}
+      {BMI < 18.5 && <p>Your BMI indicates that you might be underweight. Consider consulting a healthcare professional for advice.</p>}
+    </div>
     </div>
   );
 }
-
-// PropTypes for type checking props
-WeightLog.propTypes = {
-  showInputs: PropTypes.bool.isRequired,
-};
 
 export default WeightLog;
