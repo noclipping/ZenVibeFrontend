@@ -145,7 +145,7 @@ function WeightLog({ showInputs }) {
         );
         setWeight("");
       } catch (error) {
-        console.error("Error submitting weight:", error.message);
+        console.error("Error submitting weight!:", error.message);
       }
     }
   };
