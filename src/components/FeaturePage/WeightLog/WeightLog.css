@@ -3,7 +3,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 5px;
+    padding: 50px;
     background-color: #2d2c2c85; /* Dark background */
     color: #fff; /* White text color for contrast */
     border-radius: 20px;
@@ -12,7 +12,7 @@
     margin-right: auto;
     max-width: 1000px;
     margin-left: 400px;
-    height: 80vh; /* Adjust height to fill screen vertically */
+    height: 75vh; /* Adjust height to fill screen vertically */
     justify-content: space-between; /* Distribute space */
 }
 
@@ -33,7 +33,7 @@
 }
 
 .weight-log-form button {
-    padding: 10px 25px;
+    padding: 15px 25px;
     background-color: #0e2853; /* Medical red color */
     color: white;
     border: none;
@@ -77,3 +77,24 @@
 .clear-data-button:hover {
     background-color: #201f1f; /* Darker shade on hover */
 }
+
+.bmi-display {
+    background-color: #191818c3; /* Slightly different background */
+    padding: 10px;
+    border-radius: 15px;
+    margin-top: 15px;
+    text-align: center; /* Center-align the text */
+    
+    /* Adding a box shadow for depth */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6), /* Outer shadow for depth */
+                0 6px 20px 0 rgba(0, 0, 0, 0.19); /* Inner shadow for more emphasis */
+}
+
+
+.bmi-display p {
+    font-family: 'Montserrat', sans-serif; /* Apply Montserrat font to paragraphs */
+    font-size: 1.1rem;
+}
+
+
+
