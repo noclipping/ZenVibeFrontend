@@ -3,10 +3,9 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LandingPage from "../components/landingPage/LandingPage";
 import ProtectedPage from "../components/dashboard/ProtectedPage";
 import WeightGoal from "../../src/pages/WeightGoal";
-import MoodTracker from "../../src/pages/MoodTracker";
 import LoginPage from "../components/auth/LoginPage";
 import RegisterPage from "../components/auth/RegisterPage";
-
+import ReminderTracker from "../components/FeaturePage/ReminderFeature/ReminderTrack";
 
 function App() {
   return (
@@ -23,10 +22,10 @@ function App() {
 
         {/* Protected Page: Only accessible to logged-in users */}
         <Route path="/protected/:id" element={<ProtectedPage />} />
-        
+
         {/* Additional Features: Other pages like WeightGoal and MoodTracker */}
         <Route path="/weight-goal/:id" element={<WeightGoal />} />
-        <Route path="/mood/:id" element={<MoodTracker />} />
+        <Route path="/reminders/:id" element={<ReminderTracker />} />
       </Routes>
     </Router>
   );
