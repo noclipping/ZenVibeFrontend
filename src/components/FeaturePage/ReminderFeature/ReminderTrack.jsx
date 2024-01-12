@@ -1,6 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import SideNav from '../../../components/dashboard/sidebar/SideNav';
+import UserProfile from '../../dashboard/UserProfile/UserProfile';
+import '../ReminderFeature/ReminderTrack.css'
 
 function ReminderTrack() {
     const [reminders, setReminders] = useState([]);
@@ -37,7 +39,11 @@ function ReminderTrack() {
             const response = await fetch(`http://localhost:3000/reminder/${userId}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(newReminder),
+                body: JSON.stringify({
+                    title: newReminder.title,
+                    description: newReminder.description,
+                    reminder_date: newReminder.reminder_date
+                }),
                 credentials: 'include',
             });
             if (!response.ok) {
@@ -50,12 +56,10 @@ function ReminderTrack() {
         }
     };
 
-    // Define functions for delete and update operations (placeholders)
-    // Add these functions based on your application's logic
-
     return (
         <div className="App">
             <SideNav userId={userId} />
+            <UserProfile userId={userId} />
             <div className="reminder-content">
                 <h2>Reminders</h2>
                 {reminders.map((reminder, index) => (
@@ -63,7 +67,6 @@ function ReminderTrack() {
                         <h3>{reminder.title}</h3>
                         <p>{reminder.description}</p>
                         <p>{reminder.reminder_date}</p>
-                        {/* Add buttons for update and delete */}
                     </div>
                 ))}
                 <form onSubmit={handleCreateReminder} className="reminder-form">
