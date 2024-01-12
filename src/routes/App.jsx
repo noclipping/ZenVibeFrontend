@@ -6,6 +6,7 @@ import WeightGoal from "../../src/pages/WeightGoal";
 import LoginPage from "../components/auth/LoginPage";
 import RegisterPage from "../components/auth/RegisterPage";
 import ReminderTracker from "../components/FeaturePage/ReminderFeature/ReminderTrack";
+import ActivityReport from "../components/FeaturePage/ActivityFeature/ActivityReport"
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         {/* Additional Features: Other pages like WeightGoal and MoodTracker */}
         <Route path="/weight-goal/:id" element={<WeightGoal />} />
         <Route path="/reminders/:id" element={<ReminderTracker />} />
+        <Route path="/activity/:id" element={<ActivityReport/>} />
       </Routes>
     </Router>
   );

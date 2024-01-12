@@ -2,10 +2,11 @@ import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { Chart, registerables } from "chart.js";
 import annotationPlugin from "chartjs-plugin-annotation";
+import zoomPlugin from 'chartjs-plugin-zoom';
 import "../../FeaturePage/WeightLog/WeightLog.css";
 
 // Registering Chart.js and its plugins globally
-Chart.register(...registerables, annotationPlugin);
+Chart.register(...registerables, annotationPlugin, zoomPlugin);
 
 // Function to calculate BMI using weight in pounds and height in feet and inches
 function calculateBMI(weightInPounds, heightFeet, heightInches) {
@@ -116,6 +117,22 @@ function WeightLog() {
       },
     } : {};
 
+    const zoomOptions = {
+        pan: {
+          enabled: true,
+          mode: 'xy',
+        },
+        zoom: {
+          wheel: {
+            enabled: true,
+          },
+          pinch: {
+            enabled: true,
+          },
+          mode: 'xy',
+        },
+      };
+
     // Initializing the chart with updated data
     chartInstance.current = new Chart(ctx, {
       type: "line",
@@ -124,6 +141,7 @@ function WeightLog() {
         scales: { y: { beginAtZero: false } },
         elements: { line: { tension: 0.4 }, point: { radius: 5 } },
         plugins: { annotation: { annotations } },
+        zoom: zoomOptions,
       },
     });
   }, [weightData, weightGoal]);
