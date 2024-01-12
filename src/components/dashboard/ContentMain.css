@@ -1,17 +1,32 @@
-.main-content-holder {
-    display: flex;
-    flex-direction: column; /* Keep items stacked vertically */
-    gap: 30px; /* Increase space between items for clarity */
-    padding: 50px; /* Adjust padding for a cleaner look */
-    margin-left: 400px; /* Adjust based on your sidebar width */
-    align-items: center; /* Center items horizontally */
-    width: 1000px; /* Adjust width based on sidebar */
-    max-width: 2000px; /* Max width for larger screens */
-    margin: 100px; /* Center the holder on the page */
-    margin-right: 200px;
+
+  .chart-container {
+    /* Other styles like border, box-shadow, etc. */
+    
+    padding: 10px;
+    height: auto;
+    min-height: 100px; /* Adjust based on requirement */
+    overflow: auto;
+    max-width:100%;
+  }
+  
+ 
+  .search-container {
+    display: flex; /* Use flexbox for alignment */
+    justify-content: flex-start; /* Align content to the left */
+    padding: 10px 200px; /* Adjust padding as needed */
+    position: fixed; /* Keeps the search bar fixed at the top */
+    top: 20px; /* At the very top */
+    z-index: 100; /* To ensure it stays on top of other content */
+    width: 100%; /* Ensure it spans the full width */
 }
-/* For the canvas (chart) specifically */
-.chart-container canvas {
-    width: 100% !important; /* Ensure it takes the full width */
-    height: auto !important; /* Maintain aspect ratio */
-}
+
+  
+  .search-container input[type="text"] {
+    width: 250px; /* Adjust width as needed */
+    padding: 8px;
+    border: 1px solid #ccc; /* Example: Light grey border */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    font-size: 16px; /* Adjust as needed */
+  }
+  

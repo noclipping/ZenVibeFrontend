@@ -1,19 +1,51 @@
+import { useState } from 'react';
 import WeightLog from "../FeaturePage/WeightLog/WeightLog";
-import "./ContentMain.css";
 import ReminderTrack from "../FeaturePage/ReminderFeature/ReminderTrack";
+import ActivityTrack from "../FeaturePage/ActivityFeature/ActivityReport";
+import "./ContentMain.css";
 
 const ContentMain = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value.toLowerCase());
+  };
+
+  // Determine which components to render based on the search term
+  const renderComponents = () => {
+    if (searchTerm === "weight") {
+      return <WeightLog showInputs={false} />;
+    } else if (searchTerm === "reminders") {
+      return <ReminderTrack />;
+    } else if (searchTerm === "activity") {
+      return <ActivityTrack />;
+    } else {
+      return (
+        <>
+          <WeightLog showInputs={false} />
+          <ReminderTrack />
+          <ActivityTrack />
+        </>
+      );
+    }
+  };
+
   return (
-    <div className="main-content-holder">
-      <div className="chart-container">
-        <WeightLog showInputs={false} />
+    <div>
+      <div className="search-container">
+        <input
+          type="text"
+          placeholder="Search..."
+          onChange={handleSearchChange}
+          value={searchTerm}
+        />
       </div>
-      <div className="chart-container">
-        <ReminderTrack />
+      <div className="main-content-holder">
+        {renderComponents()}
       </div>
-      {/* Additional components can be added here */}
     </div>
   );
 };
 
 export default ContentMain;
+
