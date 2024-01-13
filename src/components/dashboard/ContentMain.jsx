@@ -36,7 +36,7 @@ const ContentMain = () => { // Include userId as a prop if passed from a parent 
       <div className="search-container">
         <input
           type="text"
-          placeholder="Search..."
+          placeholder="Search views"
           onChange={handleSearchChange}
           value={searchTerm}
         />
