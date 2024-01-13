@@ -1,17 +1,37 @@
-.main-content-holder {
+/* Apply overflow hidden to the body or a main container to disable scrolling */
+
+  .main-content-holder {
+    padding-top: 1px;
     display: flex;
-    flex-direction: column; /* Keep items stacked vertically */
-    gap: 30px; /* Increase space between items for clarity */
-    padding: 50px; /* Adjust padding for a cleaner look */
-    margin-left: 400px; /* Adjust based on your sidebar width */
-    align-items: center; /* Center items horizontally */
-    width: 1000px; /* Adjust width based on sidebar */
-    max-width: 2000px; /* Max width for larger screens */
-    margin: 100px; /* Center the holder on the page */
-    margin-right: 200px;
-}
-/* For the canvas (chart) specifically */
-.chart-container canvas {
-    width: 100% !important; /* Ensure it takes the full width */
-    height: auto !important; /* Maintain aspect ratio */
-}
+    flex-direction: column;
+    align-items: center;
+    gap: 100px;
+    overflow: hidden;
+  }
+  
+  .search-container {
+    display: flex;
+    justify-content: flex-start;
+    padding: 10px 350px;
+    position: fixed;
+    top: 20px;
+    z-index: 100;
+    width: 100%;
+  }
+  
+  .search-container input[type="text"] {
+    width: 250px;
+    padding: 8px;
+    border-radius: 15px;
+    font-size: 16px;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    outline: none;
+    border: 2px solid transparent;
+  }
+  
+  .search-container input[type="text"]:hover,
+  .search-container input[type="text"]:focus {
+    box-shadow: 0 4px 8px rgb(135, 6, 6);
+    transform: scale(1.05);
+  }
+  

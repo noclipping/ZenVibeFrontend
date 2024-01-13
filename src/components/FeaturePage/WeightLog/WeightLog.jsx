@@ -2,10 +2,12 @@ import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { Chart, registerables } from "chart.js";
 import annotationPlugin from "chartjs-plugin-annotation";
+import zoomPlugin from 'chartjs-plugin-zoom';
+import PropTypes from 'prop-types';
 import "../../FeaturePage/WeightLog/WeightLog.css";
 
 // Registering Chart.js and its plugins globally
-Chart.register(...registerables, annotationPlugin);
+Chart.register(...registerables, annotationPlugin, zoomPlugin);
 
 // Function to calculate BMI using weight in pounds and height in feet and inches
 function calculateBMI(weightInPounds, heightFeet, heightInches) {
@@ -14,7 +16,7 @@ function calculateBMI(weightInPounds, heightFeet, heightInches) {
   return weightInKg / (heightInMeters ** 2); // BMI formula
 }
 
-function WeightLog() {
+function WeightLog({ showInputs }) {
   // State hooks for managing various data and BMI
   const [weight, setWeight] = useState("");
   const [weightGoal, setWeightGoal] = useState("");
@@ -116,6 +118,22 @@ function WeightLog() {
       },
     } : {};
 
+    const zoomOptions = {
+        pan: {
+          enabled: true,
+          mode: 'xy',
+        },
+        zoom: {
+          wheel: {
+            enabled: true,
+          },
+          pinch: {
+            enabled: true,
+          },
+          mode: 'xy',
+        },
+      };
+
     // Initializing the chart with updated data
     chartInstance.current = new Chart(ctx, {
       type: "line",
@@ -124,6 +142,9 @@ function WeightLog() {
         scales: { y: { beginAtZero: false } },
         elements: { line: { tension: 0.4 }, point: { radius: 5 } },
         plugins: { annotation: { annotations } },
+        zoom: zoomOptions,
+        responsive: true,
+        maintainAspectRatio: true,
       },
     });
   }, [weightData, weightGoal]);
@@ -185,29 +206,37 @@ function WeightLog() {
 
   
 
-  // JSX for rendering the component
   return (
     <div className="weight-log-container">
       <div className="weight-log-chart">
         <canvas ref={chartRef} />
       </div>
-      <form onSubmit={handleWeightSubmit} className="weight-log-form">
-        <input
-          type="number"
-          value={weight}
-          onChange={(e) => setWeight(e.target.value)}
-          placeholder="Enter weight (lb)"
-          required
-        />
-        <button type="submit">Log Weight</button>
-      </form>
-      <div className="bmi-display">
-      <p>Current BMI: {BMI.toFixed(2)} ({getBMICategory(BMI)})</p>
-      {BMI > 24.9 && <p>Your BMI indicates that you might be overweight. Consider consulting a healthcare professional for advice.</p>}
-      {BMI < 18.5 && <p>Your BMI indicates that you might be underweight. Consider consulting a healthcare professional for advice.</p>}
-    </div>
+
+      {showInputs && (
+        <>
+          <form onSubmit={handleWeightSubmit} className="weight-log-form">
+            <input
+              type="number"
+              value={weight}
+              onChange={(e) => setWeight(e.target.value)}
+              placeholder="Enter weight (lb)"
+              required
+            />
+            <button type="submit">Log Weight</button>
+          </form>
+          <div className="bmi-display">
+            <p>Current BMI: {BMI.toFixed(2)} ({getBMICategory(BMI)})</p>
+            {BMI > 24.9 && <p>Your BMI indicates that you might be overweight. Consider consulting a healthcare professional for advice.</p>}
+            {BMI < 18.5 && <p>Your BMI indicates that you might be underweight. Consider consulting a healthcare professional for advice.</p>}
+          </div>
+        </>
+      )}
     </div>
   );
 }
+WeightLog.propTypes = {
+    showInputs: PropTypes.string.isRequired,
+};
+
 
 export default WeightLog;

@@ -4,17 +4,23 @@
     flex-direction: column;
     align-items: center;
     padding: 50px;
-    background-color: #2d2c2c85; /* Dark background */
+    background-color: #1c1b1b85; /* Dark background */
     color: #fff; /* White text color for contrast */
-    border-radius: 20px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    border-radius: 30px;
+  
+    /* Enhanced box shadow for depth */
+    box-shadow: 
+      0 10px 20px rgba(0, 0, 0, 0.2), /* Outer shadow */
+      0 6px 6px rgba(0, 0, 0, 0.3); /* Inner shadow for added depth */
+  
     padding-left: 20px;
     margin-right: auto;
     max-width: 1000px;
     margin-left: 400px;
-    height: 75vh; /* Adjust height to fill screen vertically */
-    justify-content: space-between; /* Distribute space */
-}
+    height: 75vh;
+    justify-content: space-between;
+  }
+  
 
 /* Form styling */
 .weight-log-form {

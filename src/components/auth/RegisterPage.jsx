@@ -58,10 +58,9 @@ function RegisterPage() {
     return (
         <div className="auth-container">
             {error && <p className="error">{error}</p>}
-
+            
             <form className="auth-form" onSubmit={stage === 1 ? handleFirstStageSubmit : handleFinalSubmit}>
                 <img src={logo} alt="ZenVibe Logo" className="auth-logo" />
-
                 {stage === 1 ? (
                     <>
                         <input type="text" value={registerUsername} onChange={(e) => setRegisterUsername(e.target.value)} placeholder="Username" required />

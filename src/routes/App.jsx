@@ -4,10 +4,10 @@ import LandingPage from "../components/landingPage/LandingPage";
 import ProtectedPage from "../components/dashboard/ProtectedPage";
 import WeightGoal from "../../src/pages/WeightGoal";
 import FoodPage from "../pages/FoodPage";
-import MoodTracker from "../../src/pages/MoodTracker";
 import LoginPage from "../components/auth/LoginPage";
 import RegisterPage from "../components/auth/RegisterPage";
-
+import ReminderTracker from "../components/FeaturePage/ReminderFeature/ReminderTrack";
+import ActivityReport from "../components/FeaturePage/ActivityFeature/ActivityReport"
 
 
 function App() {
@@ -25,11 +25,13 @@ function App() {
 
         {/* Protected Page: Only accessible to logged-in users */}
         <Route path="/protected/:id" element={<ProtectedPage />} />
-        
+
         {/* Additional Features: Other pages like WeightGoal and MoodTracker */}
         <Route path="/weight-goal/:id" element={<WeightGoal />} />
         <Route path="/food/:id" element={<FoodPage />} />
-        <Route path="/mood/:id" element={<MoodTracker />} />
+        <Route path="/reminders/:id" element={<ReminderTracker />} />
+        <Route path="/activity/:id" element={<ActivityReport/>} />
+
       </Routes>
     </Router>
   );
