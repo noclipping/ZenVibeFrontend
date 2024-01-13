@@ -1,14 +1,12 @@
 /* Apply overflow hidden to the body or a main container to disable scrolling */
-body {
-    overflow: hidden;
-  }
-  
+
   .main-content-holder {
     padding-top: 1px;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 100px;
+    overflow: hidden;
   }
   
   .search-container {

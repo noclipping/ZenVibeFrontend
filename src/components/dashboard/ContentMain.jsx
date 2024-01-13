@@ -1,18 +1,27 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import WeightLog from "../FeaturePage/WeightLog/WeightLog";
 import ReminderTrack from "../FeaturePage/ReminderFeature/ReminderTrack";
 import ActivityTrack from "../FeaturePage/ActivityFeature/ActivityReport";
 import PropTypes from 'prop-types';
 import "./ContentMain.css";
 
-const ContentMain = () => { // Include userId as a prop if passed from a parent component
+const ContentMain = () => {
   const [searchTerm, setSearchTerm] = useState('');
+
+  useEffect(() => {
+    // Disable scrolling when the component mounts
+    document.body.style.overflow = 'hidden';
+
+    // Enable scrolling back when the component unmounts
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, []);
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value.toLowerCase());
   };
 
-  // Determine which components to render based on the search term
   const renderComponents = () => {
     if (searchTerm === "weight") {
       return <WeightLog showInputs={false} />;
@@ -30,9 +39,9 @@ const ContentMain = () => { // Include userId as a prop if passed from a parent 
       );
     }
   };
+
   return (
     <div>
-
       <div className="search-container">
         <input
           type="text"
@@ -53,4 +62,3 @@ ContentMain.propTypes = {
 };
 
 export default ContentMain;
-
