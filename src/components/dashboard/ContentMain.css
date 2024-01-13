@@ -1,29 +1,39 @@
-.main-content-holder {
-    padding-top: 1px; /* Space to accommodate the fixed search container */
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Center the components */
-    gap: 100px; /* Space between each component */
+/* Apply overflow hidden to the body or a main container to disable scrolling */
+body {
+    overflow: hidden;
   }
   
-  
+  .main-content-holder {
+    padding-top: 1px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 100px;
+  }
   
   .search-container {
-    display: flex; /* Use flexbox for alignment */
-    justify-content: flex-start; /* Align content to the left */
-    padding: 10px 350px; /* Adjust padding as needed */
-    position: fixed; /* Keeps the search bar fixed at the top */
-    top: 20px; /* At the very top */
-    z-index: 100; /* To ensure it stays on top of other content */
-    width: 100%; /* Ensure it spans the full width */
-}
-
+    display: flex;
+    justify-content: flex-start;
+    padding: 10px 350px;
+    position: fixed;
+    top: 20px;
+    z-index: 100;
+    width: 100%;
+  }
   
   .search-container input[type="text"] {
-    width: 250px; /* Adjust width as needed */
-    padding: 8px; /* Example: Light grey border */
-    border-radius: 15px; /* Rounded corners */
-    box-shadow: 0 2px 4px rgb(135, 6, 6); /* Soft shadow for depth */
-    font-size: 16px; /* Adjust as needed */
+    width: 250px;
+    padding: 8px;
+    border-radius: 15px;
+    font-size: 16px;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    outline: none;
+    border: 2px solid transparent;
+  }
+  
+  .search-container input[type="text"]:hover,
+  .search-container input[type="text"]:focus {
+    box-shadow: 0 4px 8px rgb(135, 6, 6);
+    transform: scale(1.05);
   }
   
