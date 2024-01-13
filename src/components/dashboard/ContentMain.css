@@ -1,14 +1,11 @@
-.chart-container {
-    /* Other existing styles */
-    padding: 30px;
-    height: auto;
-    min-height: 100px; /* Adjust based on requirement */
-    overflow: auto;
-    max-width: 100%;
-    margin-top: 15px; /* Adds margin at the top */
-    margin-bottom: 20px; /* Adds margin at the bottom */
-    padding-bottom: 20px;
+.main-content-holder {
+    padding-top: 1px; /* Space to accommodate the fixed search container */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center the components */
+    gap: 100px; /* Space between each component */
   }
+  
   
   
   .search-container {
