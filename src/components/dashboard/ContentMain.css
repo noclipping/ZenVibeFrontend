@@ -1,14 +1,16 @@
-
-  .chart-container {
-    /* Other styles like border, box-shadow, etc. */
+.chart-container {
+    /* Other existing styles */
     padding: 30px;
     height: auto;
     min-height: 100px; /* Adjust based on requirement */
     overflow: auto;
-    max-width:100%;
+    max-width: 100%;
+    margin-top: 15px; /* Adds margin at the top */
+    margin-bottom: 20px; /* Adds margin at the bottom */
+    padding-bottom: 20px;
   }
   
- 
+  
   .search-container {
     display: flex; /* Use flexbox for alignment */
     justify-content: flex-start; /* Align content to the left */
