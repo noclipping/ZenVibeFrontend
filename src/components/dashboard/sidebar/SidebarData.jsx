@@ -1,40 +1,37 @@
 // SidebarData.jsx
 import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
-import * as IoIcons from 'react-icons/io';
 
 export const getSidebarData = (userId) => [
     {
         title: 'Dashboard Overview',
         path: `/protected/${userId}`,
-        icon: <AiIcons.AiFillHome />,
+        icon: <AiIcons.AiFillHome />, // Icon for home/dashboard
         cName: 'nav-text'
     },
     {
         title: 'Weight Goal',
         path: `/weight-goal/${userId}`,
-        icon: <IoIcons.IoIosPaper />,
+        icon: <FaIcons.FaBalanceScale />, // Icon representing a scale for weight
         cName: 'nav-text'
     },
     {
         title: 'Reminders',
         path: `/reminders/${userId}`,
-        icon: <FaIcons.FaCartPlus />,
+        icon: <AiIcons.AiOutlineBell />, // Icon for reminders/notifications
         cName: 'nav-text'
     },
     {
         title: 'Activity Report',
         path: `/activity/${userId}`,
-        icon: <IoIcons.IoMdPeople />,
+        icon: <FaIcons.FaRunning />, // Icon representing physical activity
         cName: 'nav-text'
     },
     {
         title: 'Settings',
         path: `/settings/${userId}`,
-        icon: <IoIcons.IoMdHelpCircle />,
+        icon: <AiIcons.AiFillSetting />, // Icon for settings
         cName: 'nav-text'
     }
-    // You can add more items here as needed.
+    // Add more items as needed
 ];
-
-// Export this function to use it in your SideNav component to generate dynamic links.
