@@ -23,7 +23,7 @@
     width: 250px; /* Adjust width as needed */
     padding: 8px; /* Example: Light grey border */
     border-radius: 15px; /* Rounded corners */
-    box-shadow: 0 2px 4px rgba(40, 39, 39, 0.647); /* Soft shadow for depth */
+    box-shadow: 0 2px 4px rgb(135, 6, 6); /* Soft shadow for depth */
     font-size: 16px; /* Adjust as needed */
   }
   
