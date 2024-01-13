@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
 .protected-page {
     display: flex;
 }
@@ -6,3 +8,11 @@
     flex-grow: 1; /* Take up remaining space */
     padding: 1rem;
 }
+
+.greeting-container {
+    margin-left: 638px; /* Adds margin to the left, moving text to the right */
+    /* Other existing styles... */
+    margin-top:25px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 31px;
+  }

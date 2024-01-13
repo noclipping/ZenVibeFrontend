@@ -1,8 +1,7 @@
 
   .chart-container {
     /* Other styles like border, box-shadow, etc. */
-    
-    padding: 10px;
+    padding: 30px;
     height: auto;
     min-height: 100px; /* Adjust based on requirement */
     overflow: auto;
@@ -13,7 +12,7 @@
   .search-container {
     display: flex; /* Use flexbox for alignment */
     justify-content: flex-start; /* Align content to the left */
-    padding: 10px 200px; /* Adjust padding as needed */
+    padding: 10px 350px; /* Adjust padding as needed */
     position: fixed; /* Keeps the search bar fixed at the top */
     top: 20px; /* At the very top */
     z-index: 100; /* To ensure it stays on top of other content */
