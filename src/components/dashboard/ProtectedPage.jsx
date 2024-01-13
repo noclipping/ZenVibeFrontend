@@ -1,14 +1,14 @@
-import  { useState, useEffect } from 'react';
-import ContentMain from './ContentMain';
-import UserProfile from './UserProfile/UserProfile';
-import SideNav from './sidebar/SideNav';
-import { useParams } from 'react-router-dom';
+import { useState, useEffect } from "react";
+import ContentMain from "./ContentMain";
+import UserProfile from "./UserProfile/UserProfile";
+import SideNav from "./sidebar/SideNav";
+import { useParams } from "react-router-dom";
 import "./ProtectedPage.css";
 
 function ProtectedPage() {
   const { id: userId } = useParams();
   const [userData, setUserData] = useState(null);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -39,13 +39,17 @@ function ProtectedPage() {
     return <div>Loading...</div>;
   }
 
-  
   return (
     <div className="protected-page">
-      <div className="content-below-top-bar"> {/* Add this class to your next content container */}
-      <div className="top-bar">
-        <h2 className="greeting-container">Hello {userData.username}, this is your view for today</h2>
-      </div>
+      <div className="content-below-top-bar">
+        {" "}
+        {/* Add this class to your next content container */}
+        <div className="top-bar">
+          <div className="greeting-container">
+            Hello!<span className="username-animation">{userData.username}</span>
+            , this is your view for today
+          </div>
+        </div>
         <SideNav userId={userId} />
         <ContentMain userName={userData.username} />
         <UserProfile userData={userData} />
