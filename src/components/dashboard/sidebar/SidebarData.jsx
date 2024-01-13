@@ -28,6 +28,12 @@ export const SidebarData = [
     cName: 'nav-text'
   },
   {
+    title: 'Food Log',
+    path: '/food',
+    icon: <IoIcons.IoMdPeople />,
+    cName: 'nav-text'
+  },
+  {
     title: 'Reminders',
     path: '/reminders',
     icon: <FaIcons.FaEnvelopeOpenText />,
