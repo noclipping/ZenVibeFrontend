@@ -69,6 +69,12 @@ function ReminderTrack() {
     }));
   };
 
+  const handleCheckboxChange = (id, checked) => {
+    // Update the status of the reminder (this could involve an API call)
+    // For demonstration, let's just log the action
+    console.log(`Reminder ${id} completed status: ${checked}`);
+};
+
 
   return (
     <div className="App">
@@ -83,11 +89,18 @@ function ReminderTrack() {
       />
         {reminders.map((reminder, index) => (
           <div key={index} className="reminder-item">
+             <input
+            type="checkbox"
+            id={`checkbox-${index}`}
+            onChange={(e) => handleCheckboxChange(reminder.id, e.target.checked)}
+          />
+          <label htmlFor={`checkbox-${index}`} className="reminder-label">
             <h3>{reminder.title}</h3>
             <p>{reminder.description}</p>
             <p>{reminder.reminder_date}</p>
-          </div>
-        ))}
+          </label>
+        </div>
+      ))}
         <form onSubmit={handleCreateReminder} className="reminder-form">
           <input
             type="text"
