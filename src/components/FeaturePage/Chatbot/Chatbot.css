@@ -54,8 +54,8 @@
     align-items: center;
     left: 500px;
     width: 50%;
-    background-color: #424242; /* Dark background for input area */
-    border-radius: 20px;
+    background-color: #1c1b1b85; /* Dark background for input area */
+    border-radius: 15px;
     padding: 15px;
     position: absolute; /* Positioning at the bottom */
     bottom: 80px; /* Adjust as needed to fit within the container */
