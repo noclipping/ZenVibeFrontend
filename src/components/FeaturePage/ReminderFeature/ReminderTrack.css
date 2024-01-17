@@ -38,20 +38,20 @@
 .reminder-item label {
     text-align: left;
     flex-grow: 1;
-    padding-top: 10px;
 }
 .reminder-form {
     display: flex;
     flex-direction: column;
     gap: 5px;
-    width: 70%;
+    width: 80%;
     padding-bottom: 1px;
+    padding-top: 60px;
 }
 
 .reminder-form input, .reminder-form textarea {
     padding: 10px; /* Slightly reduced padding */
     border: 2px solid #1e1d1d;
-    border-radius: 8px; /* Slightly reduced border-radius */
+    border-radius: 15px; /* Slightly reduced border-radius */
     background-color: #2f2f2f;
     color: #fff;
 }
@@ -61,7 +61,7 @@
     background-color: #0e2853;
     color: white;
     border: none;
-    border-radius: 8px; /* Slightly reduced border-radius */
+    border-radius: 15px; /* Slightly reduced border-radius */
     cursor: pointer;
     transition: background-color 0.3s;
 }
