@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
+import FoodEntryCard from "./FoodEntryCard";
 import { useParams } from "react-router-dom";
-import { Chart, registerables } from "chart.js";
-import annotationPlugin from "chartjs-plugin-annotation";
 import "../../FeaturePage/Food/FoodLog.css";
 
 function FoodLog() {
@@ -9,7 +8,10 @@ function FoodLog() {
     const [calories, setCalories] = useState(0);
     const [foodEntries, setFoodEntries] = useState([]);
     const [totalCalories, setTotalCalories] = useState(0)
+
+
     const { entry_id } = useParams();
+
     const { id } = useParams()
 
     useEffect(() => {
@@ -74,50 +76,90 @@ function FoodLog() {
 
     };
 
-    const handleDelete = async (foodEntryId) => {
+    const deleteFoodEntries = async (foodEntryId) => {
+        console.log(foodEntryId)
+        
+    try {
+        const response = await fetch(`http://localhost:3000/food/${foodEntryId}`, {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+        });
+
+        console.log("Delete response:", response);
+
+        if (!response.ok) {
+            const errorMessage = await response.text();
+            throw new Error(`HTTP error! status: ${response.status}, message: ${errorMessage}`);
+        }
+
+        // Update the state by filtering out the deleted entry
+        setFoodEntries((prevFoodEntries) =>
+            prevFoodEntries.filter((foodEntry) => foodEntry.id !== foodEntryId)
+        );
+    } catch (error) {
+        console.error("Error deleting food entry:", error);
+    }
+};
+
+    const editFoodEntries = async (foodEntryId, updatedFoodName, updatedCalories) => {
+
+       
+        console.log(foodEntries, "all food entries");
+           
         try {
-            //   console.log("Deleting entry with ID:", entry_id);
+
+            if (!foodEntryId) {
+                console.error("Food entry ID is undefined.");
+                return;
+            }
+            const payload = {
+                food_name: updatedFoodName,
+                calories: parseFloat(updatedCalories),
+            };
+
             const response = await fetch(`http://localhost:3000/food/${foodEntryId}`, {
-                method: "DELETE",
+                method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",
-            });
-
-            console.log("Delete response:", response);
+                body: JSON.stringify(payload),
+            })
 
             if (!response.ok) {
-                const errorMessage = await response.text();
-                throw new Error(`HTTP error! status: ${response.status}, message: ${errorMessage}`);
+                throw new Error(`HTTP error! status: ${response.status}`);
             }
 
-            setFoodEntries((prevEntries) => prevEntries.filter(entry => entry.entry_id!== foodEntryId));
-            console.log("Deletion successful");
+            setFoodEntries((prevFoodEntries) =>
+            prevFoodEntries.map((foodEntry) =>
+                foodEntry.entry_id === foodEntryId
+                    ? { ...foodEntry, ...payload } // Update only the relevant fields
+                    : foodEntry
+            )
+        );
+
+            setEditing(false)
         } catch (error) {
-            console.error("Error deleting food entry:", error);
+            console.log("Error updating food entry:", error)
         }
-    };
-
-
+    }
 
     return (
         <div className="weight-log-container">
-            <div>
-                <h3>Food Log</h3>
-                <p>Total Daily Calories: {totalCalories}</p>
-                {foodEntries.map((entry, index) => {
-                    console.log(entry, "ENTRY")
-                    return (
-                        <div key={index}>
-                            <p>{entry.foodEntryId}</p>
-                            <p>Food Name: {entry.food_name}</p>
-                            <p>Calories: {entry.calories}</p>
-                            <button type="button">Update Food</button>
-                            <button type="button" onClick={() => handleDelete(entry.entry_id)}>Delete</button>
-                        </div>
-                    )
-                })}
-            </div>
 
+            <h1>Food</h1>
+            <p>Total Daily Calories: {totalCalories}</p>
+            {foodEntries.map((foodEntry, index) => {
+                return (
+                    <FoodEntryCard
+                        key={foodEntry.entry_id}
+                        entry={foodEntry}
+                        editFoodEntries={editFoodEntries}
+                        deleteFoodEntries={deleteFoodEntries}
+                    />
+                )
+            }
+
+            )}
             <form onSubmit={handleFoodSubmit} className="weight-log-form">
                 <label>
                     Food Name:
@@ -141,12 +183,11 @@ function FoodLog() {
                     />
                 </label>
                 <br />
-                <button type="submit" onSubmit={handleDelete}>Add Food</button>
-
-
+                <button type="submit">Add Food</button>
             </form>
-        </div>
-    );
+        </div >
+    )
 }
+
 
 export default FoodLog;
