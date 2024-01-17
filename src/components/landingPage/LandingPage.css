@@ -5,7 +5,7 @@ body{
   padding: 0;
   font-family: Arial, Helvetica, sans-serif;
   background-color: #02051a;
-  color: #fff
+  color: #fbf2f2
 }
 
 /* src/components/Navbar.css */
@@ -81,6 +81,7 @@ body{
   align-items: center;
   height: 100vh; /* Set the hero section to take up the full viewport height */
   text-align: center; /* Center the text within the hero section */
+  padding-left: 70px;
 }
 
 
@@ -139,6 +140,131 @@ body{
 /* Ensure that .dashboard-container allows for space for the button */
 .dashboard-container {
   width:1000px; /* Full width */
-  margin-bottom: 2rem; /* Space between image and button */
+  margin-bottom: 3rem; /* Space between image and button */
 }
 
+/* About Section Enhancements */
+.about-section {
+  background-size: cover;
+  color: #fff;
+  padding: 50px 0;
+}
+
+.about-section .section-title {
+  margin-bottom: 20px;
+  padding-left: 750px;
+  font-size: 2rem;
+}
+
+.features-section .section-title {
+  margin-bottom: 20px;
+  padding-left: 100px;
+  font-size: 2rem;
+}
+
+.about-section .section-content {
+  font-size: 16px; /* Your existing font size */
+  line-height: 1.6; /* Improved line height for readability */
+  text-align: center; /* Center the text */
+  padding: 20px; /* Add padding around the text */
+ left: 700px;
+  max-width: 800px; /* Maximum width of the content */
+  margin-left: 420px;
+  background-color: rgba(255, 255, 255, 0.1); /* Optional: subtle background */
+  border-radius: 10px; /* Optional: rounded corners */
+  color: #fff; /* Adjust text color as needed */
+}
+
+/* Responsive Font Size */
+@media screen and (max-width: 768px) {
+  .about-section .section-content {
+    font-size: 14px; /* Smaller font size for mobile devices */
+    padding: 15px;
+  }
+}
+/* Features Section - Mimicking About Section Styles */
+.features-section {
+  color: #fff; /* Assuming white text color */
+  padding: 90px; /* Adjust padding as per About section */
+  text-align: center; /* Center-align the text */
+}
+.features-section .feature-list {
+  list-style: none; /* Remove bullet points */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Centering the cards */
+  gap: 20px; /* Spacing between cards */
+}
+
+.features-section .feature-item {
+  background-color: rgba(255, 255, 255, 0.1); /* Optional: subtle background */
+  padding: 50px;
+  margin-left: 30px;
+  border-radius: 10px; /* Rounded corners for the cards */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Box shadow for depth */
+  width: 300px; /* Fixed width, adjust as needed */
+  text-align: left; /* Align text inside cards */
+  transition: transform 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.features-section .feature-item:hover {
+  transform: translateY(-5px); /* Slight raise effect on hover */
+}
+
+@media screen and (max-width: 768px) {
+  .features-section .feature-list {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .features-section .feature-item {
+    width: 90%; /* Full width on smaller screens */
+  }
+
+  .features-section .section-title,
+  .features-section .section-content {
+    padding-left: 0; /* Remove padding on smaller screens */
+  }
+}
+
+.reviews-section {
+  padding: 90px; /* Consistent padding with features section */
+  text-align: center;
+  color: #fff;
+}
+
+.reviews-section .section-title {
+  /* Same styling as features section title */
+  margin-bottom: 20px;
+  padding-left: 70px;
+  font-size: 2rem;
+}
+
+.reviews-section .review-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Center the cards horizontally */
+  gap: 15px; /* Space between cards */
+}
+
+.reviews-section .review-card {
+  background-color: rgba(255, 255, 255, 0.1); /* Optional: subtle background */
+  padding: 50px;
+  margin: 15px;
+  border-radius: 10px; /* Same as feature-item */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Same as feature-item */
+  width: 300px; /* Adjust as needed */
+  text-align: left; /* Consistent text alignment */
+  transition: transform 0.3s ease; /* Same hover effect */
+}
+
+.reviews-section .review-card:hover {
+  transform: translateY(-5px); /* Same hover effect as feature-item */
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+  .reviews-section .section-title {
+    padding-left: 5vw; /* Responsive padding */
+  }
+}
