@@ -7,6 +7,10 @@ import LoginPage from "../components/auth/LoginPage";
 import RegisterPage from "../components/auth/RegisterPage";
 import ReminderTracker from "../components/FeaturePage/ReminderFeature/ReminderTrack";
 import ActivityReport from "../components/FeaturePage/ActivityFeature/ActivityReport"
+import ZenAI from "../pages/ZenAI";
+
+
+
 
 function App() {
   return (
@@ -28,6 +32,8 @@ function App() {
         <Route path="/weight-goal/:id" element={<WeightGoal />} />
         <Route path="/reminders/:id" element={<ReminderTracker />} />
         <Route path="/activity/:id" element={<ActivityReport/>} />
+        <Route path="/chat/:id" element={<ZenAI/>} />
+
       </Routes>
     </Router>
   );

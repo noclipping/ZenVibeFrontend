@@ -187,9 +187,46 @@ function WeightLog({ showInputs }) {
         }
       } catch (error) {
         console.error("Error submitting weight:", error);
-      }
+      }33
     }
   };
+
+  const handleDeleteLastEntry = async () => {
+    // Ensure there is data to delete
+    if (weightData.datasets[0].data.length > 1) {
+        try {
+            // Fetch the ID of the latest weight entry
+            const latestEntryResponse = await fetch(`http://localhost:3000/weight/latest/${id}`, {
+                method: "GET",
+                credentials: "include",
+            });
+            if (!latestEntryResponse.ok) throw new Error('Failed to fetch latest entry');
+
+            const latestEntry = await latestEntryResponse.json();
+            const latestEntryId = latestEntry.entry_id; // Assuming the response contains the entry_id
+
+            // Send DELETE request
+            const deleteResponse = await fetch(`http://localhost:3000/weight/${latestEntryId}`, {
+                method: "DELETE",
+                credentials: "include",
+            });
+            if (!deleteResponse.ok) throw new Error('Failed to delete entry');
+
+            // Update the chart data by removing the last entry
+            const updatedData = weightData.datasets[0].data.slice(0, -1);
+            const updatedLabels = weightData.labels.slice(0, -1);
+            setWeightData({
+                ...weightData,
+                labels: updatedLabels,
+                datasets: [{ ...weightData.datasets[0], data: updatedData }],
+            });
+        } catch (error) {
+            console.error("Error deleting weight entry:", error);
+        }
+    }
+};
+
+  
 
   //created function for BMI categories for user notification 
   function getBMICategory(bmi) {
@@ -229,13 +266,15 @@ function WeightLog({ showInputs }) {
             {BMI > 24.9 && <p>Your BMI indicates that you might be overweight. Consider consulting a healthcare professional for advice.</p>}
             {BMI < 18.5 && <p>Your BMI indicates that you might be underweight. Consider consulting a healthcare professional for advice.</p>}
           </div>
+          <button onClick={handleDeleteLastEntry}>Delete Last Entry</button>
         </>
+        
       )}
     </div>
   );
 }
 WeightLog.propTypes = {
-    showInputs: PropTypes.string.isRequired,
+  showInputs: PropTypes.bool, // If it's a boolean
 };
 
 
