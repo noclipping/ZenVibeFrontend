@@ -3,11 +3,13 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LandingPage from "../components/landingPage/LandingPage";
 import ProtectedPage from "../components/dashboard/ProtectedPage";
 import WeightGoal from "../../src/pages/WeightGoal";
+import FoodPage from "../pages/FoodPage";
 import LoginPage from "../components/auth/LoginPage";
 import RegisterPage from "../components/auth/RegisterPage";
 import ReminderTracker from "../components/FeaturePage/ReminderFeature/ReminderTrack";
 import ActivityReport from "../components/FeaturePage/ActivityFeature/ActivityReport"
 import ZenAI from "../pages/ZenAI";
+
 
 
 
@@ -30,6 +32,7 @@ function App() {
 
         {/* Additional Features: Other pages like WeightGoal and MoodTracker */}
         <Route path="/weight-goal/:id" element={<WeightGoal />} />
+        <Route path="/food/:id" element={<FoodPage />} />
         <Route path="/reminders/:id" element={<ReminderTracker />} />
         <Route path="/activity/:id" element={<ActivityReport/>} />
         <Route path="/chat/:id" element={<ZenAI/>} />

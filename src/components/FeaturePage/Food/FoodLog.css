@@ -1,0 +1,34 @@
+.weight-log-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5px;
+    background-color: #2d2c2c85; /* Dark background */
+    color: #fff; /* White text color for contrast */
+    border-radius: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    padding-left: 20px;
+    margin-right: auto;
+    max-width: 1000px;
+    margin-left: 400px;
+    height: 80vh; /* Adjust height to fill screen vertically */
+    justify-content: space-between; /* Distribute space */
+}
+
+.calorie-counter {
+    text-align: center;
+  }
+  
+  input {
+    padding: 8px;
+    margin: 10px;
+  }
+  
+  .progress-bar {
+    background-color: #e0e0e0;
+    height: 20px;
+    margin-top: 10px;
+    
+    transition: width 0.3s ease-in-out, background-color 0.3s ease-in-out;
+  }
+  

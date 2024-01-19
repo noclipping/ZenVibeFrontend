@@ -42,6 +42,12 @@ export const getSidebarData = (userId) => [
         cName: 'nav-text'
     },
     {
+      title: 'Food Log',
+      path: `/food/${userId}`,
+      icon: <FaIcons.FaUtensils />,
+      cName: 'nav-text'
+    },
+    {
         title: 'Settings',
         path: `/settings/${userId}`,
         icon: <AiIcons.AiFillSetting />, // Icon for settings
@@ -49,3 +55,4 @@ export const getSidebarData = (userId) => [
     }
     // Add more items as needed
 ];
+
