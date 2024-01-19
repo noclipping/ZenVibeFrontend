@@ -16,6 +16,8 @@ function calculateBMI(weightInPounds, heightFeet, heightInches) {
   return weightInKg / (heightInMeters ** 2); // BMI formula
 }
 
+ 
+
 function WeightLog({ showInputs }) {
   // State hooks for managing various data and BMI
   const [weight, setWeight] = useState("");
@@ -245,6 +247,7 @@ function WeightLog({ showInputs }) {
 
   return (
     <div className="weight-log-container">
+      <h1>Each day is a step closer to your goal!</h1>
       <div className="weight-log-chart">
         <canvas ref={chartRef} />
       </div>
