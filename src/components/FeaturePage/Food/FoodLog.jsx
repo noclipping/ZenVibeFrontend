@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
 import FoodEntryCard from "./FoodEntryCard";
+import UserBMR from "./UserBMR";
+
 import { useParams } from "react-router-dom";
 import "../../FeaturePage/Food/FoodLog.css";
+import "./CalorieBar.css"
 
 function FoodLog() {
     const [foodName, setFoodName] = useState("");
@@ -9,10 +12,11 @@ function FoodLog() {
     const [foodEntries, setFoodEntries] = useState([]);
     const [totalCalories, setTotalCalories] = useState(0)
 
-
-    const { entry_id } = useParams();
+const { entry_id } = useParams();
 
     const { id } = useParams()
+
+    
 
     useEffect(() => {
         const fetchFoodEntries = async () => {
@@ -104,7 +108,6 @@ function FoodLog() {
 
     const editFoodEntries = async (foodEntryId, updatedFoodName, updatedCalories) => {
 
-       
         console.log(foodEntries, "all food entries");
            
         try {
@@ -143,50 +146,62 @@ function FoodLog() {
         }
     }
 
+   const updateProgressBar = () => {
+        const percentage = (totalCalories / 2000) * 100;
+        return { width: `${percentage}%` };
+      };
+    
+      const updateProgressBarColor = () => {
+        if (totalCalories < 500) {
+          return { backgroundColor: "#fff" }; 
+        } else if (totalCalories < 1000) {
+          return { backgroundColor: "#fff" }; 
+        } else if (totalCalories < 1500) {
+        } else {
+          return { backgroundColor: "#0e2853" }; // medical red
+        }
+      };
     return (
         <div className="weight-log-container">
-
-            <h1>Food</h1>
-            <p>Total Daily Calories: {totalCalories}</p>
-            {foodEntries.map((foodEntry, index) => {
-                return (
-                    <FoodEntryCard
-                        key={foodEntry.entry_id}
-                        entry={foodEntry}
-                        editFoodEntries={editFoodEntries}
-                        deleteFoodEntries={deleteFoodEntries}
-                    />
-                )
-            }
-
-            )}
-            <form onSubmit={handleFoodSubmit} className="weight-log-form">
-                <label>
-                    Food Name:
-                    <input
-                        type="text"
-                        value={foodName}
-                        placeholder="Enter Food"
-                        onChange={(e) => setFoodName(e.target.value)}
-                        required
-                    />
-                </label>
-                <br />
-                <label>
-                    Calories:
-                    <input
-                        type="number"
-                        value={calories}
-                        onChange={(e) => setCalories(e.target.value)}
-                        placeholder="Enter Calories"
-                        required
-                    />
-                </label>
-                <br />
-                <button type="submit">Add Food</button>
-            </form>
-        </div >
-    )
+      <h1>Food Entries</h1>
+      <UserBMR />
+      {/* <p>Total Daily Calories: {totalCalories}</p> */}
+      <div className="progress-bar" style={{ ...updateProgressBar(), ...updateProgressBarColor() }}>{totalCalories}</div>
+      {foodEntries.map((foodEntry, index) => (
+        <FoodEntryCard
+          key={foodEntry.entry_id}
+          entry={foodEntry}
+          editFoodEntries={editFoodEntries}
+          deleteFoodEntries={deleteFoodEntries}
+        />
+      ))}
+      <form onSubmit={handleFoodSubmit} className="weight-log-form">
+        <label>
+          Food Name:
+          <input
+            type="text"
+            value={foodName}
+            placeholder="Enter Food"
+            onChange={(e) => setFoodName(e.target.value)}
+            required
+          />
+        </label>
+        <br />
+        <label>
+          Calories:
+          <input
+            type="number"
+            value={calories}
+            onChange={(e) => setCalories(parseInt(e.target.value, 10))}
+            placeholder="Enter Calories"
+            required
+          />
+        </label>
+        <br />
+        <button type="submit">Add Food</button>
+      </form>
+    </div>
+  );
 }
 
 

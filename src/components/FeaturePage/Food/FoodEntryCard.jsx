@@ -9,13 +9,14 @@ export default function FoodEntryCard({
     const [updatedFoodName, setUpdatedFoodName] = useState("");
     const [updatedCalories, setUpdatedCalories] = useState(0);
 
+
     return (
         <div>
             {!isEditing ? (
                 <div>
-                    <h3>Food Entry</h3>
-                    <p>Food Name: {entry.food_name}</p>
-                    <p>Calories: {entry.calories}</p>
+                    {/* <h3>Food Entries</h3> */}
+                    <p>{entry.food_name}</p>
+                    <p>{entry.calories}</p>
                 </div>
             ) : (
                 <div>
@@ -37,7 +38,7 @@ export default function FoodEntryCard({
                             setIsEditing(!isEditing)
                            
                         }}
-                    > Update Food
+                    > Update Food 
                     </button>
                     <button type="button" onClick={() => setIsEditing(false)}>Cancel
                     </button>
@@ -49,14 +50,14 @@ export default function FoodEntryCard({
                     setIsEditing(!isEditing)
                 }}
             >
-                Edit Food
+                ✎
             </button>
             <button
                 onClick={() => {
                     deleteFoodEntries(entry.entry_id)
                 }}
             >
-                Delete
+               ❌
             </button>
         </div>
     );
