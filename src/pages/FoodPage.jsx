@@ -3,12 +3,12 @@ import FoodLog from "../components/FeaturePage/Food/FoodLog";
 import SideNav from "../components/dashboard/sidebar/SideNav";
 
 function FoodPage(){
-    const { id } = useParams()
+    const { id: userId } = useParams()
 
     return (
         <div className="App">
-            <FoodLog />
-            <SideNav />
+            <FoodLog userId={userId} />
+            <SideNav userId={userId}  />
         </div>
     )
 }
