@@ -15,11 +15,11 @@
 .custom-calendar .react-calendar__tile {
     padding: 8px; /* Slightly reduced padding */
     margin: 7px; /* Reduced margin */
-    background-color: #901001cc;
+    background-color: #121212d8;
     border-radius: 6px;
      /* Smaller radius for tiles */
     text-align: center;
-    color: #0a0a0a;
+    color: #ffffff99;
     flex-grow: 1;
     transition: background-color 0.3s ease;
     cursor: pointer;
@@ -34,9 +34,9 @@
 }
 
 .custom-calendar .react-calendar__navigation button {
-    background-color: #06387e8b;
+    background-color: #2a2a2ae1;
     font-size: 14px; /* Smaller font size for buttons */
-    color: rgb(1, 1, 1);
+    color: rgba(255, 255, 255, 0.52);
     border: none;
 }
 
