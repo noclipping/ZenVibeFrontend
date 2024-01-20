@@ -60,6 +60,7 @@ function RegisterPage() {
             {error && <p className="error">{error}</p>}
             
             <form className="auth-form" onSubmit={stage === 1 ? handleFirstStageSubmit : handleFinalSubmit}>
+            <h1>Please enter your information to get started!</h1>
                 <img src={logo} alt="ZenVibe Logo" className="auth-logo" />
                 {stage === 1 ? (
                     <>
