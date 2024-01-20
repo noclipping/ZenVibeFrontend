@@ -51,7 +51,7 @@ function ProtectedPage() {
           </div>
         </div>
         <SideNav userId={userId} />
-        <ContentMain userName={userData.username} />
+        <ContentMain userId={userId} />
         <UserProfile userData={userData} />
       </div>
     </div>

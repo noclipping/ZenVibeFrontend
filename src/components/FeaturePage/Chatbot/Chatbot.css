@@ -1,0 +1,89 @@
+/* Chatbot Container */
+.ChatbotContainer {
+    display: flex;
+    margin-bottom: 70px;
+    flex-direction: column;
+    align-items: center;
+    padding: 60px;
+    background-color: #1c1b1b85; /* Dark background similar to weight log */
+    color: #e7e7e7; /* White text color for contrast */
+    border-radius: 30px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 6px 6px rgba(0, 0, 0, 0.3); /* Outer shadow */
+    margin-left: 500px; /* Adjust as per layout requirements */
+    height: 60vh;
+    width: 750px;
+  }
+  
+  /* Message list styling */
+  .message-list {
+    flex-grow: 1;
+    overflow-y: auto;
+    width: 100%;
+    padding-bottom: 10px; /* Space for scrolling within the container */
+    padding-right: 300px;
+  }
+  
+  /* Individual message styling */
+  .message {
+    max-width: 50%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 15px;
+    background-color: #424242; /* Dark background for messages */
+    color: #fff; /* White text for readability */
+    word-wrap: break-word;
+    margin-right: 100px;
+  }
+  
+  .message.user {
+    background-color: #0e2853; /* Medical red color for user messages */
+    color: white;
+    align-self: flex-end;
+  }
+  
+  /* Typing indicator styling */
+  .typing-indicator {
+    font-style: italic;
+    color: #666;
+    align-self: flex-end;
+  }
+  
+  /* Message input area styling */
+  .message-input {
+    display: flex;
+    align-items: center;
+    left: 500px;
+    width: 50%;
+    background-color: #2a292985; /* Dark background for input area */
+    border-radius: 15px;
+    padding: 15px;
+    position: absolute; /* Positioning at the bottom */
+    bottom: 80px; /* Adjust as needed to fit within the container */
+  }
+  
+  /* Input field styling */
+  .message-input input {
+    flex-grow: 1;
+    background-color: transparent;
+    border: none;
+    color: #fff;
+    padding-left: 10px;
+    outline: none;
+  }
+  
+  /* Send button styling */
+  .message-input button {
+    margin-left: 10px;
+    background-color: #0e2853; /* Medical red color */
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .message-input button:hover {
+    background-color: #201f1f;
+  }
+  

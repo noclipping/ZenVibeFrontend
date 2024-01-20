@@ -1,0 +1,74 @@
+.custom-calendar .react-calendar {
+    border: none;
+    border-radius: 8px; /* Slightly smaller radius */
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2); /* Less pronounced shadow */
+    font-family: 'Arial', sans-serif;
+    background-color: #1c1c1c;
+    padding: 1px; /* Reduced padding */
+    width: 100%;
+    max-width: 350px; /* Smaller maximum width */
+    margin: auto;
+
+    transition: all 0.3s ease;
+}
+
+.custom-calendar .react-calendar__tile {
+    padding: 8px; /* Slightly reduced padding */
+    margin: 7px; /* Reduced margin */
+    background-color: #121212d8;
+    border-radius: 6px;
+     /* Smaller radius for tiles */
+    text-align: center;
+    color: #ffffff99;
+    flex-grow: 1;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    font-size: 14px /* Smaller font size for tiles */
+}
+
+.custom-calendar .react-calendar__navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px; /* Reduced margin */
+    padding-top: 1px;
+}
+
+.custom-calendar .react-calendar__navigation button {
+    background-color: #2a2a2ae1;
+    font-size: 14px; /* Smaller font size for buttons */
+    color: rgba(255, 255, 255, 0.52);
+    border: none;
+}
+
+.custom-calendar .react-calendar__month-view__weekdays {
+    text-align: center;
+    padding: 10px 0;
+    margin-bottom: 8px; /* Reduced margin */
+    padding-top: 1px;
+}
+
+.custom-calendar .react-calendar__month-view__weekdays__weekday {
+    font-size: 14px; /* Smaller font size for weekdays */
+}
+
+.custom-calendar .react-calendar__month-view__days {
+    justify-content: space-between;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .custom-calendar .react-calendar {
+        padding: 15px;
+        max-width: 100%;
+    }
+
+    .custom-calendar .react-calendar__tile {
+        font-size: 0.8em;
+    }
+
+    .custom-calendar .react-calendar__navigation button {
+        font-size: 0.9em;
+    }
+}
+
+/* Additional styles for hover and active states as previously defined */
