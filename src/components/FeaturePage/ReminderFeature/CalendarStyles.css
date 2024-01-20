@@ -4,7 +4,6 @@
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2); /* Less pronounced shadow */
     font-family: 'Arial', sans-serif;
     background-color: #1c1c1c;
-    color: #fff;
     padding: 1px; /* Reduced padding */
     width: 100%;
     max-width: 350px; /* Smaller maximum width */
@@ -16,15 +15,15 @@
 .custom-calendar .react-calendar__tile {
     padding: 8px; /* Slightly reduced padding */
     margin: 7px; /* Reduced margin */
-    background-color: #0c214798;
+    background-color: #901001cc;
     border-radius: 6px;
      /* Smaller radius for tiles */
     text-align: center;
-    color: #dcdcdc;
+    color: #0a0a0a;
     flex-grow: 1;
     transition: background-color 0.3s ease;
     cursor: pointer;
-    font-size: 10px /* Smaller font size for tiles */
+    font-size: 14px /* Smaller font size for tiles */
 }
 
 .custom-calendar .react-calendar__navigation {
@@ -35,9 +34,9 @@
 }
 
 .custom-calendar .react-calendar__navigation button {
-    background-color: #1b40834c;
+    background-color: #06387e8b;
     font-size: 14px; /* Smaller font size for buttons */
-    color: white;
+    color: rgb(1, 1, 1);
     border: none;
 }
 

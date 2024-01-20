@@ -1,26 +1,28 @@
-/* Overall container */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+
 .weight-log-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 50px;
+    padding: 50px; /* Adjusted padding */
     background-color: #1c1b1b85; /* Dark background */
+    font-family: 'Montserrat', sans-serif;
     color: #fff; /* White text color for contrast */
-    border-radius: 30px;
-  
-    /* Enhanced box shadow for depth */
-    box-shadow: 
-      0 10px 20px rgba(0, 0, 0, 0.2), /* Outer shadow */
-      0 6px 6px rgba(0, 0, 0, 0.3); /* Inner shadow for added depth */
-  
-    padding-left: 20px;
-    margin-right: auto;
-    max-width: 1000px;
-    margin-left: 400px;
-    height: 75vh;
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 6px 6px rgba(0, 0, 0, 0.3);
+    margin: auto; /* Center the container */
+    max-width: 100%; /* Increased max width */
+    height: auto; /* Height adjusts to content */
     justify-content: space-between;
+}
+
+
+.weight-log-container h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 35px;
+    /* You can also add other font-related properties here */
   }
-  
 
 /* Form styling */
 .weight-log-form {
@@ -39,7 +41,7 @@
 }
 
 .weight-log-form button {
-    padding: 15px 25px;
+    padding: 10px 20px;
     background-color: #0e2853; /* Medical red color */
     color: white;
     border: none;
@@ -54,41 +56,26 @@
 
 /* Chart area */
 .weight-log-chart {
-    width: 105%;
+    width: 110%;
     flex-grow: 1; /* Chart takes up remaining space */
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-bottom: 2px;
 }
 
 .weight-log-chart canvas {
-    width: 90% !important; /* Adjust width as needed */
+    width: 80% !important; /* Adjust width as needed */
     height: auto !important;
-}
-
-.clear-data-button {
-    padding: 10px 20px;
-    background-color: #8f0b04; /* Red color for clear button */
-    color: white;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    margin-top: 30px; /* Spacing from the forms */
-    margin-bottom: 15px;
-    width: 200px;
-
-    transition: background-color 0.3s;
-}
-
-.clear-data-button:hover {
-    background-color: #201f1f; /* Darker shade on hover */
 }
 
 .bmi-display {
     background-color: #191818c3; /* Slightly different background */
-    padding: 10px;
+    padding: 15px;
+    padding-left: 40px;
+    padding-right: 50px;
     border-radius: 15px;
-    margin-top: 15px;
+    margin-top: 10px;
     text-align: center; /* Center-align the text */
     
     /* Adding a box shadow for depth */
@@ -99,8 +86,22 @@
 
 .bmi-display p {
     font-family: 'Montserrat', sans-serif; /* Apply Montserrat font to paragraphs */
-    font-size: 1.1rem;
+    font-size: 14px;
 }
 
 
 
+.delete-entry-button {
+    padding: 10px 20px;
+    background-color: #950d08; /* Bootstrap's btn-danger color */
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin: 10px;
+    transition: background-color 0.3s;
+}
+
+.delete-entry-button:hover {
+    background-color: #272626; /* Darker shade on hover */
+}

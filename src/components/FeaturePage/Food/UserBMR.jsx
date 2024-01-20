@@ -1,19 +1,14 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { calculateBMR } from "./bmrCalculator";
 import "./CalorieBar.css";
 
-export default function UserBMR() {
-  const calculateBMR = (gender, weight, height, age) => {
-    return gender === 'Female'
-      ? Math.floor(655.1 + (4.35 * weight) + (4.7 * height) - (4.676 * age))
-      : Math.floor(66.47 + (6.24 * weight) + (12.7 * height) - (6.755 * age))
-  };
-
+function UserBMR() {
   const [BMR, setBMR] = useState(0);
   const [activityLevel, setActivityLevel] = useState("sedentary");
   const [calorieDeficit, setCalorieDeficit] = useState(500);
-
   const { id } = useParams();
+
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -89,4 +84,6 @@ export default function UserBMR() {
       
     </div>
   );
-}
+  }
+
+  export default UserBMR;

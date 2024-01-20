@@ -25,7 +25,7 @@ export const getSidebarData = (userId) => [
     },
     {
         title: 'Mood Tracker',
-        path: `/protected/${userId}`,
+        path: `/mood/${userId}`,
         icon: <FaSmile />, // Using a smiley face icon to symbolize mood tracking
         cName: 'nav-text'
     },
