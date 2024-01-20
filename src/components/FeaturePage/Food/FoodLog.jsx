@@ -6,13 +6,14 @@ import { useParams } from "react-router-dom";
 import "../../FeaturePage/Food/FoodLog.css";
 import "./CalorieBar.css"
 
+
 function FoodLog() {
     const [foodName, setFoodName] = useState("");
     const [calories, setCalories] = useState(0);
     const [foodEntries, setFoodEntries] = useState([]);
-    const [totalCalories, setTotalCalories] = useState(0)
+    const [consumedCalories, setConsumedCalories] = useState(0)
 
-const { entry_id } = useParams();
+//const { entry_id } = useParams();
 
     const { id } = useParams()
 
@@ -34,8 +35,8 @@ const { entry_id } = useParams();
                 const foodEntries = await foodResponse.json();
                 setFoodEntries(foodEntries);
 
-                const totalCalories = foodEntries.reduce((total, entry) => total + entry.calories, 0)
-                setTotalCalories(totalCalories)
+                const consumedCalories = foodEntries.reduce((total, entry) => total + entry.calories, 0)
+                setConsumedCalories(consumedCalories)
             } catch (error) {
                 console.error("Error fetching food data:", error);
             }
@@ -146,27 +147,29 @@ const { entry_id } = useParams();
         }
     }
 
-   const updateProgressBar = () => {
-        const percentage = (totalCalories / 2000) * 100;
-        return { width: `${percentage}%` };
-      };
+//    const updateProgressBar = () => {
+//         const percentage = (totalCalories / 2000) * 100;
+//         return { width: `${percentage}%` };
+//       };
     
-      const updateProgressBarColor = () => {
-        if (totalCalories < 500) {
-          return { backgroundColor: "#fff" }; 
-        } else if (totalCalories < 1000) {
-          return { backgroundColor: "#fff" }; 
-        } else if (totalCalories < 1500) {
-        } else {
-          return { backgroundColor: "#0e2853" }; // medical red
-        }
-      };
+//       const updateProgressBarColor = () => {
+//         if (totalCalories < 500) {
+//           return { backgroundColor: "#fff" }; 
+//         } else if (totalCalories < 1000) {
+//           return { backgroundColor: "#fff" }; 
+//         } else if (totalCalories < 1500) {
+//         } else {
+//           return { backgroundColor: "#0e2853" }; // medical red
+//         }
+//       };
     return (
         <div className="weight-log-container">
+            
       <h1>Food Entries</h1>
-      <UserBMR />
+      {/* <CalorieBar totalCalories={totalCalories} /> */}
+      <UserBMR consumedCalories={consumedCalories} foodEntries={foodEntries} />
       {/* <p>Total Daily Calories: {totalCalories}</p> */}
-      <div className="progress-bar" style={{ ...updateProgressBar(), ...updateProgressBarColor() }}>{totalCalories}</div>
+      {/* <div className="progress-bar" style={{ ...updateProgressBar(), ...updateProgressBarColor() }}>{totalCalories}</div> */}
       {foodEntries.map((foodEntry, index) => (
         <FoodEntryCard
           key={foodEntry.entry_id}
