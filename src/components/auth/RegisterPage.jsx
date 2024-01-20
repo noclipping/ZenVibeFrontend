@@ -18,6 +18,9 @@ function RegisterPage() {
     const [goalWeight, setGoalWeight] = useState('');
     const [error, setError] = useState('');
 
+    const [gender, setGender] = useState('Male'); // Default to 'Male'
+    const [activityLevel, setActivityLevel] = useState('sedentary'); // Default to 'sedentary'
+
     // Handle first stage submit
     const handleFirstStageSubmit = (e) => {
         e.preventDefault();
@@ -28,6 +31,7 @@ function RegisterPage() {
     const handleFinalSubmit = async (e) => {
         e.preventDefault();
         try {
+            // Add gender and activityLevel to the request body
             const response = await fetch('http://localhost:3000/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -35,12 +39,14 @@ function RegisterPage() {
                 body: JSON.stringify({
                     username: registerUsername,
                     password_hash: registerPassword,
-                    email: email,
+                    email,
                     original_weight: parseFloat(originalWeight),
                     feet: parseInt(feet),
                     inches: parseInt(inches),
                     age: parseInt(age),
                     goal_weight: parseFloat(goalWeight),
+                    gender, // Add this
+                    activity_level: activityLevel, // Add this
                 }),
             });
 
@@ -60,7 +66,7 @@ function RegisterPage() {
             {error && <p className="error">{error}</p>}
             
             <form className="auth-form" onSubmit={stage === 1 ? handleFirstStageSubmit : handleFinalSubmit}>
-            <h1>Please enter your information to get started!</h1>
+                <h1>Please enter your information to get started!</h1>
                 <img src={logo} alt="ZenVibe Logo" className="auth-logo" />
                 {stage === 1 ? (
                     <>
@@ -77,12 +83,33 @@ function RegisterPage() {
                         <input type="number" value={inches} onChange={(e) => setInches(e.target.value)} placeholder="Inches" required />
                         <input type="number" value={age} onChange={(e) => setAge(e.target.value)} placeholder="Age" required />
                         <input type="number" value={goalWeight} onChange={(e) => setGoalWeight(e.target.value)} placeholder="Goal Weight" required />
+                        
+                        <label>
+                            Gender:
+                            <select onChange={(e) => setGender(e.target.value)}>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                        </label>
+    
+                        <label>
+                            Activity Level:
+                            <select onChange={(e) => setActivityLevel(e.target.value)}>
+                                <option value="sedentary">Sedentary</option>
+                                <option value="lightlyActive">Lightly Active</option>
+                                <option value="moderatelyActive">Moderately Active</option>
+                                <option value="veryActive">Very Active</option>
+                                <option value="extremelyActive">Extremely Active</option>
+                            </select>
+                        </label>
+    
                         <button type="submit">Sign Up</button>
                     </>
                 )}
             </form>
         </div>
     );
+    
 }
 
 export default RegisterPage;

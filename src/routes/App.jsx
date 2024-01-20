@@ -16,6 +16,7 @@ import ZenAI from "../pages/ZenAI";
 
 
 
+
 function App() {
   return (
     <Router>
@@ -39,7 +40,6 @@ function App() {
         <Route path="/mood/:id" element={<MoodTracker />} />
         <Route path="/activity/:id" element={<ActivityReport/>} />
         <Route path="/chat/:id" element={<ZenAI/>} />
-
       </Routes>
     </Router>
   );

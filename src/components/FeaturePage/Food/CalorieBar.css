@@ -1,4 +1,4 @@
-/* FoodLog.css (or your relevant stylesheet) */
+
 .calorie-counter {
     text-align: center;
   }
@@ -15,4 +15,4 @@
     width: 0; /* Initial width is set to 0, and it will be dynamically adjusted using JavaScript */
     transition: width 0.3s ease-in-out, background-color 0.3s ease-in-out;
   }
-  
+

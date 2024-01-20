@@ -1,16 +1,24 @@
 import { useState, useEffect } from "react";
 import FoodEntryCard from "./FoodEntryCard";
 import UserBMR from "./UserBMR";
+
 import { useParams } from "react-router-dom";
 import "../../FeaturePage/Food/FoodLog.css";
-import "./CalorieBar.css";
+import "./CalorieBar.css"
+
 
 function FoodLog() {
     const [foodName, setFoodName] = useState("");
     const [calories, setCalories] = useState(0);
     const [foodEntries, setFoodEntries] = useState([]);
-    const [totalCalories, setTotalCalories] = useState(0);
-    const { id } = useParams();
+    const [consumedCalories, setConsumedCalories] = useState(0)
+
+
+//const { entry_id } = useParams();
+
+    const { id } = useParams()
+
+    
 
     useEffect(() => {
         const fetchFoodEntries = async () => {
@@ -27,8 +35,9 @@ function FoodLog() {
 
                 const foodEntries = await foodResponse.json();
                 setFoodEntries(foodEntries);
-                const total = foodEntries.reduce((total, entry) => total + entry.calories, 0);
-                setTotalCalories(total);
+
+                const consumedCalories = foodEntries.reduce((total, entry) => total + entry.calories, 0)
+                setConsumedCalories(consumedCalories)
             } catch (error) {
                 console.error("Error fetching food data:", error);
             }
@@ -36,9 +45,6 @@ function FoodLog() {
 
         fetchFoodEntries();
     }, [id]);
-
-
-    
 
     const handleFoodSubmit = async (e) => {
         e.preventDefault();
@@ -68,33 +74,46 @@ function FoodLog() {
             }
 
             setFoodName("");
-            setCalories(0);
+            setCalories("");
         } catch (error) {
             console.error("Error submitting food entry:", error);
         }
+
+
     };
 
     const deleteFoodEntries = async (foodEntryId) => {
-        try {
-            const response = await fetch(`http://localhost:3000/food/${foodEntryId}`, {
-                method: "DELETE",
-                headers: { "Content-Type": "application/json" },
-                credentials: "include",
-            });
+        console.log(foodEntryId)
+        
+    try {
+        const response = await fetch(`http://localhost:3000/food/${foodEntryId}`, {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+        });
 
-            if (!response.ok) {
-                const errorMessage = await response.text();
-                throw new Error(`HTTP error! status: ${response.status}, message: ${errorMessage}`);
-            }
+        console.log("Delete response:", response);
 
-            setFoodEntries(foodEntries.filter(foodEntry => foodEntry.entry_id !== foodEntryId));
-        } catch (error) {
-            console.error("Error deleting food entry:", error);
+        if (!response.ok) {
+            const errorMessage = await response.text();
+            throw new Error(`HTTP error! status: ${response.status}, message: ${errorMessage}`);
         }
-    };
 
-    const editFoodEntries = async (foodEntryId, updatedFoodName, updatedCalories) => {
+        // Update the state by filtering out the deleted entry
+        setFoodEntries((prevFoodEntries) =>
+            prevFoodEntries.filter((foodEntry) => foodEntry.id !== foodEntryId)
+        );
+    } catch (error) {
+        console.error("Error deleting food entry:", error);
+    }
+};
+
+const editFoodEntries = async (foodEntryId, updatedFoodName, updatedCalories) => {
+
+        console.log(foodEntries, "all food entries");
+           
         try {
+
             if (!foodEntryId) {
                 console.error("Food entry ID is undefined.");
                 return;
@@ -109,79 +128,79 @@ function FoodLog() {
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",
                 body: JSON.stringify(payload),
-            });
+            })
 
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
 
-            setFoodEntries(foodEntries.map(foodEntry =>
-                foodEntry.entry_id === foodEntryId ? { ...foodEntry, ...payload } : foodEntry
-            ));
+            setFoodEntries((prevFoodEntries) =>
+            prevFoodEntries.map((foodEntry) =>
+                foodEntry.entry_id === foodEntryId
+                    ? { ...foodEntry, ...payload } // Update only the relevant fields
+                    : foodEntry
+            )
+        );
         } catch (error) {
-            console.log("Error updating food entry:", error);
+            console.log("Error updating food entry:", error)
         }
-    };
+    }
 
-    const updateProgressBar = () => {
-        const percentage = (totalCalories / 2000) * 100;
-        return { width: `${percentage}%` };
-    };
-
-    const updateProgressBarColor = () => {
-        if (totalCalories < 500) {
-            return { backgroundColor: "#fff" };
-        } else if (totalCalories < 1000) {
-            return { backgroundColor: "#fff" };
-        } else if (totalCalories < 1500) {
-            return { backgroundColor: "#fff" };
-        } else {
-            return { backgroundColor: "#0e2853" };
-        }
-    };
-
+//    const updateProgressBar = () => {
+//         const percentage = (totalCalories / 2000) * 100;
+//         return { width: `${percentage}%` };
+//       };
+    
+//       const updateProgressBarColor = () => {
+//         if (totalCalories < 500) {
+//           return { backgroundColor: "#fff" }; 
+//         } else if (totalCalories < 1000) {
+//           return { backgroundColor: "#fff" }; 
+//         } else if (totalCalories < 1500) {
+//         } else {
+//           return { backgroundColor: "#0e2853" }; // medical red
+//         }
+//       };
     return (
-        <div className="weight-log-container">
-            <h1>Food Entries</h1>
-            <UserBMR />
-            <div className="progress-bar" style={{ ...updateProgressBar(), ...updateProgressBarColor() }}>
-                {totalCalories}
-            </div>
-            {foodEntries.map(foodEntry => (
-                <FoodEntryCard
-                    key={foodEntry.entry_id}
-                    entry={foodEntry}
-                    editFoodEntries={editFoodEntries}
-                    deleteFoodEntries={deleteFoodEntries}
-                />
-            ))}
-            <form onSubmit={handleFoodSubmit} className="weight-log-form">
-                <label>
-                    Food Name:
-                    <input
-                        type="text"
-                        value={foodName}
-                        placeholder="Enter Food"
-                        onChange={(e) => setFoodName(e.target.value)}
-                        required
+            <div className="weight-log-container">
+                <h1>Food Entries</h1>
+                <UserBMR consumedCalories={consumedCalories} foodEntries={foodEntries} />
+                {foodEntries.map((foodEntry) => (
+                    <FoodEntryCard
+                        key={foodEntry.entry_id}
+                        entry={foodEntry}
+                        editFoodEntries={editFoodEntries}
+                        deleteFoodEntries={deleteFoodEntries}
                     />
-                </label>
-                <br />
-                <label>
-                    Calories:
-                    <input
-                        type="number"
-                        value={calories}
-                        onChange={(e) => setCalories(parseInt(e.target.value, 10))}
-                        placeholder="Enter Calories"
-                        required
-                    />
-                </label>
-                <br />
-                <button type="submit">Add Food</button>
-            </form>
-        </div>
-    );
+                ))}
+       <form onSubmit={handleFoodSubmit} className="weight-log-form">
+        <label>
+          Food Name:
+          <input
+            type="text"
+            value={foodName}
+            placeholder="Enter Food"
+            onChange={(e) => setFoodName(e.target.value)}
+            required
+          />
+        </label>
+        <br />
+        <label>
+          Calories:
+          <input
+            type="number"
+            value={calories}
+            onChange={(e) => setCalories(parseInt(e.target.value, 10))}
+            placeholder="Enter Calories"
+            required
+          />
+        </label>
+        <br />
+        <button type="submit">Add Food</button>
+      </form>
+    </div>
+  );
 }
+
 
 export default FoodLog;
