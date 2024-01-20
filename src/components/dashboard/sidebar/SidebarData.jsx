@@ -36,16 +36,16 @@ export const getSidebarData = (userId) => [
         cName: 'nav-text'
     },
     {
-        title: 'Ask Zen',
-        path: `/chat/${userId}`,
-        icon: <FaBolt />, // Using a lightning bolt icon to symbolize energy or power
-        cName: 'nav-text'
-    },
-    {
       title: 'Food Log',
       path: `/food/${userId}`,
       icon: <FaIcons.FaUtensils />,
       cName: 'nav-text'
+    },
+    {
+        title: 'Ask Zen',
+        path: `/chat/${userId}`,
+        icon: <FaBolt />, // Using a lightning bolt icon to symbolize energy or power
+        cName: 'nav-text'
     },
     {
         title: 'Settings',
