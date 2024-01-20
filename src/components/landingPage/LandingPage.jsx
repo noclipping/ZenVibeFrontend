@@ -1,7 +1,8 @@
 import "./LandingPage.css";
+import Spline from '@splinetool/react-spline';
 import Navbar from "./navbar/Navbar";
 import { useNavigate } from "react-router-dom";
-import dashboardImage from "../../../assets/dashboard.png";
+import dashboardImage from "../../../assets/Zen_land.png";
 
 function LandingPage() {
   const navigate = useNavigate();
@@ -28,6 +29,10 @@ function LandingPage() {
         <h2 className="section-title">About ZenVibe</h2>
         <p className="section-content">
           <div>
+Mood Tracker
+Understand your mood patterns and work towards emotional balance.
+
+
             <p>
               ZenVibe is an innovative health and wellness tracker, meticulously
               crafted to guide and support individuals on their journey to a
@@ -50,8 +55,8 @@ function LandingPage() {
             </p>
           </div>
         </p>
+        <Spline scene="https://prod.spline.design/R47T9roV3JNYA-0b/scene.splinecode" />
       </section>
-
       {/* Features Section */}
       <section className="features-section" id="features">
         <h2 className="section-title">Features</h2>
@@ -93,7 +98,7 @@ function LandingPage() {
         <div className="review-card">
           <p>
             &quot;I love the simplicity and effectiveness of ZenVibe. Its a
-            must-have for anyone serious about health.&quot;
+            must-have for anyone serious about health.&quot;e
           </p>
         </div>
         {/* Add more reviews as needed */}
