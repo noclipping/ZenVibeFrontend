@@ -57,7 +57,7 @@ function LoginPage() {
 
       {/* Login Form */}
       <form className="auth-form" onSubmit={handleLogin}>
-        <h1>Please Login to access your account!</h1>
+        <h1>Your Zen Vibe experience Awaits</h1>
         <img src={logo} alt="ZenVibe Logo" className="auth-logo" />
         <input
           type="text"
