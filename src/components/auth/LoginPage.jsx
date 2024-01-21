@@ -36,7 +36,7 @@ function LoginPage() {
 
       setTimeout(() => {
         navigate(`/protected/${data.id}`); // Navigate after the logo screen
-      }, 1000000); // Adjust the timeout duration as needed //6090
+      }, 6089); // Adjust the timeout duration as needed //6090
     } catch (err) {
       setError(err.message);
     }

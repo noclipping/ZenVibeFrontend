@@ -34,7 +34,7 @@
   
   .auth-form h1 {
     margin-bottom: 0.9rem;
-    font-size: 25px;
+    font-size: 21px;
   }
 
   
@@ -132,4 +132,33 @@
 @keyframes fadeInMessage {
   from { opacity: 0; }
   to { opacity: 1; }
+}
+
+.auth-form label {
+  display: block; /* Make labels block elements to take full width */
+  color: #fff; /* Label text color */
+  font-size: 16px; /* Adjust as needed */
+  margin-bottom: 10px; /* Space between label and select */
+}
+
+
+.auth-form select {
+  width: 100%; /* Make selects take up full width of their parent container */
+  padding: 0.9rem; /* Padding for comfortable clicking */
+  margin-bottom: 1rem; /* Space between each form element */
+  border-radius: 10px; /* Rounded corners */
+  border: 3px solid #002da9; /* Border color to match your theme */
+  background-color: #484747; /* Background color to match your theme */
+  color: #fff; /* Text color inside the select */
+  -webkit-appearance: none; /* Removes the default arrow in WebKit browsers */
+  -moz-appearance: none; /* Removes the default arrow in Firefox */
+  appearance: none; /* Removes the default arrow in modern browsers */
+  background-repeat: no-repeat;
+  background-size: 12px; /* Size of the arrow icon */
+}
+
+/* Optionally, style the hover and focus states */
+.auth-form select:hover, .auth-form select:focus {
+  border-color: #0056b3; /* Darker border on hover/focus */
+  outline: none; /* Remove default focus outline */
 }
