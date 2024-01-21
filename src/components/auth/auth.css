@@ -26,7 +26,7 @@
     width: 45%;
     max-width: 400px; /* Adjust width as needed */
     padding: 2rem;
-    background-color: #201e1e; /* Background of the form */
+    background-color: #131313; /* Background of the form */
     border-radius: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Optional: adds depth */
     font-size: 16px;
@@ -69,12 +69,67 @@
   .auth-form button:hover {
     background-color: #535bf2;
   }
-  
   /* Responsive adjustments */
-  @media (max-width: 768px) {
-    .auth-form {
-      width: 90%;
-      padding: 1.5rem;
-    }
+@media (max-width: 768px) {
+  .auth-form {
+
+    left: 200px;
   }
-  
+}
+
+.logo-screen-container {
+  display: flex;
+  justify-content: flex-end; /* Aligns horizontally to the right */
+  align-items: center; /* Aligns vertically to the center */
+  height: 100vh;
+  padding-left: 770px;
+}
+
+.logo-animation {
+  width: 150px; /* Adjust the size of the logo */
+  animation: fadeInSpinPulse 6s ease-in-out infinite;
+}
+
+@keyframes fadeInSpinPulse {
+  0%, 10% {
+    opacity: 0;
+    transform: scale(0.5); /* Start smaller */
+  }
+  30% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg); /* Fully visible and starts rotating */
+  }
+  50% {
+    transform: scale(1) rotate(360deg); /* Complete one full rotation */
+  }
+  60%, 100% {
+    transform: scale(1) rotate(360deg) scale(1.1); /* Pulse effect */
+  }
+}
+
+.welcome-message {
+  position: absolute; /* Position the message absolutely within its parent */
+  top: 0; /* Aligns to the top of the container */
+  left: 0; /* Aligns to the left of the container */
+  font-size: 30px; /* Adjust font size as needed */
+  margin-left: 725px; /* Adjust to move message more to the left */
+  padding-top:320px;
+  color: #ffffff; /* Adjust text color as needed */
+  animation: fadeInMessage 3s ease-in-out;
+}
+
+.signup-message {
+  position: absolute; /* Position the message absolutely within its parent */
+  top: 0; /* Aligns to the top of the container */
+  left: 0; /* Aligns to the left of the container */
+  font-size: 30px; /* Adjust font size as needed */
+  margin-left: 500px; /* Adjust to move message more to the left */
+  padding-top:318px;
+  color: #ffffff; /* Adjust text color as needed */
+  animation: fadeInMessage 3s ease-in-out;
+}
+
+@keyframes fadeInMessage {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

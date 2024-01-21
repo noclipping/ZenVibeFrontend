@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import{ useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import logo from '../../../assets/zenvibe.png'; // Update the path as necessary
 import '../auth/auth.css'; // Update the path as necessary
@@ -7,7 +7,7 @@ function RegisterPage() {
     const navigate = useNavigate();
 
     // State for registration
-    const [stage, setStage] = useState(1); // Control the stage of the registration form
+    const [stage, setStage] = useState(1);
     const [registerUsername, setRegisterUsername] = useState('');
     const [registerPassword, setRegisterPassword] = useState('');
     const [email, setEmail] = useState('');
@@ -17,21 +17,20 @@ function RegisterPage() {
     const [age, setAge] = useState('');
     const [goalWeight, setGoalWeight] = useState('');
     const [error, setError] = useState('');
-
-    const [gender, setGender] = useState('Male'); // Default to 'Male'
-    const [activityLevel, setActivityLevel] = useState('sedentary'); // Default to 'sedentary'
+    const [showLogoScreen, setShowLogoScreen] = useState(false);
+    const [gender, setGender] = useState('Male');
+    const [activityLevel, setActivityLevel] = useState('sedentary');
 
     // Handle first stage submit
     const handleFirstStageSubmit = (e) => {
         e.preventDefault();
-        setStage(2); // Move to the second stage
+        setStage(2);
     };
 
     // Handle final registration submit
     const handleFinalSubmit = async (e) => {
         e.preventDefault();
         try {
-            // Add gender and activityLevel to the request body
             const response = await fetch('http://localhost:3000/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -45,8 +44,8 @@ function RegisterPage() {
                     inches: parseInt(inches),
                     age: parseInt(age),
                     goal_weight: parseFloat(goalWeight),
-                    gender, // Add this
-                    activity_level: activityLevel, // Add this
+                    gender,
+                    activity_level: activityLevel,
                 }),
             });
 
@@ -55,11 +54,23 @@ function RegisterPage() {
             }
 
             const data = await response.json();
-            navigate(`/protected/${data.id}`);
+            setShowLogoScreen(true);
+            setTimeout(() => {
+                navigate(`/protected/${data.id}`);
+            }, 6090);
         } catch (err) {
             setError(err.message);
         }
     };
+
+    if (showLogoScreen) {
+        return (
+            <div className="logo-screen-container">
+                <img src={logo} alt="ZenVibe Logo" className="logo-animation" />
+                <h2 className="signup-message">Welcome To ZenVibe Preparing your Experience!</h2>
+            </div>
+        );
+    }
 
     return (
         <div className="auth-container">
