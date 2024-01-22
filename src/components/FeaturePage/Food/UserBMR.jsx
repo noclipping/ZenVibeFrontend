@@ -81,28 +81,30 @@ export default function UserBMR({foodEntries}) {
 
   
   
- const updateProgressBar = () => {
-    const percentage = totalDailyCalories() !== 0 ? (consumedCalories / totalDailyCalories()) * 100 : 0;
+  const updateProgressBar = () => {
+    const percentage = Math.min(100, (consumedCalories / totalDailyCalories()) * 100);
     return { width: `${percentage}%` };
-    
-  };
-
-  const updateProgressBarColor = () => {
-    if (consumedCalories > totalDailyCalories()) {
-      return { backgroundColor: "#ff0000" }; // Green color for less than 500 calories
-    } else {
-      return { backgroundColor: "#fff" }; // Red color for 1500 calories and above
-    }
   };
   
+  const updateProgressBarColor = () => {
+    const percentage = (consumedCalories / totalDailyCalories()) * 100;
+    if (percentage < 70) {
+      return { backgroundColor: 'green' };
+    } else if (percentage >= 70 && percentage <= 90) {
+      return { backgroundColor: 'yellow' };
+    } else {
+      return { backgroundColor: 'red' };
+    }
+  };
 
   return (
     <div>
       <>
         {/* <h2>Calorie Calculator</h2> */}
        
-        <div className="progress-bar" style={{ ...updateProgressBar(), ...updateProgressBarColor() }}>
-        </div>
+        <div className="progress-bar">
+    <div className="progress-bar-inner" style={{ ...updateProgressBar(), ...updateProgressBarColor() }}></div>
+  </div>
 
         {/* <p>BMR: {BMR}</p>
         <p>TDEE: {calculateTDEE()}</p> */}
