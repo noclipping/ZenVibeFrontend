@@ -5,16 +5,16 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 50px; /* Adjusted padding */
-    background-color: #1c1b1b85; /* Dark background */
-    font-family: 'Montserrat', sans-serif;
-    color: #fff; /* White text color for contrast */
-    border-radius: 20px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 6px 6px rgba(0, 0, 0, 0.3);
-    margin: auto; /* Center the container */
-    max-width: 100%; /* Increased max width */
-    height: auto; /* Height adjusts to content */
-    justify-content: space-between;
+    padding: 50px; /* Adjusted padding for more space */
+    background-color: #15151585; /* Semi-transparent dark background */
+    font-family: 'Montserrat', sans-serif; /* Stylish font */
+    color: #fff; /* White text for contrast */
+    border-radius: 20px; /* Rounded corners */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 6px 6px rgba(0, 0, 0, 0.3); /* Depth effect with shadow */
+    margin: auto; /* Center the container horizontally */
+    max-width: 100%; /* Limit width to prevent overflow */
+    height: auto; /* Height adjusts automatically to content */
+    justify-content: space-between; /* Space distribution between child elements */
 }
 
 
@@ -32,7 +32,7 @@
 }
 
 .weight-log-form input {
-    padding: 10px 25px;
+    padding: 10px 15px;
     border: 3px solid #1e1d1d;
     border-radius: 15px;
     width: 150px; /* Increased width of input */
@@ -41,13 +41,14 @@
 }
 
 .weight-log-form button {
-    padding: 10px 20px;
-    background-color: #0e2853; /* Medical red color */
+    padding: 15px 20px;
+    background-color: #0e2853; 
     color: white;
     border: none;
     border-radius: 15px;
     cursor: pointer;
     transition: background-color 0.3s;
+    font-size: 14px;
 }
 
 .weight-log-form button:hover {
@@ -71,9 +72,9 @@
 
 .bmi-display {
     background-color: #191818c3; /* Slightly different background */
-    padding: 15px;
-    padding-left: 40px;
-    padding-right: 50px;
+    padding: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
     border-radius: 15px;
     margin-top: 10px;
     text-align: center; /* Center-align the text */
@@ -92,16 +93,19 @@
 
 
 .delete-entry-button {
-    padding: 10px 20px;
-    background-color: #950d08; /* Bootstrap's btn-danger color */
+    padding: 15px 30px;
+    background-color:#272626; /* Bootstrap's btn-danger color */
     color: white;
     border: none;
     border-radius: 10px;
     cursor: pointer;
+    box-shadow: #201f1f;
     margin: 10px;
+    margin-left: 20px;
     transition: background-color 0.3s;
+    font-size: 14px;
 }
 
 .delete-entry-button:hover {
-    background-color: #272626; /* Darker shade on hover */
+    background-color: #950d08; /* Darker shade on hover */
 }
