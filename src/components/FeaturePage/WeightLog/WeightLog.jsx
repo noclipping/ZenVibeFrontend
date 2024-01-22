@@ -24,6 +24,7 @@ function WeightLog({ showInputs }) {
     const [userGender, setUserGender] = useState("");
     const [BMI, setBMI] = useState(0);
     const [totalDailyCalories, setTotalDailyCalories] = useState(0);
+    const [userData, setUserData] = useState({}); 
     const [weightData, setWeightData] = useState({
         labels: ["Start"],
         datasets: [
@@ -42,6 +43,13 @@ function WeightLog({ showInputs }) {
     const { id } = useParams();
 
     useEffect(() => {
+      const storedTotalDailyCalories = localStorage.getItem("totalDailyCalories");
+      if (storedTotalDailyCalories) {
+          setTotalDailyCalories(parseFloat(storedTotalDailyCalories));
+      }
+  }, []);
+
+    useEffect(() => {
         const fetchUserData = async () => {
             if (!id) {
                 console.error("No user ID available.");
@@ -54,6 +62,8 @@ function WeightLog({ showInputs }) {
                     credentials: "include",
                 });
                 const userData = await userResponse.json();
+
+                setUserData(userData);
 
                 setWeightGoal(userData.goal_weight);
                 setHeightFeet(userData.feet);
@@ -79,6 +89,15 @@ function WeightLog({ showInputs }) {
 
         fetchUserData();
     }, [id]);
+
+
+    const calculateAndUpdateCalories = (userData, weight) => {
+      const BMR = calculateBMR(userData.gender, weight, userData.feet * 12 + userData.inches, userData.age);
+      const TDEE = Math.floor(BMR * getActivityFactor("sedentary"));
+      const newTotalDailyCalories = TDEE - 500;
+      setTotalDailyCalories(newTotalDailyCalories);
+      localStorage.setItem("totalDailyCalories", newTotalDailyCalories);
+  };
 
     const updateChartData = (weightEntries, initialWeight) => {
         const chartLabels = weightEntries.map((entry, index) => `Day ${index + 1}`);
@@ -167,6 +186,7 @@ function WeightLog({ showInputs }) {
                     credentials: "include",
                 });
 
+
                 if (response.ok) {
                     const newWeightEntry = await response.json();
                     const updatedData = [...weightData.datasets[0].data, newWeightEntry.weight];
@@ -188,6 +208,7 @@ function WeightLog({ showInputs }) {
                 console.error("Error submitting weight:", error);
             }
         }
+        calculateAndUpdateCalories(userData, newEntryWeight);
     };
 
     const handleDeleteLastEntry = async () => {
@@ -215,6 +236,11 @@ function WeightLog({ showInputs }) {
                     labels: updatedLabels,
                     datasets: [{ ...weightData.datasets[0], data: updatedData }],
                 });
+
+                if (updatedData.length > 0) {
+                    const latestWeight = updatedData[updatedData.length - 1];
+                    calculateAndUpdateCalories(userData, latestWeight); // Recalculate calories after deletion
+                }
             } catch (error) {
                 console.error("Error deleting weight entry:", error);
             }
