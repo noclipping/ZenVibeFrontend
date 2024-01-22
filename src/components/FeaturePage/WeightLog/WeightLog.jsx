@@ -33,10 +33,10 @@ function WeightLog({ showInputs }) {
     datasets: [
       {
         label: "Weight (lb)",
-        data: [],
-        borderColor: "#FFFFFF",
-        pointBackgroundColor: "#FF0000",
-        pointBorderColor: "#FF0000",
+      data: [],
+      borderColor: "black", // Change line color to black
+      pointBackgroundColor: "red", // Change points to red
+      pointBorderColor: "black",
       },
     ],
   });
@@ -53,11 +53,13 @@ function WeightLog({ showInputs }) {
   }, []);
 
   useEffect(() => {
-    const fetchUserData = async () => {
+    const fetchInitialData = async () => {
       if (!id) {
         console.error("No user ID available.");
         return;
       }
+
+
 
       try {
         const userResponse = await fetch(`http://localhost:3000/user/${id}`, {
@@ -100,7 +102,7 @@ function WeightLog({ showInputs }) {
       }
     };
 
-    fetchUserData();
+    fetchInitialData();
   }, [id]);
 
   const calculateAndUpdateCalories = (userData, weight) => {
@@ -125,9 +127,9 @@ function WeightLog({ showInputs }) {
         {
           label: "Weight (lb)",
           data: [initialWeight, ...chartData],
-          borderColor: "#FFFFFF",
-          pointBackgroundColor: "#FF0000",
-          pointBorderColor: "#FF0000",
+          borderColor: "#C70039 ",
+          pointBackgroundColor: "black",
+          pointBorderColor: "white",
         },
       ],
     });
@@ -140,6 +142,8 @@ function WeightLog({ showInputs }) {
 
     const ctx = chartRef.current.getContext("2d");
     const goalValue = parseFloat(weightGoal);
+
+    
 
     const annotations = goalValue
       ? {
@@ -235,6 +239,8 @@ function WeightLog({ showInputs }) {
         console.error("Error submitting weight:", error);
       }
     }
+    // Clear the weight input field after successful submission
+    setWeight("");
     calculateAndUpdateCalories(userData, newEntryWeight);
   };
 
