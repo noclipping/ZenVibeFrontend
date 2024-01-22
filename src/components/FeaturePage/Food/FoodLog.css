@@ -1,34 +1,71 @@
-.weight-log-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 5px;
-    background-color: #2d2c2c85; /* Dark background */
-    color: #fff; /* White text color for contrast */
-    border-radius: 20px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    padding-left: 20px;
-    margin-right: auto;
-    max-width: 1000px;
-    margin-left: 400px;
-    height: 80vh; /* Adjust height to fill screen vertically */
-    justify-content: space-between; /* Distribute space */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+.food-log-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-left: 1000px;
+  background-color: #15151585; /* Semi-transparent dark background */
+  font-family: 'Montserrat', sans-serif;
+  color: #fff;
+  border-radius: 20px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 6px 6px rgba(0, 0, 0, 0.3);
+  margin: auto;
+  max-width: 600px; /* Adjust the width as needed */
+  width: 100%;
+  right: 200px;
+  height: auto;
 }
 
-.calorie-counter {
-    text-align: center;
+.food-log-container h1 {
+  font-size: 35px;
+  margin-bottom: 20px;
+}
+
+/* Form Styling */
+.food-log-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.food-log-form label {
+  color: #fff;
+  font-size: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.food-log-form input {
+  padding: 10px 15px;
+  border: 2px solid #1e1d1d;
+  border-radius: 10px;
+  background-color: #424242;
+  color: #fff;
+  margin-top: 5px;
+}
+
+.food-log-form button {
+  padding: 10px 20px;
+  background-color: #0e2853;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  align-self: center; /* Center the button */
+}
+
+.food-log-form button:hover {
+  background-color: #201f1f;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .food-log-container {
+    padding: 20px;
+    max-width: 100%;
   }
-  
-  input {
-    padding: 8px;
-    margin: 10px;
-  }
-  
-  .progress-bar {
-    background-color: #e0e0e0;
-    height: 20px;
-    margin-top: 10px;
-    
-    transition: width 0.3s ease-in-out, background-color 0.3s ease-in-out;
-  }
-  
+}

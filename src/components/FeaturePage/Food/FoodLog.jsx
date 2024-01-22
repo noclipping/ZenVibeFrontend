@@ -4,8 +4,7 @@ import UserBMR from "./UserBMR";
 
 import { useParams } from "react-router-dom";
 import "../../FeaturePage/Food/FoodLog.css";
-import "./CalorieBar.css"
-
+import "../../FeaturePage/Food/FoodLog.css"
 
 function FoodLog() {
     const [foodName, setFoodName] = useState("");
@@ -161,46 +160,44 @@ const editFoodEntries = async (foodEntryId, updatedFoodName, updatedCalories) =>
 //           return { backgroundColor: "#0e2853" }; // medical red
 //         }
 //       };
-    return (
-            <div className="weight-log-container">
-                <h1>Food Entries</h1>
-                <UserBMR consumedCalories={consumedCalories} foodEntries={foodEntries} />
-                {foodEntries.map((foodEntry) => (
-                    <FoodEntryCard
-                        key={foodEntry.entry_id}
-                        entry={foodEntry}
-                        editFoodEntries={editFoodEntries}
-                        deleteFoodEntries={deleteFoodEntries}
-                    />
-                ))}
-       <form onSubmit={handleFoodSubmit} className="weight-log-form">
-        <label>
-          Food Name:
-          <input
-            type="text"
-            value={foodName}
-            placeholder="Enter Food"
-            onChange={(e) => setFoodName(e.target.value)}
-            required
-          />
-        </label>
-        <br />
-        <label>
-          Calories:
-          <input
-            type="number"
-            value={calories}
-            onChange={(e) => setCalories(parseInt(e.target.value, 10))}
-            placeholder="Enter Calories"
-            required
-          />
-        </label>
-        <br />
-        <button type="submit">Add Food</button>
-      </form>
+return (
+    <div className="food-log-container">
+        <h1>Food Entries</h1>
+        <UserBMR consumedCalories={consumedCalories} foodEntries={foodEntries} />
+        {foodEntries.map((foodEntry) => (
+            <FoodEntryCard
+                key={foodEntry.entry_id}
+                entry={foodEntry}
+                editFoodEntries={editFoodEntries}
+                deleteFoodEntries={deleteFoodEntries}
+            />
+        ))}
+        <form onSubmit={handleFoodSubmit} className="food-log-form">
+            <label>
+                Food Name:
+                <input
+                    type="text"
+                    value={foodName}
+                    placeholder="Enter Food"
+                    onChange={(e) => setFoodName(e.target.value)}
+                    required
+                />
+            </label>
+            <br />
+            <label>
+                Calories:
+                <input
+                    type="number"
+                    value={calories}
+                    onChange={(e) => setCalories(parseInt(e.target.value, 10))}
+                    placeholder="Enter Calories"
+                    required
+                />
+            </label>
+            <br />
+            <button type="submit">Add Food</button>
+        </form>
     </div>
-  );
+);
 }
-
-
 export default FoodLog;

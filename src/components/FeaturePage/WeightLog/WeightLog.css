@@ -4,31 +4,36 @@
 .weight-log-container {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    padding: 50px; /* Adjusted padding for more space */
+    align-items: center; /* Centers content horizontally within the container */
+    padding: 40px; /* Padding inside the container */
+    margin-left: 400px; /* Increase this value as needed to move away from the sidebar */
     background-color: #15151585; /* Semi-transparent dark background */
-    font-family: 'Montserrat', sans-serif; /* Stylish font */
-    color: #fff; /* White text for contrast */
-    border-radius: 20px; /* Rounded corners */
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 6px 6px rgba(0, 0, 0, 0.3); /* Depth effect with shadow */
-    margin: auto; /* Center the container horizontally */
-    max-width: 100%; /* Limit width to prevent overflow */
-    height: auto; /* Height adjusts automatically to content */
-    justify-content: space-between; /* Space distribution between child elements */
+    font-family: 'Montserrat', sans-serif;
+    color: #fff;
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 6px 6px rgba(0, 0, 0, 0.3);
+    max-width: 100%; /* You might want to adjust this if the container is still too wide */
+    height: auto;
+    justify-content: space-between;
+    /* Remove margin-right if you are pushing the container from the sidebar */
+    margin-right: 0; /* Or adjust it if you want to keep some space on the right as well */
 }
-
 
 .weight-log-container h1 {
     font-family: 'Montserrat', sans-serif;
     font-size: 35px;
+    padding-right: 100px;
     /* You can also add other font-related properties here */
   }
 
 /* Form styling */
 .weight-log-form {
     display: flex;
+    flex-direction: column; /* Stack inputs vertically */
+    align-items: center; /* Center-align the form */
     gap: 10px;
-    margin-top: 15px; /* Moved form to the bottom */
+    width: 100%; /* Full width to align with the chart */
+    margin-top: 15px; /* Space after the chart */
 }
 
 .weight-log-form input {
@@ -49,27 +54,27 @@
     cursor: pointer;
     transition: background-color 0.3s;
     font-size: 14px;
+    width: 80%;
 }
 
 .weight-log-form button:hover {
     background-color: #201f1f;
 }
 
-/* Chart area */
+
 .weight-log-chart {
-    width: 110%;
-    flex-grow: 1; /* Chart takes up remaining space */
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-bottom: 2px;
+    padding-bottom: 10px;
+    width: 100%; /* Use 100% of the container's width */
+    margin-right: 0; /* Reset any specific margins */
 }
 
 .weight-log-chart canvas {
-    width: 80% !important; /* Adjust width as needed */
+    max-width: 100%; /* Ensure the canvas does not overflow its container */
     height: auto !important;
 }
-
 .bmi-display {
     background-color: #191818c3; /* Slightly different background */
     padding: 5px;
@@ -77,6 +82,8 @@
     padding-right: 15px;
     border-radius: 15px;
     margin-top: 10px;
+    width: 80%; /* Match the width of the chart and form elements */
+    margin: 10px auto;
     text-align: center; /* Center-align the text */
     
     /* Adding a box shadow for depth */

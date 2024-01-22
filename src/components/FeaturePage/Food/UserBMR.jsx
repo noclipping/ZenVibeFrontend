@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import PropTypes from 'prop-types'; // Import PropTypes
 // import FoodEntryCard from "./FoodEntryCard";
+import "../../FeaturePage/Food/UserBMR.css"
 import "./CalorieBar.css";
 
 export default function UserBMR({foodEntries}) {
