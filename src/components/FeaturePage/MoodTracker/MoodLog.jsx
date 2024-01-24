@@ -1,23 +1,62 @@
-import { useState, useEffect,} from 'react';
+import { useState, useEffect } from 'react';
 import { Scatter } from 'react-chartjs-2';
 import 'chartjs-adapter-date-fns';
-import '../../FeaturePage/MoodTracker/MoodLog.css'; // Adjust the path as needed
-
-// Make sure to install chartjs-plugin-zoom for zooming functionality
-// npm install chartjs-plugin-zoom
 import 'chartjs-plugin-zoom';
+import { useParams } from 'react-router-dom';
+
+import '../../FeaturePage/MoodTracker/MoodLog.css';
 
 function MoodLog() {
   const [mood, setMood] = useState('');
   const [intensity, setIntensity] = useState(5);
-  const [moodEntries, setMoodEntries] = useState(() => {
-    const saved = localStorage.getItem('moodEntries');
-    return saved ? JSON.parse(saved) : [];
-  });
+  const [moodEntries, setMoodEntries] = useState([]);
+  const { id } = useParams();
 
   useEffect(() => {
-    localStorage.setItem('moodEntries', JSON.stringify(moodEntries));
-  }, [moodEntries]);
+    const fetchMoodEntries = async () => {
+      try {
+        const response = await fetch(`http://localhost:3000/mood/${id}`, {
+          method: 'GET',
+          credentials: 'include',
+        });
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        const data = await response.json();
+        setMoodEntries(data);
+      } catch (error) {
+        console.error('Error fetching mood data:', error);
+      }
+    };
+
+    fetchMoodEntries();
+  }, [id]);
+
+  const handleMoodSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch(`http://localhost:3000/mood/${id}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          user_id: id,
+          emotion: mood,
+          intensity: parseInt(intensity, 10),
+          entry_date: new Date().toISOString().split('T')[0],
+        }),
+        credentials: 'include',
+      });
+
+      if (response.ok) {
+        const newMoodEntry = await response.json();
+        setMoodEntries([...moodEntries, newMoodEntry]);
+        setMood('');
+        setIntensity(5);
+      } else {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+    } catch (error) {
+      console.error('Error submitting mood entry:', error);
+    }
+  };
 
   const getMoodColor = (mood) => {
     switch (mood) {
@@ -32,29 +71,11 @@ function MoodLog() {
     }
   };
 
-  const handleMoodSubmit = (e) => {
-    e.preventDefault();
-    const newEntry = {
-      mood,
-      intensity,
-      date: new Date().toISOString(),
-    };
-    setMoodEntries([...moodEntries, newEntry]);
-    setMood('');
-    setIntensity(5);
-  };
-
-  const clearData = () => {
-    localStorage.removeItem('moodEntries');
-    setMoodEntries([]);
-  };
-
-  // Preparing the data for the Scatter chart
   const scatterData = {
     datasets: moodEntries.map((entry) => ({
-      label: `${entry.mood} on ${new Date(entry.date).toLocaleDateString()}`,
-      data: [{ x: new Date(entry.date), y: entry.intensity }],
-      backgroundColor: getMoodColor(entry.mood),
+      label: `${entry.emotion} on ${new Date(entry.entry_date).toLocaleDateString()}`,
+      data: [{ x: new Date(entry.entry_date), y: entry.intensity }],
+      backgroundColor: getMoodColor(entry.emotion),
     })),
   };
 
@@ -117,8 +138,7 @@ function MoodLog() {
               <option value="">Select Mood</option>
               <option value="Happy">Happy</option>
               <option value="Sad">Sad</option>
-              <option value="Anxious">Neutral</option>
-              <option value="Anxious">Anxious</option>
+              {/* Add other mood options as needed */}
             </select>
           </label>
         </div>
@@ -130,14 +150,13 @@ function MoodLog() {
               onChange={(e) => setIntensity(e.target.value)}
               min="1"
               max="10"
-              placeholder="Mood Intensity (1-10)"
+              placeholder="Intensity (1-10)"
               required
             />
           </label>
         </div>
         <button type="submit">Log Mood</button>
       </form>
-      <button onClick={clearData} className="clear-data-button">Clear Data</button>
     </div>
   );
 }

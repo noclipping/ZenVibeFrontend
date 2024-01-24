@@ -49,7 +49,7 @@ function UserProfile() {
   return (
     <div className="user-profile-container">
       <img
-        src="../../../../assets/zenvibe.png" // Replace with the actual image source
+        src="../../../../assets/default_img.webp" // Replace with the actual image source
         alt="Profile"
         className="profile-pic-btn"
         onClick={toggleIntermediateModal}
