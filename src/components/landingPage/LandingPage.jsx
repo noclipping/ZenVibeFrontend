@@ -2,7 +2,7 @@ import "./LandingPage.css";
 import Spline from '@splinetool/react-spline';
 import Navbar from "./navbar/Navbar";
 import { useNavigate } from "react-router-dom";
-import dashboardImage from "../../../assets/Zen_land.png";
+import dashboardImage from "../../../assets/dashpic.png";
 
 function LandingPage() {
   const navigate = useNavigate();
