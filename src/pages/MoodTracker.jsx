@@ -9,7 +9,7 @@ function MoodTracker() {
     return (
         <div className="App">
             <SideNav userId={userId}/>
-            <MoodLog userId={userId}/>
+            <MoodLog showInputs={true}/>
             <UserProfile/>
         </div>
     );
