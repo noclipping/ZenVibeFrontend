@@ -46,7 +46,7 @@ function RegisterPage() {
                     age: parseInt(age),
                     goal_weight: parseFloat(goalWeight),
                     gender, // Add this
-                    activity_level: activityLevel, // Add this
+                    activityLevel // Add this
                 }),
             });
 
