@@ -1,72 +1,40 @@
-.custom-calendar .react-calendar {
-    border: none;
-    border-radius: 8px;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-    font-family: 'Montserrat', sans-serif;
-    background-color: #1c1c1c;
-    padding: 15px;
-    width: 100%;
-    max-width: 700px; /* Set a max-width that looks good on your layout */
-    margin: 20px auto; /* Add some top and bottom margin for spacing */
-    transition: all 0.3s ease;
+.custom-calendar .rbc-calendar {
+    /* ... other styles ... */
+    background-color: #272a29; /* Slate black background */
+    font-family: 'Montserrat', sans-serif; /* Montserrat font for the calendar */
 }
 
-.custom-calendar .react-calendar__tile {
-    padding: 15px; /* Increase padding for larger clickable area */
-    margin: 2px; /* Reduce margin to create a tighter grid */
-    background-color: #121212;
-    border-radius: 4px; /* Rounded corners for each date tile */
-    text-align: center;
-    color: #fff; /* Full white color for better readability */
-    transition: background-color 0.3s ease;
-    cursor: pointer;
-    font-size: 16px; /* Larger font size for better readability */
+.custom-calendar .rbc-header {
+    background-color: #201f1f; /* Medical red for headers */
+    color: white;
+    font-family: 'Montserrat', sans-serif; /* Montserrat font for headers */
 }
 
-.custom-calendar .react-calendar__tile--active,
-.custom-calendar .react-calendar__tile--hasActive {
-    background-color: #0e2853; /* Highlight color for the current date or selected date */
-    color: #ffffff;
+.custom-calendar .rbc-today {
+    background-color: #383737; /* Medical red for today */
 }
 
-.custom-calendar .react-calendar__navigation {
-    margin-bottom: 15px; /* More spacing from navigation to the grid */
+.custom-calendar .rbc-date-cell:hover {
+    background-color: #1c1c1c; /* Slightly darker slate black on hover */
 }
 
-.custom-calendar .react-calendar__navigation button {
-    background-color: #2a2a2ae1;
-    font-size: 16px; /* Consistent font size with date tiles */
-    color: #fff; /* Full white color for better readability */
-    border: none;
+.custom-calendar .rbc-event {
+    background-color: #373636; /* Medical red for events */
+    color: white;
 }
 
-.custom-calendar .react-calendar__month-view__weekdays {
-    text-align: center;
-    padding: 10px 0;
+.custom-calendar .rbc-event:hover {
+    background-color: #c70d0d; /* Slightly darker slate black on hover */
 }
 
-.custom-calendar .react-calendar__month-view__weekdays__weekday {
-    font-size: 16px; /* Increase font size for weekday names */
-    color: #fff; /* Full white color for better readability */
+.custom-calendar .rbc-toolbar {
+    background-color: #272a29; /* Slate black for the toolbar */
+    color: white;
+    font-family: 'Montserrat', sans-serif; /* Montserrat font for the toolbar */
 }
 
-.custom-calendar .react-calendar__month-view__days {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr); /* Creates a grid layout for days */
-    gap: 2px; /* Space between grid items */
+.custom-calendar .rbc-toolbar button {
+    color: white;
 }
 
-@media (max-width: 600px) {
-    .custom-calendar .react-calendar {
-        padding: 10px;
-        max-width: 95%; /* Allow for some margin on small screens */
-    }
-
-    .custom-calendar .react-calendar__tile {
-        font-size: 14px; /* Slightly smaller font on small screens */
-    }
-
-    .custom-calendar .react-calendar__navigation button {
-        font-size: 14px; /* Slightly smaller font on small screens */
-    }
-}
+/* Add other custom styles as needed */
