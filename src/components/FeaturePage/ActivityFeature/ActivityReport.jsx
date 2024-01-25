@@ -21,12 +21,8 @@ function ActivityTrack() {
     datasets: [
       {
         data: [],
-        backgroundColor: [
-          "#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0", "#9966FF", // Example colors
-        ],
-        hoverBackgroundColor: [
-          "#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0", "#9966FF", // Example hover colors
-        ],
+        backgroundColor: ["red", "gray", "blue"], // Colors for Weights, Other, and Cardio respectively
+        hoverBackgroundColor: ["red", "gray", "blue"], // Hover colors
       },
     ],
   });
@@ -89,32 +85,37 @@ function ActivityTrack() {
   };
 
   const preparePieChartData = (activities) => {
-    const activityTypes = activities.reduce((acc, activity) => {
-      const type = activity.activity_name || "Other"; // Use activity_name as category, default to 'Other'
-      acc[type] = (acc[type] || 0) + 1;
-      return acc;
-    }, {});
+    const activityCategories = {
+      Weights: 0,
+      Cardio: 0,
+      Other: 0,
+    };
+
+    activities.forEach((activity) => {
+      const activityName = activity.activity_name || "Other"; // Default to 'Other' if no name is provided
+      const lowercaseActivityName = activityName.toLowerCase();
+
+      // Categorize activities based on keywords in the name
+      if (lowercaseActivityName.includes("weight")) {
+        activityCategories.Weights++;
+      } else if (
+        lowercaseActivityName.includes("cardio") ||
+        lowercaseActivityName.includes("running")
+      ) {
+        activityCategories.Cardio++;
+      } else {
+        activityCategories.Other++;
+      }
+    });
 
     const chartData = {
-      labels: Object.keys(activityTypes),
+      labels: Object.keys(activityCategories),
       datasets: [
         {
           label: "Activity Types",
-          data: Object.values(activityTypes),
-          backgroundColor: [
-            "#FF6384",
-            "#36A2EB",
-            "#FFCE56",
-            "#4BC0C0",
-            "#9966FF",
-          ], // Example colors
-          hoverBackgroundColor: [
-            "#FF6384",
-            "#36A2EB",
-            "#FFCE56",
-            "#4BC0C0",
-            "#9966FF",
-          ], // Example hover colors
+          data: Object.values(activityCategories),
+          backgroundColor: ["red", "gray", "blue"], // Colors for Weights, Other, and Cardio respectively
+          hoverBackgroundColor: ["red", "gray", "blue"], // Hover colors
         },
       ],
     };
@@ -163,7 +164,11 @@ function ActivityTrack() {
         <h2>Activities</h2>
         <div>Activity Streak: {activityStreak} days</div>
         {pieChartData && pieChartData.labels.length > 0 ? (
-          <Pie data={pieChartData} />
+          <div className="activity-spacing">
+            {" "}
+            {/* Added this div with the class */}
+            <Pie data={pieChartData} />
+          </div>
         ) : (
           <p>Loading chart data...</p>
         )}
@@ -175,17 +180,13 @@ function ActivityTrack() {
             onChange={(e) =>
               setNewActivity({ ...newActivity, activity_name: e.target.value })
             }
+            className="activity-input"
           />
           {/* Add other input fields for sets, reps, etc. */}
-          <button type="submit">Add Activity</button>
+          <button type="submit" className="activity-button">
+            Add Activity
+          </button>
         </form>
-        {activities.map((activity, index) => (
-          <div key={index} className="activity-item">
-            <h3>{activity.activity_name}</h3>
-            {/* Buttons for editing and deleting activities */}
-            {/* Implement these as needed */}
-          </div>
-        ))}
       </div>
     </div>
   );
