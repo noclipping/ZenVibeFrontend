@@ -1,3 +1,4 @@
+
 .custom-calendar .react-calendar {
     border: none;
     border-radius: 8px; /* Slightly smaller radius */
@@ -72,3 +73,44 @@
 }
 
 /* Additional styles for hover and active states as previously defined */
+.custom-calendar .rbc-calendar {
+    /* ... other styles ... */
+    background-color: #272a29; /* Slate black background */
+    font-family: 'Montserrat', sans-serif; /* Montserrat font for the calendar */
+}
+
+.custom-calendar .rbc-header {
+    background-color: #201f1f; /* Medical red for headers */
+    color: white;
+    font-family: 'Montserrat', sans-serif; /* Montserrat font for headers */
+}
+
+.custom-calendar .rbc-today {
+    background-color: #383737; /* Medical red for today */
+}
+
+.custom-calendar .rbc-date-cell:hover {
+    background-color: #1c1c1c; /* Slightly darker slate black on hover */
+}
+
+.custom-calendar .rbc-event {
+    background-color: #373636; /* Medical red for events */
+    color: white;
+}
+
+.custom-calendar .rbc-event:hover {
+    background-color: #c70d0d; /* Slightly darker slate black on hover */
+}
+
+.custom-calendar .rbc-toolbar {
+    background-color: #272a29; /* Slate black for the toolbar */
+    color: white;
+    font-family: 'Montserrat', sans-serif; /* Montserrat font for the toolbar */
+}
+
+.custom-calendar .rbc-toolbar button {
+    color: white;
+}
+
+/* Add other custom styles as needed */
+

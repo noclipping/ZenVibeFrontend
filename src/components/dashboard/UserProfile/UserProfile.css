@@ -113,16 +113,93 @@
   background-color: rgba(255, 255, 255, 0.1); /* subtle hover effect */
 }
 
+
 .profile-modal-label {
   font-weight: bold;
   margin-right: 10px;
   color: #ac1c06; /* or any color of your choice */
+
+.profile-modal-label {
+  font-weight: bold;
+  margin-right: 15px; /* Increase margin for better spacing */
+  color: #ac1c06; /* or any color of your choice */
+  font-size: 16px; /* Increase font size for better visibility */
+
 }
 
 .profile-modal-value {
   font-weight: normal;
   color: #ffffff;
 }
+
+
+.intermediate-modal {
+  position: absolute;
+  right: 0;
+  background-color: rgb(39, 36, 36); /* Dark background color */
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  z-index: 15;
+  width: 150px; /* Set a fixed width */
+  font-size: 14px; /* Adjust font size */
+}
+
+.option-btn {
+  padding: 8px;
+  margin-bottom: 5px; /* Adds spacing between buttons */
+  font-size: 14px; /* Consistent font size */
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.1); /* Slight background for visibility */
+  border: none;
+  border-radius: 5px; /* Rounded corners for buttons */
+  color: white; /* Text color */
+  text-align: left;
+  transition: background-color 0.2s ease; /* Smooth transition for hover effect */
+}
+
+.option-btn:hover {
+  background: rgba(255, 255, 255, 0.2); /* Change background on hover */
+}
+/* Full Profile Modal */
+.full-profile-modal {
+  position: fixed;
+  z-index: 20;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%); /* Center the modal */
+  max-width: 80%; /* Increased maximum width */
+  max-height: 90%; /* Increased maximum height */
+  width: auto; /* Auto width based on content */
+  height: auto; /* Auto height based on content */
+  background-color: rgba(30, 29, 29, 0.931); /* Semi-transparent black background */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto; /* Scroll if content overflows */
+  padding: 200px;
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5); /* Box shadow for a floating effect */
+  box-sizing: border-box;
+}
+
+
+
+.close-full-profile-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 5px 10px;
+  font-size: 1.5em;
+  color: rgb(15, 15, 15);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
 
 /* Responsive adjustments */
 @media screen and (max-width: 480px) {

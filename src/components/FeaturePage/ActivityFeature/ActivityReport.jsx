@@ -15,22 +15,32 @@ function ActivityTrack() {
     reps: 0,
     lift_weight: 0,
     duration: 0,
+
     //entry_date: "",
   });
  
   //console.log(activities, "this one")
+
+    entry_date: "",
+  });
+
   const [activityStreak, setActivityStreak] = useState(0);
   const [pieChartData, setPieChartData] = useState({
     labels: [],
     datasets: [
       {
         data: [],
+
         backgroundColor: [
           "#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0", "#9966FF", // Example colors
         ],
         hoverBackgroundColor: [
           "#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0", "#9966FF", // Example hover colors
         ],
+
+        backgroundColor: ["red", "gray", "blue"], // Colors for Weights, Other, and Cardio respectively
+        hoverBackgroundColor: ["red", "gray", "blue"], // Hover colors
+
       },
     ],
   });
@@ -54,6 +64,7 @@ function ActivityTrack() {
   useEffect(() => {
     fetchActivities();
   }, [fetchActivities]);
+
   //console.log(fetchActivities)
 
   // const handleCreateActivity = async (event) => {
@@ -120,6 +131,76 @@ function ActivityTrack() {
             "#4BC0C0",
             "#9966FF",
           ], // Example hover colors
+
+  const handleCreateActivity = async (event) => {
+    event.preventDefault();
+    const activityData = {
+      ...newActivity,
+      sets: newActivity.sets || null,
+      reps: newActivity.reps || null,
+      lift_weight: newActivity.lift_weight || null,
+      duration: newActivity.duration || null,
+      entry_date:
+        newActivity.entry_date || new Date().toISOString().split("T")[0], // default to current date if not provided
+    };
+
+    try {
+      const response = await fetch(`http://localhost:3000/activity/${userId}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(activityData),
+        credentials: "include",
+      });
+      if (!response.ok) {
+        const errorResponse = await response.json();
+        throw new Error(errorResponse.error || "Failed to create activity");
+      }
+      setNewActivity({
+        activity_name: "",
+        sets: 0,
+        reps: 0,
+        lift_weight: 0,
+        duration: 0,
+        entry_date: "",
+      });
+      await fetchActivities();
+    } catch (error) {
+      console.error("Create Activity Error:", error);
+    }
+  };
+
+  const preparePieChartData = (activities) => {
+    const activityCategories = {
+      Weights: 0,
+      Cardio: 0,
+      Other: 0,
+    };
+
+    activities.forEach((activity) => {
+      const activityName = activity.activity_name || "Other"; // Default to 'Other' if no name is provided
+      const lowercaseActivityName = activityName.toLowerCase();
+
+      // Categorize activities based on keywords in the name
+      if (lowercaseActivityName.includes("weight")) {
+        activityCategories.Weights++;
+      } else if (
+        lowercaseActivityName.includes("cardio") ||
+        lowercaseActivityName.includes("running")
+      ) {
+        activityCategories.Cardio++;
+      } else {
+        activityCategories.Other++;
+      }
+    });
+
+    const chartData = {
+      labels: Object.keys(activityCategories),
+      datasets: [
+        {
+          label: "Activity Types",
+          data: Object.values(activityCategories),
+          backgroundColor: ["red", "gray", "blue"], // Colors for Weights, Other, and Cardio respectively
+          hoverBackgroundColor: ["red", "gray", "blue"], // Hover colors
         },
       ],
     };
@@ -163,7 +244,6 @@ function ActivityTrack() {
 //   console.log("Activities:", activities);
 // console.log("Pie Chart Data:", pieChartData);
 
-
   return (
     <div className="App">
       <SideNav userId={userId} />
@@ -182,6 +262,33 @@ function ActivityTrack() {
         
         
       <ActivityLog activities={activities} setActivities = {setActivities}fetchActivities={fetchActivities}  />
+      <div className="activity-content">
+        <h2>Activities</h2>
+        <div>Activity Streak: {activityStreak} days</div>
+        {pieChartData && pieChartData.labels.length > 0 ? (
+          <div className="activity-spacing">
+            {" "}
+            {/* Added this div with the class */}
+            <Pie data={pieChartData} />
+          </div>
+        ) : (
+          <p>Loading chart data...</p>
+        )}
+        <form onSubmit={handleCreateActivity}>
+          <input
+            type="text"
+            placeholder="Activity Name"
+            value={newActivity.activity_name}
+            onChange={(e) =>
+              setNewActivity({ ...newActivity, activity_name: e.target.value })
+            }
+            className="activity-input"
+          />
+          {/* Add other input fields for sets, reps, etc. */}
+          <button type="submit" className="activity-button">
+            Add Activity
+          </button>
+        </form>
       </div>
     </div>
   );

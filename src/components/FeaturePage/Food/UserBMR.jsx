@@ -1,9 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
+import PropTypes from 'prop-types'; // Import PropTypes
 // import FoodEntryCard from "./FoodEntryCard";
+import "../../FeaturePage/Food/UserBMR.css"
 import "./CalorieBar.css";
 
-export default function UserBMR({ totalCalories, foodEntries}) {
+export default function UserBMR({foodEntries}) {
    
     
     
@@ -32,8 +34,14 @@ export default function UserBMR({ totalCalories, foodEntries}) {
 
   const { id } = useParams();
 
-  const TDEE = () => Math.floor(BMR * getActivityFactor(activityLevel));
-  const totalDailyCalories = () => TDEE() - calorieDeficit;
+  const TDEE = useCallback(() => {
+    return Math.floor(BMR * getActivityFactor(activityLevel));
+  }, [BMR, activityLevel]);
+
+  const totalDailyCalories = useCallback(() => {
+    return TDEE() - calorieDeficit;
+  }, [TDEE, calorieDeficit]); // Add dependencies here
+
 
     useEffect(() => {
     const fetchUserData = async () => {
@@ -69,33 +77,34 @@ export default function UserBMR({ totalCalories, foodEntries}) {
     };
 
     fetchUserData();
-  }, [id, totalCalories, foodEntries]);
+  },  [id, foodEntries, totalDailyCalories]);
 
   
   
- const updateProgressBar = () => {
-    const percentage = totalDailyCalories() !== 0 ? (consumedCalories / totalDailyCalories()) * 100 : 0;
+  const updateProgressBar = () => {
+    const percentage = Math.min(100, (consumedCalories / totalDailyCalories()) * 100);
     return { width: `${percentage}%` };
-    
   };
-
+  
   const updateProgressBarColor = () => {
-    if (consumedCalories > totalDailyCalories()) {
-      return { backgroundColor: "#ff0000" }; // Green color for less than 500 calories
+    const percentage = (consumedCalories / totalDailyCalories()) * 100;
+    if (percentage < 70) {
+      return { backgroundColor: 'green' };
+    } else if (percentage >= 70 && percentage <= 90) {
+      return { backgroundColor: 'yellow' };
     } else {
-      return { backgroundColor: "#fff" }; // Red color for 1500 calories and above
+      return { backgroundColor: 'red' };
     }
   };
-  
 
   return (
     <div>
       <>
         {/* <h2>Calorie Calculator</h2> */}
        
-        <div className="progress-bar" style={{ ...updateProgressBar(), ...updateProgressBarColor() }}>
-          {totalCalories}
-        </div>
+        <div className="progress-bar">
+    <div className="progress-bar-inner" style={{ ...updateProgressBar(), ...updateProgressBarColor() }}></div>
+  </div>
 
         {/* <p>BMR: {BMR}</p>
         <p>TDEE: {calculateTDEE()}</p> */}
@@ -125,4 +134,11 @@ export default function UserBMR({ totalCalories, foodEntries}) {
       </>
     </div>
   );
+
 }
+
+  }
+  UserBMR.propTypes = {
+    foodEntries: PropTypes.array.isRequired
+  };
+

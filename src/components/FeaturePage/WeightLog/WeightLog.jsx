@@ -2,9 +2,18 @@ import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { Chart, registerables } from "chart.js";
 import annotationPlugin from "chartjs-plugin-annotation";
+
 import zoomPlugin from "chartjs-plugin-zoom";
 import PropTypes from "prop-types";
 import { calculateBMR } from "../../FeaturePage/Food/bmrCalculator"; // Ensure this path is correct
+
+import {
+  calculateBMR,
+  getActivityFactor,
+} from "../../FeaturePage/Food/CalculateBMR"; // Ensure correct path
+import zoomPlugin from "chartjs-plugin-zoom";
+import PropTypes from "prop-types";
+
 import "../../FeaturePage/WeightLog/WeightLog.css";
 
 Chart.register(...registerables, annotationPlugin, zoomPlugin);
@@ -23,17 +32,29 @@ function WeightLog({ showInputs }) {
   const [userAge, setUserAge] = useState(0);
   const [userGender, setUserGender] = useState("");
   const [BMI, setBMI] = useState(0);
+
   const [dailyCaloriesForWeightLoss, setDailyCaloriesForWeightLoss] =
     useState(0);
+
+  const [totalDailyCalories, setTotalDailyCalories] = useState(0);
+  const [userData, setUserData] = useState({});
+
   const [weightData, setWeightData] = useState({
     labels: ["Start"],
     datasets: [
       {
         label: "Weight (lb)",
+
         data: [],
         borderColor: "#FFFFFF",
         pointBackgroundColor: "#FF0000",
         pointBorderColor: "#FF0000",
+
+      data: [],
+      borderColor: "black", // Change line color to black
+      pointBackgroundColor: "red", // Change points to red
+      pointBorderColor: "black",
+
       },
     ],
   });
@@ -43,18 +64,26 @@ function WeightLog({ showInputs }) {
   const { id } = useParams();
 
   useEffect(() => {
+
     const storedValue = localStorage.getItem("dailyCaloriesForWeightLoss");
     if (storedValue) {
       setDailyCaloriesForWeightLoss(parseFloat(storedValue));
+
+    const storedTotalDailyCalories = localStorage.getItem("totalDailyCalories");
+    if (storedTotalDailyCalories) {
+      setTotalDailyCalories(parseFloat(storedTotalDailyCalories));
+
     }
   }, []);
 
   useEffect(() => {
-    const fetchUserData = async () => {
+    const fetchInitialData = async () => {
       if (!id) {
         console.error("No user ID available.");
         return;
       }
+
+
 
       try {
         const userResponse = await fetch(`http://localhost:3000/user/${id}`, {
@@ -62,6 +91,10 @@ function WeightLog({ showInputs }) {
           credentials: "include",
         });
         const userData = await userResponse.json();
+
+
+        setUserData(userData);
+
 
         setWeightGoal(userData.goal_weight);
         setHeightFeet(userData.feet);
@@ -72,13 +105,15 @@ function WeightLog({ showInputs }) {
           calculateBMI(userData.original_weight, userData.feet, userData.inches)
         );
 
+
         const initialBMR = calculateBMR(
           userData.gender,
           userData.original_weight,
           userData.feet * 12 + userData.inches,
           userData.age
         );
-        setDailyCaloriesForWeightLoss(calculateDailyCalories(initialBMR));
+        const TDEE = Math.floor(initialBMR * getActivityFactor("sedentary"));
+        setTotalDailyCalories(TDEE - 500); // Assuming a deficit of 500 calories
 
         const weightResponse = await fetch(
           `http://localhost:3000/weight/${id}`,
@@ -94,11 +129,24 @@ function WeightLog({ showInputs }) {
       }
     };
 
-    fetchUserData();
+    fetchInitialData();
   }, [id]);
+
 
   const calculateDailyCalories = (bmr, deficit = 500) => {
     return bmr - deficit;
+
+  const calculateAndUpdateCalories = (userData, weight) => {
+    const BMR = calculateBMR(
+      userData.gender,
+      weight,
+      userData.feet * 12 + userData.inches,
+      userData.age
+    );
+    const TDEE = Math.floor(BMR * getActivityFactor("sedentary"));
+    const newTotalDailyCalories = TDEE - 500;
+    setTotalDailyCalories(newTotalDailyCalories);
+    localStorage.setItem("totalDailyCalories", newTotalDailyCalories);
   };
 
   const updateChartData = (weightEntries, initialWeight) => {
@@ -110,9 +158,13 @@ function WeightLog({ showInputs }) {
         {
           label: "Weight (lb)",
           data: [initialWeight, ...chartData],
+
           borderColor: "#FFFFFF",
           pointBackgroundColor: "#FF0000",
           pointBorderColor: "#FF0000",
+          borderColor: "#C70039 ",
+          pointBackgroundColor: "black",
+          pointBorderColor: "white",
         },
       ],
     });
@@ -202,12 +254,15 @@ function WeightLog({ showInputs }) {
           setWeightData({
             ...weightData,
             labels: updatedLabels,
+
             datasets: [
               {
                 ...weightData.datasets[0],
                 data: updatedData,
               },
             ],
+
+            datasets: [{ ...weightData.datasets[0], data: updatedData }],
           });
 
           setBMI(calculateBMI(newWeightEntry.weight, heightFeet, heightInches));
@@ -218,6 +273,7 @@ function WeightLog({ showInputs }) {
             heightFeet * 12 + heightInches,
             userAge
           );
+
           const updatedCalorieIntake = calculateDailyCalories(updatedBMR);
           setDailyCaloriesForWeightLoss(updatedCalorieIntake);
 
@@ -229,11 +285,18 @@ function WeightLog({ showInputs }) {
           setWeight("");
         } else {
           throw new Error(`HTTP error! status: ${response.status}`);
+
+          const TDEE = Math.floor(updatedBMR * getActivityFactor("sedentary"));
+          setTotalDailyCalories(TDEE - 500); // Update total daily calories
+
         }
       } catch (error) {
         console.error("Error submitting weight:", error);
       }
     }
+    // Clear the weight input field after successful submission
+    setWeight("");
+    calculateAndUpdateCalories(userData, newEntryWeight);
   };
 
   const handleDeleteLastEntry = async () => {
@@ -248,6 +311,7 @@ function WeightLog({ showInputs }) {
         );
         if (!latestEntryResponse.ok)
           throw new Error("Failed to fetch latest entry");
+
 
         const latestEntry = await latestEntryResponse.json();
         const latestEntryId = latestEntry.entry_id;
@@ -290,10 +354,45 @@ function WeightLog({ showInputs }) {
     <div className="weight-log-container">
       <h1>Each Day is a step closer towards your goals</h1>
 
+
+        const latestEntry = await latestEntryResponse.json();
+        const latestEntryId = latestEntry.entry_id;
+
+        const deleteResponse = await fetch(
+          `http://localhost:3000/weight/${latestEntryId}`,
+          {
+            method: "DELETE",
+            credentials: "include",
+          }
+        );
+        if (!deleteResponse.ok) throw new Error("Failed to delete entry");
+
+        const updatedData = weightData.datasets[0].data.slice(0, -1);
+        const updatedLabels = weightData.labels.slice(0, -1);
+        setWeightData({
+          ...weightData,
+          labels: updatedLabels,
+          datasets: [{ ...weightData.datasets[0], data: updatedData }],
+        });
+
+        if (updatedData.length > 0) {
+          const latestWeight = updatedData[updatedData.length - 1];
+          calculateAndUpdateCalories(userData, latestWeight); // Recalculate calories after deletion
+        }
+      } catch (error) {
+        console.error("Error deleting weight entry:", error);
+      }
+    }
+  };
+  return (
+    <div className="weight-log-container">
+      <h1>Each Day is a step closer towards your goals</h1>
+  
+
       <div className="weight-log-chart">
         <canvas ref={chartRef} />
       </div>
-
+  
       {showInputs && (
         <>
           <form onSubmit={handleWeightSubmit} className="weight-log-form">
@@ -307,6 +406,7 @@ function WeightLog({ showInputs }) {
             <button type="submit">Log Weight</button>
           </form>
           <div className="bmi-display">
+
             <div>
               <p>
                 Calorie Intake: {dailyCaloriesForWeightLoss.toFixed(1)} kcal
@@ -327,6 +427,10 @@ function WeightLog({ showInputs }) {
                 consulting a healthcare professional for advice.
               </p>
             )}
+
+            <p>Daily Target Calorie intake: {totalDailyCalories} kcal</p>
+            <p>Current BMI: {BMI.toFixed(2)}</p> {/* Display only the BMI value */}
+
           </div>
           <button
             onClick={handleDeleteLastEntry}
@@ -344,4 +448,6 @@ WeightLog.propTypes = {
   showInputs: PropTypes.bool,
 };
 
+
 export default WeightLog;
+

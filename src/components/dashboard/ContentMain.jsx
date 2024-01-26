@@ -4,6 +4,7 @@ import ReminderTrack from "../FeaturePage/ReminderFeature/ReminderTrack";
 import ActivityTrack from "../FeaturePage/ActivityFeature/ActivityReport";
 import PropTypes from 'prop-types';
 import "./ContentMain.css";
+import MoodLog from '../FeaturePage/MoodTracker/MoodLog';
 
 const ContentMain = () => {
     const [activeIndex, setActiveIndex] = useState(0);
@@ -11,6 +12,9 @@ const ContentMain = () => {
 
     const components = [
         <WeightLog showInputs={false} key="WeightLog" />,
+
+        <MoodLog showInputs={false} key="MoodLog" />, // Add a comma here
+
         <ReminderTrack key="ReminderTrack" />,
         <ActivityTrack key="ActivityTrack" />
     ];
@@ -33,8 +37,13 @@ const ContentMain = () => {
                 {showDropdown && (
                     <ul className="dropdown-menu">
                         <li onClick={() => handleDropdownChange(0)}>Weight Log</li>
+
                         <li onClick={() => handleDropdownChange(1)}>Reminder Track</li>
                         <li onClick={() => handleDropdownChange(2)}>Activity Track</li>
+
+                        <li onClick={() => handleDropdownChange(1)}>Mood Log</li>
+                        <li onClick={() => handleDropdownChange(2)}>Reminder Track</li>
+                        <li onClick={() => handleDropdownChange(3)}>Activity Track</li>
                     </ul>
                 )}
             </div>

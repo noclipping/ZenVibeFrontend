@@ -10,6 +10,7 @@
     border-radius: 30px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 6px 6px rgba(0, 0, 0, 0.3); /* Outer shadow */
     margin-left: 500px; /* Adjust as per layout requirements */
+
     height: 60vh;
     width: 750px;
   }
@@ -63,16 +64,78 @@
   
   /* Input field styling */
   .message-input input {
+=======
+    height: 60vh; /* Set the height of the container */
+    width: 750px; /* Set the width of the container */
+}
+
+/* Message list styling */
+.message-list {
+    flex-grow: 1;
+    overflow-y: auto; /* Enable vertical scrolling */
+    width: 100%;
+    padding: 0 10px; /* Space for scrolling within the container */
+    max-height: 64vh; /* Set a maximum height for the message list */
+}
+
+.message {
+    max-width: 70%; /* Adjust the width of the messages */
+    margin-bottom: 5px; /* Reduced space between messages */
+    padding: 5px 10px; /* Reduced padding around messages */
+    border-radius: 10px; /* Reduced border radius for messages */
+    background-color: #424242; /* Dark background for messages */
+    color: #fff; /* White text for readability */
+    word-wrap: break-word; /* Ensure long words wrap */
+    align-self: flex-start; /* Align messages to start */
+}
+
+.message.user {
+    background-color: #0e2853; /* Medical red color for user messages */
+    color: white;
+    align-self: flex-end; /* Align user messages to the end */
+}
+
+/* Typing indicator styling */
+.typing-indicator {
+    font-style: italic;
+    color: #666;
+    align-self: flex-end;
+}
+
+/* Message input area styling */
+.message-input {
+    display: flex;
+    align-items: center;
+    background-color: #2a292985; /* Dark background for input area */
+    border-radius: 15px;
+    padding: 15px;
+    position: absolute; /* Fixed position at the bottom of the container */
+    bottom: 80px; /* Adjust as needed */
+    left: 56%; /* Center align the input area */
+    transform: translateX(-50%); /* Adjust for center alignment */
+    width: 50%; /* Adjust the width of the input area */
+}
+
+/* Input field styling */
+.message-input input {
+
     flex-grow: 1;
     background-color: transparent;
     border: none;
     color: #fff;
     padding-left: 10px;
     outline: none;
+
   }
   
   /* Send button styling */
   .message-input button {
+
+}
+
+/* Send button styling */
+.message-input button {
+
     margin-left: 10px;
     background-color: #0e2853; /* Medical red color */
     border: none;
@@ -81,9 +144,16 @@
     border-radius: 15px;
     cursor: pointer;
     transition: background-color 0.3s;
+
   }
   
   .message-input button:hover {
     background-color: #201f1f;
   }
   
+
+}
+
+.message-input button:hover {
+    background-color: #201f1f;
+}
