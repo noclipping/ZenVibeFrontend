@@ -5,7 +5,7 @@
     display: flex;
     flex-direction: column;
     align-items: center; /* Centers content horizontally within the container */
-    padding: 40px; /* Padding inside the container */
+    padding: 20px; /* Padding inside the container */
     margin-left: 400px; /* Increase this value as needed to move away from the sidebar */
     background-color: #15151585; /* Semi-transparent dark background */
     font-family: 'Montserrat', sans-serif;
@@ -22,7 +22,7 @@
 .weight-log-container h1 {
     font-family: 'Montserrat', sans-serif;
     font-size: 30px;
-    padding-right: 100px;
+    padding-right: 5px;
     /* You can also add other font-related properties here */
   }
 
@@ -32,8 +32,8 @@
     flex-direction: column; /* Stack inputs vertically */
     align-items: center; /* Center-align the form */
     gap: 10px;
-    width: 100%; /* Full width to align with the chart */
-    margin-top: 15px; /* Space after the chart */
+    width: 50%; /* Full width to align with the chart */
+    margin-top: -30px; /* Space after the chart */
 }
 
 .weight-log-form input {
@@ -66,13 +66,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-bottom: 10px;
-    width: 100%; /* Use 100% of the container's width */
-    margin-right: 0; /* Reset any specific margins */
+    padding-bottom: 60px;
+    width: 120%; /* Use 100% of the container's width */
+    margin-right: 10px; /* Reset any specific margins */
 }
 
 .weight-log-chart canvas {
-    max-width: 100%; /* Ensure the canvas does not overflow its container */
+    max-width: 1000px; /* Ensure the canvas does not overflow its container */
     height: auto !important;
 }
 .bmi-display {
@@ -82,7 +82,7 @@
     padding-right: 15px;
     border-radius: 15px;
     margin-top: 10px;
-    width: 80%; /* Match the width of the chart and form elements */
+    width: 40%; /* Match the width of the chart and form elements */
     margin: 10px auto;
     text-align: center; /* Center-align the text */
     
@@ -132,10 +132,33 @@
     overflow: hidden; /* Hide overflowing content */
   }
   
-  .progress-bar-fill {
-    height: 20px; /* Height of the progress bar */
-    width: 0; /* Initial width (0% progress) */
-    background-color: #0e2853; /* Color of the filled progress bar */
-    transition: width 0.5s ease-in-out; /* Animation for smooth progress change */
+
+  
+  .tooltip {
+    position: relative;
+    display: inline-block;
+    cursor: pointer; /* Indicates hoverable area */
+  }
+  
+  .tooltip .tooltipText {
+    visibility: hidden;
+    width: 200px;
+    background-color: rgba(42, 41, 41, 0.927);
+    color: white;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -100px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  
+  .tooltip:hover .tooltipText {
+    visibility: visible;
+    opacity: 1;
   }
   
