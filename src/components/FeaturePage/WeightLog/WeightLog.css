@@ -21,7 +21,7 @@
 
 .weight-log-container h1 {
     font-family: 'Montserrat', sans-serif;
-    font-size: 35px;
+    font-size: 30px;
     padding-right: 100px;
     /* You can also add other font-related properties here */
   }
@@ -116,3 +116,26 @@
 .delete-entry-button:hover {
     background-color: #950d08; /* Darker shade on hover */
 }
+
+/* Add this CSS code to your project */
+.progress-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 90px; /* Adjust the margin-top as needed */
+  }
+  
+  .progress-bar {
+    width: 100%;
+    background-color: #ddd; /* Background color of the progress bar container */
+    border-radius: 10px;
+    overflow: hidden; /* Hide overflowing content */
+  }
+  
+  .progress-bar-fill {
+    height: 20px; /* Height of the progress bar */
+    width: 0; /* Initial width (0% progress) */
+    background-color: #0e2853; /* Color of the filled progress bar */
+    transition: width 0.5s ease-in-out; /* Animation for smooth progress change */
+  }
+  
