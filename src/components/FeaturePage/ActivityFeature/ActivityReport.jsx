@@ -1,5 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
+import ActivityCard from "./ActivityCard";
+import ActivityLog from "./ActivityLog";
 import { Pie } from "react-chartjs-2";
 import SideNav from "../../../components/dashboard/sidebar/SideNav";
 import UserProfile from "../../dashboard/UserProfile/UserProfile";
@@ -13,9 +15,10 @@ function ActivityTrack() {
     reps: 0,
     lift_weight: 0,
     duration: 0,
-    entry_date: "",
+    //entry_date: "",
   });
  
+  //console.log(activities, "this one")
   const [activityStreak, setActivityStreak] = useState(0);
   const [pieChartData, setPieChartData] = useState({
     labels: [],
@@ -51,43 +54,44 @@ function ActivityTrack() {
   useEffect(() => {
     fetchActivities();
   }, [fetchActivities]);
+  //console.log(fetchActivities)
 
-  const handleCreateActivity = async (event) => {
-    event.preventDefault();
-    const activityData = {
-      ...newActivity,
-      sets: newActivity.sets || null,
-      reps: newActivity.reps || null,
-      lift_weight: newActivity.lift_weight || null,
-      duration: newActivity.duration || null,
-      entry_date:
-        newActivity.entry_date || new Date().toISOString().split("T")[0], // default to current date if not provided
-    };
+  // const handleCreateActivity = async (event) => {
+  //   event.preventDefault();
+  //   const activityData = {
+  //     ...newActivity,
+  //     sets: newActivity.sets || null,
+  //     reps: newActivity.reps || null,
+  //     lift_weight: newActivity.lift_weight || null,
+  //     duration: newActivity.duration || null,
+  //     entry_date:
+  //       newActivity.entry_date || new Date().toISOString().split("T")[0], // default to current date if not provided
+  //   };
 
-    try {
-      const response = await fetch(`http://localhost:3000/activity/${userId}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(activityData),
-        credentials: "include",
-      });
-      if (!response.ok) {
-        const errorResponse = await response.json();
-        throw new Error(errorResponse.error || "Failed to create activity");
-      }
-      setNewActivity({
-        activity_name: "",
-        sets: 0,
-        reps: 0,
-        lift_weight: 0,
-        duration: 0,
-        entry_date: "",
-      });
-      await fetchActivities();
-    } catch (error) {
-      console.error("Create Activity Error:", error);
-    }
-  };
+  //   try {
+  //     const response = await fetch(`http://localhost:3000/activity/${userId}`, {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify(activityData),
+  //       credentials: "include",
+  //     });
+  //     if (!response.ok) {
+  //       const errorResponse = await response.json();
+  //       throw new Error(errorResponse.error || "Failed to create activity");
+  //     }
+  //     setNewActivity({
+  //       activity_name: "",
+  //       sets: 0,
+  //       reps: 0,
+  //       lift_weight: 0,
+  //       duration: 0,
+  //       entry_date: "",
+  //     });
+  //     await fetchActivities();
+  //   } catch (error) {
+  //     console.error("Create Activity Error:", error);
+  //   }
+  // };
 
   const preparePieChartData = (activities) => {
     const activityTypes = activities.reduce((acc, activity) => {
@@ -156,69 +160,28 @@ function ActivityTrack() {
     setActivityStreak(streak);
   }, [activities]);
 
+//   console.log("Activities:", activities);
+// console.log("Pie Chart Data:", pieChartData);
+
+
   return (
     <div className="App">
       <SideNav userId={userId} />
       <UserProfile userId={userId} />
+      {/* <ActivityCard /> */}
+      
       <div className="activity-content">
-        <h2>Activities</h2>
+        
+      <h2>Activities</h2>
         <div>Activity Streak: {activityStreak} days</div>
         {pieChartData && pieChartData.labels.length > 0 ? (
           <Pie data={pieChartData} />
         ) : (
           <p>Loading chart data...</p>
         )}
-        <form onSubmit={handleCreateActivity}>
-          <input
-            type="text"
-            placeholder="Activity Name"
-            value={newActivity.activity_name}
-            onChange={(e) =>
-              setNewActivity({ ...newActivity, activity_name: e.target.value })
-            }
-          />
-          <input
-            type="text"
-            placeholder="Sets"
-            value={newActivity.sets}
-            onChange={(e) =>
-              setNewActivity({ ...newActivity, activity_name: e.target.value })
-            }
-          />
-          <input
-            type="text"
-            placeholder="Reps"
-            value={newActivity.reps}
-            onChange={(e) =>
-              setNewActivity({ ...newActivity, activity_name: e.target.value })
-            }
-          />
-          <input
-            type="text"
-            placeholder="Weight Lifted"
-            value={newActivity.lift_weight}
-            onChange={(e) =>
-              setNewActivity({ ...newActivity, activity_name: e.target.value })
-            }
-          />
-          <input
-            type="text"
-            placeholder="Duration"
-            value={newActivity.duration}
-            onChange={(e) =>
-              setNewActivity({ ...newActivity, activity_name: e.target.value })
-            }
-          />
-          {/* Add other input fields for sets, reps, etc. */}
-          <button type="submit">Add Activity</button>
-        </form>
-        {activities.map((activity, index) => (
-          <div key={index} className="activity-item">
-            <h3>{activity.activity_name}</h3>
-            {/* Buttons for editing and deleting activities */}
-            {/* Implement these as needed */}
-          </div>
-        ))}
+        
+        
+      <ActivityLog activities={activities} setActivities = {setActivities}fetchActivities={fetchActivities}  />
       </div>
     </div>
   );

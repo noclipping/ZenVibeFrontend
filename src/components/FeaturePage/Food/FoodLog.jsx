@@ -170,7 +170,7 @@ function FoodLog() {
       <UserBMR consumedCalories={consumedCalories} foodEntries={foodEntries} />
       {/* <p>Total Daily Calories: {totalCalories}</p> */}
       {/* <div className="progress-bar" style={{ ...updateProgressBar(), ...updateProgressBarColor() }}>{totalCalories}</div> */}
-      {foodEntries.map((foodEntry, index) => (
+      {foodEntries.map((foodEntry) => (
         <FoodEntryCard
           key={foodEntry.entry_id}
           entry={foodEntry}
