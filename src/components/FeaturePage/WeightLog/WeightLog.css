@@ -1,36 +1,43 @@
-/* Overall container */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+
 .weight-log-container {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    padding: 50px;
-    background-color: #1c1b1b85; /* Dark background */
-    color: #fff; /* White text color for contrast */
-    border-radius: 30px;
-  
-    /* Enhanced box shadow for depth */
-    box-shadow: 
-      0 10px 20px rgba(0, 0, 0, 0.2), /* Outer shadow */
-      0 6px 6px rgba(0, 0, 0, 0.3); /* Inner shadow for added depth */
-  
-    padding-left: 20px;
-    margin-right: auto;
-    max-width: 1000px;
-    margin-left: 400px;
-    height: 75vh;
+    align-items: center; /* Centers content horizontally within the container */
+    padding: 40px; /* Padding inside the container */
+    margin-left: 400px; /* Increase this value as needed to move away from the sidebar */
+    background-color: #15151585; /* Semi-transparent dark background */
+    font-family: 'Montserrat', sans-serif;
+    color: #fff;
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 6px 6px rgba(0, 0, 0, 0.3);
+    max-width: 100%; /* You might want to adjust this if the container is still too wide */
+    height: auto;
     justify-content: space-between;
+    /* Remove margin-right if you are pushing the container from the sidebar */
+    margin-right: 0; /* Or adjust it if you want to keep some space on the right as well */
+}
+
+.weight-log-container h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 30px;
+    padding-right: 100px;
+    /* You can also add other font-related properties here */
   }
-  
 
 /* Form styling */
 .weight-log-form {
     display: flex;
+    flex-direction: column; /* Stack inputs vertically */
+    align-items: center; /* Center-align the form */
     gap: 10px;
-    margin-top: 15px; /* Moved form to the bottom */
+    width: 100%; /* Full width to align with the chart */
+    margin-top: 15px; /* Space after the chart */
 }
 
 .weight-log-form input {
-    padding: 10px 25px;
+    padding: 10px 15px;
     border: 3px solid #1e1d1d;
     border-radius: 15px;
     width: 150px; /* Increased width of input */
@@ -39,56 +46,44 @@
 }
 
 .weight-log-form button {
-    padding: 15px 25px;
-    background-color: #0e2853; /* Medical red color */
+    padding: 15px 20px;
+    background-color: #0e2853; 
     color: white;
     border: none;
     border-radius: 15px;
     cursor: pointer;
     transition: background-color 0.3s;
+    font-size: 14px;
+    width: 80%;
 }
 
 .weight-log-form button:hover {
     background-color: #201f1f;
 }
 
-/* Chart area */
+
 .weight-log-chart {
-    width: 105%;
-    flex-grow: 1; /* Chart takes up remaining space */
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-bottom: 10px;
+    width: 100%; /* Use 100% of the container's width */
+    margin-right: 0; /* Reset any specific margins */
 }
 
 .weight-log-chart canvas {
-    width: 90% !important; /* Adjust width as needed */
+    max-width: 100%; /* Ensure the canvas does not overflow its container */
     height: auto !important;
 }
-
-.clear-data-button {
-    padding: 10px 20px;
-    background-color: #8f0b04; /* Red color for clear button */
-    color: white;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    margin-top: 30px; /* Spacing from the forms */
-    margin-bottom: 15px;
-    width: 200px;
-
-    transition: background-color 0.3s;
-}
-
-.clear-data-button:hover {
-    background-color: #201f1f; /* Darker shade on hover */
-}
-
 .bmi-display {
     background-color: #191818c3; /* Slightly different background */
-    padding: 10px;
+    padding: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
     border-radius: 15px;
-    margin-top: 15px;
+    margin-top: 10px;
+    width: 80%; /* Match the width of the chart and form elements */
+    margin: 10px auto;
     text-align: center; /* Center-align the text */
     
     /* Adding a box shadow for depth */
@@ -99,8 +94,48 @@
 
 .bmi-display p {
     font-family: 'Montserrat', sans-serif; /* Apply Montserrat font to paragraphs */
-    font-size: 1.1rem;
+    font-size: 14px;
 }
 
 
 
+.delete-entry-button {
+    padding: 15px 30px;
+    background-color:#272626; /* Bootstrap's btn-danger color */
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: #201f1f;
+    margin: 10px;
+    margin-left: 20px;
+    transition: background-color 0.3s;
+    font-size: 14px;
+}
+
+.delete-entry-button:hover {
+    background-color: #950d08; /* Darker shade on hover */
+}
+
+/* Add this CSS code to your project */
+.progress-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 90px; /* Adjust the margin-top as needed */
+  }
+  
+  .progress-bar {
+    width: 100%;
+    background-color: #ddd; /* Background color of the progress bar container */
+    border-radius: 10px;
+    overflow: hidden; /* Hide overflowing content */
+  }
+  
+  .progress-bar-fill {
+    height: 20px; /* Height of the progress bar */
+    width: 0; /* Initial width (0% progress) */
+    background-color: #0e2853; /* Color of the filled progress bar */
+    transition: width 0.5s ease-in-out; /* Animation for smooth progress change */
+  }
+  

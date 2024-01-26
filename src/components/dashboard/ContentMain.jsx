@@ -1,64 +1,55 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import WeightLog from "../FeaturePage/WeightLog/WeightLog";
 import ReminderTrack from "../FeaturePage/ReminderFeature/ReminderTrack";
 import ActivityTrack from "../FeaturePage/ActivityFeature/ActivityReport";
 import PropTypes from 'prop-types';
 import "./ContentMain.css";
+import MoodLog from '../FeaturePage/MoodTracker/MoodLog';
 
 const ContentMain = () => {
-  const [searchTerm, setSearchTerm] = useState('');
+    const [activeIndex, setActiveIndex] = useState(0);
+    const [showDropdown, setShowDropdown] = useState(false);
 
-  useEffect(() => {
-    // Disable scrolling when the component mounts
-    document.body.style.overflow = 'hidden';
+    const components = [
+        <WeightLog showInputs={false} key="WeightLog" />,
+        <MoodLog showInputs={false} key="MoodLog" />, // Add a comma here
+        <ReminderTrack key="ReminderTrack" />,
+        <ActivityTrack key="ActivityTrack" />
+    ];
 
-    // Enable scrolling back when the component unmounts
-    return () => {
-      document.body.style.overflow = 'unset';
+    const handleDropdownChange = (index) => {
+        setActiveIndex(index);
+        setShowDropdown(false); // Hide dropdown after selection
     };
-  }, []);
 
-  const handleSearchChange = (event) => {
-    setSearchTerm(event.target.value.toLowerCase());
-  };
-
-  const renderComponents = () => {
-    if (searchTerm === "weight") {
-      return <WeightLog showInputs={false} />;
-    } else if (searchTerm === "reminders") {
-      return <ReminderTrack />;
-    } else if (searchTerm === "activity") {
-      return <ActivityTrack />;
-    } else {
-      return (
-        <>
-          <WeightLog showInputs={false} />
-          <ReminderTrack />
-          <ActivityTrack />
-        </>
-      );
+    const renderComponent = () => {
+        return components[activeIndex];
     }
-  };
 
-  return (
-    <div>
-      <div className="search-container">
-        <input
-          type="text"
-          placeholder="Search views"
-          onChange={handleSearchChange}
-          value={searchTerm}
-        />
-      </div>
-      <div className="main-content-holder">
-        {renderComponents()}
-      </div>
-    </div>
-  );
+    return (
+        <div>
+            <div className="search-container"
+                 onMouseEnter={() => setShowDropdown(true)}
+                 onMouseLeave={() => setShowDropdown(false)}>
+                <input type="text" placeholder="Search views" readOnly />
+                {showDropdown && (
+                    <ul className="dropdown-menu">
+                        <li onClick={() => handleDropdownChange(0)}>Weight Log</li>
+                        <li onClick={() => handleDropdownChange(1)}>Mood Log</li>
+                        <li onClick={() => handleDropdownChange(2)}>Reminder Track</li>
+                        <li onClick={() => handleDropdownChange(3)}>Activity Track</li>
+                    </ul>
+                )}
+            </div>
+            <div className="main-content-holder">
+                {renderComponent()}
+            </div>
+        </div>
+    );
 };
 
 ContentMain.propTypes = {
-  userId: PropTypes.string.isRequired,
+    userId: PropTypes.string.isRequired,
 };
 
 export default ContentMain;
