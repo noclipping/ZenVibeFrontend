@@ -3,6 +3,19 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    padding: 100px;
+    
+    background-color: #2d2c2c85; /* Dark background */
+    color: #fff; /* White text color for contrast */
+    border-radius: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    margin-right: auto;
+    max-width: 1000px;
+    margin-left: 700px;
+    height: 75vh; /* Adjust height to fill screen vertically */
+    justify-content: space-between; /* Distribute space */
+
     padding: 40px; /* Adjusted padding for proportionality */
     margin-left: 700px; /* Keep the current position */
     background-color: #2d2c2c85; /* Dark background */
@@ -14,6 +27,7 @@
     justify-content: space-between;
     /* Remove margin-right if you are pushing the container from the sidebar */
     margin-right: 0; /* Or adjust it if you want to keep some space on the right as well */
+
 }
 
 /* Form styling for Activity */

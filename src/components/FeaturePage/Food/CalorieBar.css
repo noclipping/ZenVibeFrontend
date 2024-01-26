@@ -7,6 +7,28 @@
   overflow: hidden; /* For rounded corners */
 }
 
+
+
+.calorie-counter {
+    text-align: center;
+  }
+  
+  input {
+    padding: 8px;
+    margin: 10px;
+  }
+  
+  .progress-bar {
+    background-color: #e0e0e0;
+    height: 20px;
+    margin-top: 10px;
+    width: 0; /* Initial width is set to 0, and it will be dynamically adjusted using JavaScript */
+    transition: width 0.3s ease-in-out, background-color 0.3s ease-in-out;
+  }
+
+  
+
+=======
 .progress-bar-inner {
   height: 100%;
   border-radius: 10px;
@@ -26,3 +48,4 @@
   background-color: #f5f5f5;
   color: #333;
 }
+

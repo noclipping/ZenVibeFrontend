@@ -29,10 +29,6 @@ function LandingPage() {
         <h2 className="section-title">About ZenVibe</h2>
         <p className="section-content">
           <div>
-Mood Tracker
-Understand your mood patterns and work towards emotional balance.
-
-
             <p>
               ZenVibe is an innovative health and wellness tracker, meticulously
               crafted to guide and support individuals on their journey to a

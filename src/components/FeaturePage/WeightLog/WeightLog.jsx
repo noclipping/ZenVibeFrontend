@@ -2,12 +2,18 @@ import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { Chart, registerables } from "chart.js";
 import annotationPlugin from "chartjs-plugin-annotation";
+
+import zoomPlugin from "chartjs-plugin-zoom";
+import PropTypes from "prop-types";
+import { calculateBMR } from "../../FeaturePage/Food/bmrCalculator"; // Ensure this path is correct
+
 import {
   calculateBMR,
   getActivityFactor,
 } from "../../FeaturePage/Food/CalculateBMR"; // Ensure correct path
 import zoomPlugin from "chartjs-plugin-zoom";
 import PropTypes from "prop-types";
+
 import "../../FeaturePage/WeightLog/WeightLog.css";
 
 Chart.register(...registerables, annotationPlugin, zoomPlugin);
@@ -26,17 +32,29 @@ function WeightLog({ showInputs }) {
   const [userAge, setUserAge] = useState(0);
   const [userGender, setUserGender] = useState("");
   const [BMI, setBMI] = useState(0);
+
+  const [dailyCaloriesForWeightLoss, setDailyCaloriesForWeightLoss] =
+    useState(0);
+
   const [totalDailyCalories, setTotalDailyCalories] = useState(0);
   const [userData, setUserData] = useState({});
+
   const [weightData, setWeightData] = useState({
     labels: ["Start"],
     datasets: [
       {
         label: "Weight (lb)",
+
+        data: [],
+        borderColor: "#FFFFFF",
+        pointBackgroundColor: "#FF0000",
+        pointBorderColor: "#FF0000",
+
       data: [],
       borderColor: "black", // Change line color to black
       pointBackgroundColor: "red", // Change points to red
       pointBorderColor: "black",
+
       },
     ],
   });
@@ -46,9 +64,15 @@ function WeightLog({ showInputs }) {
   const { id } = useParams();
 
   useEffect(() => {
+
+    const storedValue = localStorage.getItem("dailyCaloriesForWeightLoss");
+    if (storedValue) {
+      setDailyCaloriesForWeightLoss(parseFloat(storedValue));
+
     const storedTotalDailyCalories = localStorage.getItem("totalDailyCalories");
     if (storedTotalDailyCalories) {
       setTotalDailyCalories(parseFloat(storedTotalDailyCalories));
+
     }
   }, []);
 
@@ -68,7 +92,9 @@ function WeightLog({ showInputs }) {
         });
         const userData = await userResponse.json();
 
+
         setUserData(userData);
+
 
         setWeightGoal(userData.goal_weight);
         setHeightFeet(userData.feet);
@@ -78,6 +104,7 @@ function WeightLog({ showInputs }) {
         setBMI(
           calculateBMI(userData.original_weight, userData.feet, userData.inches)
         );
+
 
         const initialBMR = calculateBMR(
           userData.gender,
@@ -105,6 +132,10 @@ function WeightLog({ showInputs }) {
     fetchInitialData();
   }, [id]);
 
+
+  const calculateDailyCalories = (bmr, deficit = 500) => {
+    return bmr - deficit;
+
   const calculateAndUpdateCalories = (userData, weight) => {
     const BMR = calculateBMR(
       userData.gender,
@@ -127,6 +158,10 @@ function WeightLog({ showInputs }) {
         {
           label: "Weight (lb)",
           data: [initialWeight, ...chartData],
+
+          borderColor: "#FFFFFF",
+          pointBackgroundColor: "#FF0000",
+          pointBorderColor: "#FF0000",
           borderColor: "#C70039 ",
           pointBackgroundColor: "black",
           pointBorderColor: "white",
@@ -142,8 +177,6 @@ function WeightLog({ showInputs }) {
 
     const ctx = chartRef.current.getContext("2d");
     const goalValue = parseFloat(weightGoal);
-
-    
 
     const annotations = goalValue
       ? {
@@ -221,6 +254,14 @@ function WeightLog({ showInputs }) {
           setWeightData({
             ...weightData,
             labels: updatedLabels,
+
+            datasets: [
+              {
+                ...weightData.datasets[0],
+                data: updatedData,
+              },
+            ],
+
             datasets: [{ ...weightData.datasets[0], data: updatedData }],
           });
 
@@ -232,8 +273,22 @@ function WeightLog({ showInputs }) {
             heightFeet * 12 + heightInches,
             userAge
           );
+
+          const updatedCalorieIntake = calculateDailyCalories(updatedBMR);
+          setDailyCaloriesForWeightLoss(updatedCalorieIntake);
+
+          localStorage.setItem(
+            "dailyCaloriesForWeightLoss",
+            updatedCalorieIntake
+          );
+
+          setWeight("");
+        } else {
+          throw new Error(`HTTP error! status: ${response.status}`);
+
           const TDEE = Math.floor(updatedBMR * getActivityFactor("sedentary"));
           setTotalDailyCalories(TDEE - 500); // Update total daily calories
+
         }
       } catch (error) {
         console.error("Error submitting weight:", error);
@@ -256,6 +311,49 @@ function WeightLog({ showInputs }) {
         );
         if (!latestEntryResponse.ok)
           throw new Error("Failed to fetch latest entry");
+
+
+        const latestEntry = await latestEntryResponse.json();
+        const latestEntryId = latestEntry.entry_id;
+
+        const deleteResponse = await fetch(
+          `http://localhost:3000/weight/${latestEntryId}`,
+          {
+            method: "DELETE",
+            credentials: "include",
+          }
+        );
+        if (!deleteResponse.ok) throw new Error("Failed to delete entry");
+
+        const updatedData = weightData.datasets[0].data.slice(0, -1);
+        const updatedLabels = weightData.labels.slice(0, -1);
+        setWeightData({
+          ...weightData,
+          labels: updatedLabels,
+          datasets: [{ ...weightData.datasets[0], data: updatedData }],
+        });
+      } catch (error) {
+        console.error("Error deleting weight entry:", error);
+      }
+    }
+  };
+
+  function getBMICategory(bmi) {
+    if (bmi < 18.5) {
+      return "Underweight";
+    } else if (bmi >= 18.5 && bmi <= 24.9) {
+      return "Normal weight";
+    } else if (bmi >= 25 && bmi <= 29.9) {
+      return "Overweight";
+    } else {
+      return "Obesity";
+    }
+  }
+
+  return (
+    <div className="weight-log-container">
+      <h1>Each Day is a step closer towards your goals</h1>
+
 
         const latestEntry = await latestEntryResponse.json();
         const latestEntryId = latestEntry.entry_id;
@@ -290,6 +388,7 @@ function WeightLog({ showInputs }) {
     <div className="weight-log-container">
       <h1>Each Day is a step closer towards your goals</h1>
   
+
       <div className="weight-log-chart">
         <canvas ref={chartRef} />
       </div>
@@ -307,8 +406,31 @@ function WeightLog({ showInputs }) {
             <button type="submit">Log Weight</button>
           </form>
           <div className="bmi-display">
+
+            <div>
+              <p>
+                Calorie Intake: {dailyCaloriesForWeightLoss.toFixed(1)} kcal
+              </p>
+            </div>
+            <p>
+              Current BMI: {BMI.toFixed(2)} ({getBMICategory(BMI)})
+            </p>
+            {BMI > 24.9 && (
+              <p>
+                Your BMI indicates that you might be overweight. Consider
+                consulting a healthcare professional for advice.
+              </p>
+            )}
+            {BMI < 18.5 && (
+              <p>
+                Your BMI indicates that you might be underweight. Consider
+                consulting a healthcare professional for advice.
+              </p>
+            )}
+
             <p>Daily Target Calorie intake: {totalDailyCalories} kcal</p>
             <p>Current BMI: {BMI.toFixed(2)}</p> {/* Display only the BMI value */}
+
           </div>
           <button
             onClick={handleDeleteLastEntry}
@@ -326,4 +448,6 @@ WeightLog.propTypes = {
   showInputs: PropTypes.bool,
 };
 
+
 export default WeightLog;
+

@@ -1,5 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
+import ActivityCard from "./ActivityCard";
+import ActivityLog from "./ActivityLog";
 import { Pie } from "react-chartjs-2";
 import SideNav from "../../../components/dashboard/sidebar/SideNav";
 import UserProfile from "../../dashboard/UserProfile/UserProfile";
@@ -13,16 +15,32 @@ function ActivityTrack() {
     reps: 0,
     lift_weight: 0,
     duration: 0,
+
+    //entry_date: "",
+  });
+ 
+  //console.log(activities, "this one")
+
     entry_date: "",
   });
+
   const [activityStreak, setActivityStreak] = useState(0);
   const [pieChartData, setPieChartData] = useState({
     labels: [],
     datasets: [
       {
         data: [],
+
+        backgroundColor: [
+          "#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0", "#9966FF", // Example colors
+        ],
+        hoverBackgroundColor: [
+          "#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0", "#9966FF", // Example hover colors
+        ],
+
         backgroundColor: ["red", "gray", "blue"], // Colors for Weights, Other, and Cardio respectively
         hoverBackgroundColor: ["red", "gray", "blue"], // Hover colors
+
       },
     ],
   });
@@ -46,6 +64,73 @@ function ActivityTrack() {
   useEffect(() => {
     fetchActivities();
   }, [fetchActivities]);
+
+  //console.log(fetchActivities)
+
+  // const handleCreateActivity = async (event) => {
+  //   event.preventDefault();
+  //   const activityData = {
+  //     ...newActivity,
+  //     sets: newActivity.sets || null,
+  //     reps: newActivity.reps || null,
+  //     lift_weight: newActivity.lift_weight || null,
+  //     duration: newActivity.duration || null,
+  //     entry_date:
+  //       newActivity.entry_date || new Date().toISOString().split("T")[0], // default to current date if not provided
+  //   };
+
+  //   try {
+  //     const response = await fetch(`http://localhost:3000/activity/${userId}`, {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify(activityData),
+  //       credentials: "include",
+  //     });
+  //     if (!response.ok) {
+  //       const errorResponse = await response.json();
+  //       throw new Error(errorResponse.error || "Failed to create activity");
+  //     }
+  //     setNewActivity({
+  //       activity_name: "",
+  //       sets: 0,
+  //       reps: 0,
+  //       lift_weight: 0,
+  //       duration: 0,
+  //       entry_date: "",
+  //     });
+  //     await fetchActivities();
+  //   } catch (error) {
+  //     console.error("Create Activity Error:", error);
+  //   }
+  // };
+
+  const preparePieChartData = (activities) => {
+    const activityTypes = activities.reduce((acc, activity) => {
+      const type = activity.activity_name || "Other"; // Use activity_name as category, default to 'Other'
+      acc[type] = (acc[type] || 0) + 1;
+      return acc;
+    }, {});
+
+    const chartData = {
+      labels: Object.keys(activityTypes),
+      datasets: [
+        {
+          label: "Activity Types",
+          data: Object.values(activityTypes),
+          backgroundColor: [
+            "#FF6384",
+            "#36A2EB",
+            "#FFCE56",
+            "#4BC0C0",
+            "#9966FF",
+          ], // Example colors
+          hoverBackgroundColor: [
+            "#FF6384",
+            "#36A2EB",
+            "#FFCE56",
+            "#4BC0C0",
+            "#9966FF",
+          ], // Example hover colors
 
   const handleCreateActivity = async (event) => {
     event.preventDefault();
@@ -156,10 +241,27 @@ function ActivityTrack() {
     setActivityStreak(streak);
   }, [activities]);
 
+//   console.log("Activities:", activities);
+// console.log("Pie Chart Data:", pieChartData);
+
   return (
     <div className="App">
       <SideNav userId={userId} />
       <UserProfile userId={userId} />
+      {/* <ActivityCard /> */}
+      
+      <div className="activity-content">
+        
+      <h2>Activities</h2>
+        <div>Activity Streak: {activityStreak} days</div>
+        {pieChartData && pieChartData.labels.length > 0 ? (
+          <Pie data={pieChartData} />
+        ) : (
+          <p>Loading chart data...</p>
+        )}
+        
+        
+      <ActivityLog activities={activities} setActivities = {setActivities}fetchActivities={fetchActivities}  />
       <div className="activity-content">
         <h2>Activities</h2>
         <div>Activity Streak: {activityStreak} days</div>
