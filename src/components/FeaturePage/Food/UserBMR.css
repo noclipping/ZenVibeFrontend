@@ -1,122 +1,65 @@
 /* UserBMR.css */
 
 .user-bmr-container {
-    padding: 15px; /* Adjust the padding as needed */
-    background-color: #2a2929;
+    background-color: #2a2929; /* Slate gray background */
+    color: #ffffff; /* White text for contrast */
+    padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    margin: 20px auto; /* Centered horizontally with top and bottom margin */
-    max-width: 700px; /* Maximum width of the container */
-    width: 100%; /* Full width for smaller screens, up to max-width */
-    color: #ffffff; /* Text color, assuming a dark background */
-}
-
-
-
-.user-bmr-select, .user-bmr-input {
-    width: 50%;
-    padding: 8px 10px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box; /* Ensure padding doesn't increase the width */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Deeper shadow for depth */
+    max-width: 600px; /* Slightly narrower container */
+    margin: 20px auto; /* Center the container */
 }
 
 .user-bmr-stats {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 15px;
-    margin-top: 20px;
-    background-color: #323030;
+    background-color: #323030; /* Slightly lighter than the container */
     padding: 15px;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-/* UserBMR.css - Additional Styles */
-
-/* Style for the label group containing dropdown and input */
-.label-group {
-    margin-top: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2); /* Inner shadow for depth */
+    margin-bottom: 20px;
 }
 
-/* Style for labels */
-.user-bmr-label {
+.stat-item {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    font-size: 1rem;
+}
+
+.user-bmr-label, label {
     font-weight: bold;
-    color: #a7a7a7;
+    color: #a7a7a7; /* Lighter gray for labels */
+    margin-bottom: 5px;
 }
 
-/* Style for the Activity Level dropdown */
-.user-bmr-select {
-    padding: 10px;
-    margin-top: 5px;
-    border: 2px solid #007bff; /* Blue border */
+.user-bmr-select, .user-bmr-input {
+    width: 50%;
+    padding: 10px; /* Slightly less padding for a sleeker look */
     border-radius: 5px;
-    background-color: #f8f8f8;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.user-bmr-select:hover,
-.user-bmr-select:focus {
-    background-color: #eef;
-    border-color: #0056b3;
-    outline: none;
-}
-
-/* Style for the Calorie Deficit input */
-.user-bmr-input {
-    padding: 10px;
-    margin-top: 5px;
-    border: 2px solid #28a745; /* Green border */
-    border-radius: 5px;
-    background-color: #f8f8f8;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-}
-
-.user-bmr-input:hover,
-.user-bmr-input:focus {
-    background-color: #eef;
-    border-color: #1e7e34;
-    outline: none;
-}
-/* UserBMR.css - Style for Activity Level Dropdown */
-
-.user-bmr-select {
-    width: 100%; /* Full width */
-    padding: 10px; /* Comfortable padding */
-    margin-top: 5px; /* Space above the select box */
-    border: 2px solid #007bff; /* A distinct border color */
-    border-radius: 5px; /* Rounded corners */
-    background-color: #313030; /* A light background color */
-    font-size: 1rem; /* Readable font size */
-    cursor: pointer; /* Cursor indicates it's selectable */
+    border: 1px solid #212222; /* Thinner border */
+    background-color: #313030; /* Match the stats background */
+    color: white;
+    font-size: 0.9rem; /* Smaller font size */
     appearance: none; /* Remove default styling */
-    outline: none; /* Remove outline */
-    transition: background-color 0.3s, border-color 0.3s; /* Smooth transition for hover and focus */
 }
 
-.user-bmr-select:hover {
-    background-color: #e9ecef; /* Slightly darker background on hover */
-    border-color: #0056b3; /* Change border color on hover */
+.user-bmr-select:hover, .user-bmr-select:focus, 
+.user-bmr-input:hover, .user-bmr-input:focus {
+    background-color: #393939; /* Slightly lighter on hover/focus */
+    border-color: #0c0c0c; /* Deeper blue for border */
+    outline: none;
 }
 
-.user-bmr-select:focus {
-    background-color: #202020; /* Slightly darker background on focus */
-    border-color: #0056b3; /* Change border color on focus */
+.user-bmr-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between; /* Distribute space between controls */
 }
 
+.control-item {
+    flex: 1 1 180px; /* Smaller base width for controls */
+    min-width: 150px; /* Ensure they don't get too small */
+}
 
-
-
-
-/* Additional styles for specific elements can be added here */
+/* Additional styles to further customize the component can be added here */

@@ -14,7 +14,7 @@ export default function FoodEntryCard({ entry, editFoodEntries, deleteFoodEntrie
         <div className="food-entry-card">
             {!isEditing ? (
                 <div className="food-entry-display">
-                    <p className="food-name">{entry.food_name}</p>
+                    <h3>{entry.food_name}</h3>
                     <p className="calories">{entry.calories} calories</p>
                     <button onClick={() => setIsEditing(true)}>✎ Edit</button>
                     <button onClick={() => deleteFoodEntries(entry.entry_id)}>❌ Delete</button>
