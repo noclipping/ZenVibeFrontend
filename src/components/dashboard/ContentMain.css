@@ -80,6 +80,7 @@
     transform: scale(1.05);
 }
 
+
 /* Styles for screens smaller than 768px (Mobile) */
 @media (max-width: 767px) {
     /* Add mobile-specific styles here */

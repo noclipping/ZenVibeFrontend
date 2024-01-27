@@ -55,6 +55,31 @@ function LoginPage() {
     <div className="auth-container">
       {error && <p className="error">{error}</p>}
 
+
+            {/* Login Form */}
+            <form className="auth-form" onSubmit={handleLogin}>
+                <h1>Please Login to access your account!</h1>
+                <img src={logo} alt="ZenVibe Logo" className="auth-logo" />
+                <input
+                    type="text"
+                    value={loginUsername}
+                    onChange={(e) => setLoginUsername(e.target.value)}
+                    placeholder="Username"
+                    required
+                />
+                <input
+                    type="password"
+                    value={loginPassword}
+                    onChange={(e) => setLoginPassword(e.target.value)}
+                    placeholder="Password"
+                    required
+                />
+                <div className="button-container">
+                    <button type="submit">Login</button>
+                </div>
+                <p>Dont have an account? <Link to="/register">Sign up</Link></p>
+            </form>
+
       {/* Login Form */}
       <form className="auth-form" onSubmit={handleLogin}>
         <h1>Your Zen Vibe experience Awaits</h1>
