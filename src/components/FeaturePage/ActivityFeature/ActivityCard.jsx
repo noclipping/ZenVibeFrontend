@@ -1,15 +1,17 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
 
-export default function ActivityCard({ activities, setActivities, selectedActivityType}) {
+export default function ActivityCard({
+  activities,
+  setActivities,
+  selectedActivityType,
+}) {
   const [isEditing, setIsEditing] = useState(false);
   const [updatedActivityName, setUpdatedActivityName] = useState("");
   const [updatedSets, setUpdatedSets] = useState(0);
   const [updatedReps, setUpdatedReps] = useState(0);
   const [updatedLiftWeight, setUpdatedLiftWeight] = useState(0);
   const [updatedDuration, setUpdatedDuration] = useState(0);
-  
-  
 
   const deleteActivity = async (activityEntryId) => {
     try {
@@ -20,28 +22,32 @@ export default function ActivityCard({ activities, setActivities, selectedActivi
           headers: { "Content-Type": "application/json" },
           credentials: "include",
         }
-      );
+      ) .then(() => {setActivities((prevActivities) =>
+        prevActivities.filter((activity) => activity.id !== activityEntryId)
+      );});
 
+  
       console.log("Delete response:", response);
-
+  
       if (!response.ok) {
         const errorMessage = await response.text();
         throw new Error(
           `HTTP error! status: ${response.status}, message: ${errorMessage}`
         );
       }
+  
+      // Update the state by filtering out the deleted entry
+      // setActivities((prevActivities) =>
+      //   prevActivities.filter((activity) => activity.id !== activityEntryId)
+      // );
      
 
-      // Update the state by filtering out the deleted entry
-      setActivities((prevActivity) =>
-        prevActivity.filter(
-          (activityEntry) => activityEntry.id !== activityEntryId
-        )
-      );
     } catch (error) {
       console.error("Error deleting activity entry:", error);
     }
   };
+  
+  
 
   const editActivity = async (
     activityEntryId,
@@ -87,8 +93,8 @@ export default function ActivityCard({ activities, setActivities, selectedActivi
             : activityEntry
         )
       );
-    //   fetchActivities();
-    //   setIsEditing(false);
+      //   fetchActivities();
+      //   setIsEditing(false);
     } catch (error) {
       console.log("Error updating activity entry:", error);
     }
@@ -96,18 +102,26 @@ export default function ActivityCard({ activities, setActivities, selectedActivi
 
   return (
     <div>
-      <h3>Activities List</h3>
-      
+      {/* <h3>Activities List</h3> */}
+
       {activities.map((activity) => (
         <div key={activity.entry_id}>
           {!isEditing ? (
             <div>
-              <p>Activity: {activity.activity_name}</p>
-              <p>Sets: {activity.sets}</p>
-              <p>Reps: {activity.reps}</p>
-              <p>Weight Lifted: {activity.lift_weight}</p>
-              <p>Duration (in minutes): {activity.duration}</p>
-              <div>Selected Activity Type: {selectedActivityType}</div>
+              {activity.activity_name && (
+                <p>Activity Name: {activity.activity_name}</p>
+              )}
+              {activity.sets && <p>Sets: {activity.sets}</p>}
+              {activity.reps && <p>Reps: {activity.reps}</p>}
+              {activity.lift_weight && (
+                <p>Weight Lifted: {activity.lift_weight}</p>
+              )}
+              {activity.duration && (
+                <p>Duration: {activity.duration}</p>
+              )}
+              {selectedActivityType && (
+                <div>Activity Type: {selectedActivityType}</div>
+              )}
               {/* Additional details can be displayed here */}
             </div>
           ) : (

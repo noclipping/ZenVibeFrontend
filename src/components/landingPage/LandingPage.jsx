@@ -1,5 +1,5 @@
 import "./LandingPage.css";
-import Spline from '@splinetool/react-spline';
+import Spline from "@splinetool/react-spline";
 import Navbar from "./navbar/Navbar";
 import { useNavigate } from "react-router-dom";
 import dashboardImage from "../../../assets/dashpic.png";
@@ -51,7 +51,9 @@ function LandingPage() {
             </p>
           </div>
         </p>
-        <Spline scene="https://prod.spline.design/R47T9roV3JNYA-0b/scene.splinecode" />
+        <div className="spline-container">
+          <Spline scene="https://prod.spline.design/R47T9roV3JNYA-0b/scene.splinecode" />
+        </div>
       </section>
       {/* Features Section */}
       <section className="features-section" id="features">

@@ -26,9 +26,12 @@
     transition: width 0.3s ease-in-out, background-color 0.3s ease-in-out;
   }
 
+<<<<<<< HEAD
   
 
 =======
+=======
+>>>>>>> ee495aa31eb09f46261ed8d7c8094a90acf2f431
 .progress-bar-inner {
   height: 100%;
   border-radius: 10px;
