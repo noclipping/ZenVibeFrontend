@@ -85,35 +85,29 @@
   padding-left: 770px;
 }
 
-.logo-animation {
-  width: 150px; /* Adjust the size of the logo */
-  animation: fadeInSpinPulse 6s ease-in-out infinite;
-}
-
 @keyframes fadeInSpinPulse {
-  0%, 10% {
-    opacity: 0;
-    transform: scale(0.5); /* Start smaller */
-  }
-  30% {
+  0%, 100% {
     opacity: 1;
-    transform: scale(1) rotate(0deg); /* Fully visible and starts rotating */
+    transform: scale(1); /* Normal size */
   }
   50% {
-    transform: scale(1) rotate(360deg); /* Complete one full rotation */
-  }
-  60%, 100% {
-    transform: scale(1) rotate(360deg) scale(1.1); /* Pulse effect */
+    transform: scale(1.1); /* Slightly enlarged */
   }
 }
+
+.logo-animation {
+  width: 150px; /* Adjust the size of the logo */
+  animation: fadeInSpinPulse 2s ease-in-out infinite;
+}
+
 
 .welcome-message {
   position: absolute; /* Position the message absolutely within its parent */
   top: 0; /* Aligns to the top of the container */
   left: 0; /* Aligns to the left of the container */
   font-size: 30px; /* Adjust font size as needed */
-  margin-left: 725px; /* Adjust to move message more to the left */
-  padding-top:320px;
+  margin-left: 725px;
+  padding-top: 280px; /* Adjust to move message more to the left */
   color: #ffffff; /* Adjust text color as needed */
   animation: fadeInMessage 3s ease-in-out;
 }
@@ -161,4 +155,18 @@
 .auth-form select:hover, .auth-form select:focus {
   border-color: #0056b3; /* Darker border on hover/focus */
   outline: none; /* Remove default focus outline */
+}
+
+
+/* Media Query for smaller screens */
+@media (max-width: 768px) {
+  .auth-form {
+    width: 80%; /* Wider form on smaller screens */
+    left: 10%; /* Centering */
+  }
+  .welcome-message, .signup-message {
+    font-size: 20px; /* Smaller font on smaller screens */
+    margin-left: 0; /* Remove fixed margin */
+    padding-top: 250px; /* Adjust position */
+  }
 }
