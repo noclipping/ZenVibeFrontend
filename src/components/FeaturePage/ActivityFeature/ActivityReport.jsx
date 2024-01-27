@@ -10,10 +10,10 @@ function ActivityTrack() {
   const [activities, setActivities] = useState([]);
   const [newActivity, setNewActivity] = useState({
     activity_name: "",
-    sets: 0,
-    reps: 0,
-    lift_weight: 0,
-    duration: 0,
+    sets: "",
+    reps: "",
+    lift_weight: "",
+    duration: "",
     entry_date: "",
   });
   const [selectedActivityType, setSelectedActivityType] = useState("");
@@ -23,8 +23,20 @@ function ActivityTrack() {
     datasets: [
       {
         data: [],
-        backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0", "#9966FF"],
-        hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0", "#9966FF"],
+        backgroundColor: [
+          "#FF6384",
+          "#36A2EB",
+          "#FFCE56",
+          "#4BC0C0",
+          "#9966FF",
+        ],
+        hoverBackgroundColor: [
+          "#FF6384",
+          "#36A2EB",
+          "#FFCE56",
+          "#4BC0C0",
+          "#9966FF",
+        ],
       },
     ],
   });
@@ -47,7 +59,7 @@ function ActivityTrack() {
 
   useEffect(() => {
     fetchActivities();
-  }, [fetchActivities]);
+  }, [fetchActivities, activities]);
 
   const handleCreateActivity = async (event) => {
     event.preventDefault();
@@ -88,8 +100,20 @@ function ActivityTrack() {
       datasets: [
         {
           data: Object.values(counts),
-          backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0", "#9966FF"],
-          hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0", "#9966FF"],
+          backgroundColor: [
+            "#FF6384",
+            "#36A2EB",
+            "#FFCE56",
+            "#4BC0C0",
+            "#9966FF",
+          ],
+          hoverBackgroundColor: [
+            "#FF6384",
+            "#36A2EB",
+            "#FFCE56",
+            "#4BC0C0",
+            "#9966FF",
+          ],
         },
       ],
     });
@@ -117,32 +141,83 @@ function ActivityTrack() {
         ) : (
           <p>Loading chart data...</p>
         )}
-        <ActivityCard activities={activities} setActivities={setActivities} selectedActivityType={selectedActivityType} />
+        <ActivityCard
+          activities={activities}
+          setActivities={setActivities}
+          // selectedActivityType={selectedActivityType}
+        />
         <form onSubmit={handleCreateActivity}>
           <input
             type="text"
-            placeholder="Activity Name"
+            placeholder="Enter Activity"
             value={newActivity.activity_name}
-            onChange={(e) => setNewActivity({ ...newActivity, activity_name: e.target.value })}
+            onChange={(e) =>
+              setNewActivity({ ...newActivity, activity_name: e.target.value })
+            }
             className="activity-input"
+            required
           />
+          <input
+            type="text"
+            placeholder={newActivity.reps !== "" ? "" : "# of Reps"}
+            value={newActivity.reps}
+            onChange={(e) =>
+              setNewActivity({ ...newActivity, reps: e.target.value })
+            }
+            className="reps-input"
+          />
+          <input
+            type="text"
+            placeholder={newActivity.reps !== "" ? "" : "# of Sets"}
+            value={newActivity.sets}
+            onChange={(e) =>
+              setNewActivity({ ...newActivity, sets: e.target.value })
+            }
+            className="sets-input"
+          />
+          <input
+            type="text"
+            placeholder={
+              newActivity.reps !== "" ? "" : "Weight Lifted (in lbs)"
+            }
+            value={newActivity.lift_weight}
+            onChange={(e) =>
+              setNewActivity({ ...newActivity, lift_weight: e.target.value })
+            }
+            className="liftWeight-input"
+          />
+          <input
+            type="text"
+            placeholder={newActivity.duration !== "" ? "" : "Duration (in min)"}
+            value={newActivity.duration}
+            onChange={(e) =>
+              setNewActivity({ ...newActivity, duration: e.target.value })
+            }
+            className="sets-input"
+          />
+
           {/* Other form inputs for sets, reps, etc. */}
           <select
             value={selectedActivityType}
             onChange={(e) => setSelectedActivityType(e.target.value)}
+            required
           >
             <option value="">Select Category</option>
             <option value="Weight Training">Weight Training</option>
             <option value="Cardio">Cardio</option>
             <option value="Cross Training">Cross Training</option>
-            <option value="Flexibility and Mobility">Flexibility and Mobility</option>
+            <option value="Flexibility and Mobility">
+              Flexibility and Mobility
+            </option>
             {/* Add more categories as needed */}
           </select>
-          <button type="submit" className="activity-button">Add Activity</button>
+          <button type="submit" className="activity-button">
+            Add Activity
+          </button>
         </form>
       </div>
     </div>
   );
 }
 
-export default ActivityTrack;
+export default ActivityTrack
