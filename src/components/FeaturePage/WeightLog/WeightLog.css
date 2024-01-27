@@ -4,26 +4,8 @@
 .weight-log-container {
     display: flex;
     flex-direction: column;
-
-    align-items: center;
-    padding: 50px; /* Adjusted padding */
-    background-color: #1c1b1b85; /* Dark background */
-    font-family: 'Montserrat', sans-serif;
-    color: #fff; /* White text color for contrast */
-    border-radius: 20px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 6px 6px rgba(0, 0, 0, 0.3);
-    margin: auto; /* Center the container */
-    max-width: 100%; /* Increased max width */
-    height: auto; /* Height adjusts to content */
-    justify-content: space-between;
-}
-
-
-.weight-log-container h1 {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 35px;
     align-items: center; /* Centers content horizontally within the container */
-    padding: 40px; /* Padding inside the container */
+    padding: 20px; /* Padding inside the container */
     margin-left: 400px; /* Increase this value as needed to move away from the sidebar */
     background-color: #15151585; /* Semi-transparent dark background */
     font-family: 'Montserrat', sans-serif;
@@ -40,8 +22,7 @@
 .weight-log-container h1 {
     font-family: 'Montserrat', sans-serif;
     font-size: 30px;
-    padding-right: 100px;
-
+    padding-right: 5px;
     /* You can also add other font-related properties here */
   }
 
@@ -51,8 +32,8 @@
     flex-direction: column; /* Stack inputs vertically */
     align-items: center; /* Center-align the form */
     gap: 10px;
-    width: 100%; /* Full width to align with the chart */
-    margin-top: 15px; /* Space after the chart */
+    width: 50%; /* Full width to align with the chart */
+    margin-top: -30px; /* Space after the chart */
 }
 
 .weight-log-form input {
@@ -65,9 +46,6 @@
 }
 
 .weight-log-form button {
-
-    padding: 10px 20px;
-    background-color: #0e2853; /* Medical red color */
     padding: 15px 20px;
     background-color: #0e2853; 
     color: white;
@@ -85,37 +63,16 @@
 
 
 .weight-log-chart {
-
-    width: 110%;
-    flex-grow: 1; /* Chart takes up remaining space */
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-bottom: 2px;
+    padding-bottom: 60px;
+    width: 120%; /* Use 100% of the container's width */
+    margin-right: 10px; /* Reset any specific margins */
 }
 
 .weight-log-chart canvas {
-    width: 80% !important; /* Adjust width as needed */
-    height: auto !important;
-}
-
-.bmi-display {
-    background-color: #191818c3; /* Slightly different background */
-    padding: 15px;
-    padding-left: 40px;
-    padding-right: 50px;
-    border-radius: 15px;
-    margin-top: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding-bottom: 10px;
-    width: 100%; /* Use 100% of the container's width */
-    margin-right: 0; /* Reset any specific margins */
-}
-
-.weight-log-chart canvas {
-    max-width: 100%; /* Ensure the canvas does not overflow its container */
+    max-width: 1000px; /* Ensure the canvas does not overflow its container */
     height: auto !important;
 }
 .bmi-display {
@@ -125,7 +82,7 @@
     padding-right: 15px;
     border-radius: 15px;
     margin-top: 10px;
-    width: 80%; /* Match the width of the chart and form elements */
+    width: 40%; /* Match the width of the chart and form elements */
     margin: 10px auto;
     text-align: center; /* Center-align the text */
     
@@ -143,22 +100,12 @@
 
 
 .delete-entry-button {
-
-    padding: 10px 20px;
-    background-color: #950d08; /* Bootstrap's btn-danger color */
-
     padding: 15px 30px;
     background-color:#272626; /* Bootstrap's btn-danger color */
     color: white;
     border: none;
     border-radius: 10px;
     cursor: pointer;
-    margin: 10px;
-    transition: background-color 0.3s;
-}
-
-.delete-entry-button:hover {
-    background-color: #272626; /* Darker shade on hover */
     box-shadow: #201f1f;
     margin: 10px;
     margin-left: 20px;
@@ -185,10 +132,32 @@
     overflow: hidden; /* Hide overflowing content */
   }
   
-  .progress-bar-fill {
-    height: 20px; /* Height of the progress bar */
-    width: 0; /* Initial width (0% progress) */
-    background-color: #0e2853; /* Color of the filled progress bar */
-    transition: width 0.5s ease-in-out; /* Animation for smooth progress change */
-  }
 
+  
+  .tooltip {
+    position: relative;
+    display: inline-block;
+    cursor: pointer; /* Indicates hoverable area */
+  }
+  
+  .tooltip .tooltipText {
+    visibility: hidden;
+    width: 200px;
+    background-color: rgba(42, 41, 41, 0.927);
+    color: white;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -100px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  
+  .tooltip:hover .tooltipText {
+    visibility: visible;
+    opacity: 1;
+  }

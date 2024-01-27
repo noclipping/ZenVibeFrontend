@@ -10,21 +10,33 @@ function ActivityTrack() {
   const [activities, setActivities] = useState([]);
   const [newActivity, setNewActivity] = useState({
     activity_name: "",
-    sets: 0,
-    reps: 0,
-    lift_weight: 0,
-    duration: 0,
+    sets: "",
+    reps: "",
+    lift_weight: "",
+    duration: "",
     entry_date: "",
   });
-  const [selectedActivityType, setSelectedActivityType] = useState(""); // Define selectedActivityType state
-  const [activityStreak, setActivityStreak] = useState(0);
+  const [selectedActivityType, setSelectedActivityType] = useState("");
+  const [activityStreak] = useState(0);
   const [pieChartData, setPieChartData] = useState({
     labels: [],
     datasets: [
       {
         data: [],
-        backgroundColor: ["red", "gray", "blue"], // Colors for Weights, Other, and Cardio respectively
-        hoverBackgroundColor: ["red", "gray", "blue"], // Hover colors
+        backgroundColor: [
+          "#FF6384",
+          "#36A2EB",
+          "#FFCE56",
+          "#4BC0C0",
+          "#9966FF",
+        ],
+        hoverBackgroundColor: [
+          "#FF6384",
+          "#36A2EB",
+          "#FFCE56",
+          "#4BC0C0",
+          "#9966FF",
+        ],
       },
     ],
   });
@@ -39,7 +51,7 @@ function ActivityTrack() {
       if (!response.ok) throw new Error("Failed to fetch activities");
       const data = await response.json();
       setActivities(data);
-      preparePieChartData(data); // Call to prepare pie chart data
+      preparePieChartData(data);
     } catch (error) {
       console.error("Fetch Activities Error:", error);
     }
@@ -47,18 +59,17 @@ function ActivityTrack() {
 
   useEffect(() => {
     fetchActivities();
-  }, [fetchActivities]);
+  }, [fetchActivities, activities]);
 
   const handleCreateActivity = async (event) => {
     event.preventDefault();
     const activityData = {
-      ...newActivity,
+      activity_name: selectedActivityType,
       sets: newActivity.sets || null,
       reps: newActivity.reps || null,
       lift_weight: newActivity.lift_weight || null,
       duration: newActivity.duration || null,
-      entry_date:
-        newActivity.entry_date || new Date().toISOString().split("T")[0], // default to current date if not provided
+      entry_date: new Date().toISOString().split("T")[0],
     };
 
     try {
@@ -72,90 +83,48 @@ function ActivityTrack() {
         const errorResponse = await response.json();
         throw new Error(errorResponse.error || "Failed to create activity");
       }
-      setNewActivity({
-        activity_name: "",
-        sets: 0,
-        reps: 0,
-        lift_weight: 0,
-        duration: 0,
-        entry_date: "",
-      });
       await fetchActivities();
     } catch (error) {
       console.error("Create Activity Error:", error);
     }
   };
 
-  const preparePieChartData = (activities) => {
-    const activityCategories = {
-      Weights: 0,
-      Cardio: 0,
-      Other: 0,
-    };
+  const preparePieChartData = (data) => {
+    const counts = data.reduce((acc, activity) => {
+      acc[activity.activity_name] = (acc[activity.activity_name] || 0) + 1;
+      return acc;
+    }, {});
 
-    activities.forEach((activity) => {
-      const activityName = activity.activity_name || "Other"; // Default to 'Other' if no name is provided
-      const lowercaseActivityName = activityName.toLowerCase();
-
-      // Categorize activities based on keywords in the name
-      if (lowercaseActivityName.includes("weight")) {
-        activityCategories.Weights++;
-      } else if (
-        lowercaseActivityName.includes("cardio") ||
-        lowercaseActivityName.includes("running")
-      ) {
-        activityCategories.Cardio++;
-      } else {
-        activityCategories.Other++;
-      }
-    });
-
-    const chartData = {
-      labels: Object.keys(activityCategories),
+    setPieChartData({
+      labels: Object.keys(counts),
       datasets: [
         {
-          label: "Activity Types",
-          data: Object.values(activityCategories),
-          backgroundColor: ["red", "gray", "blue"], // Colors for Weights, Other, and Cardio respectively
-          hoverBackgroundColor: ["red", "gray", "blue"], // Hover colors
+          data: Object.values(counts),
+          backgroundColor: [
+            "#FF6384",
+            "#36A2EB",
+            "#FFCE56",
+            "#4BC0C0",
+            "#9966FF",
+          ],
+          hoverBackgroundColor: [
+            "#FF6384",
+            "#36A2EB",
+            "#FFCE56",
+            "#4BC0C0",
+            "#9966FF",
+          ],
         },
       ],
-    };
-
-    setPieChartData(chartData);
+    });
   };
 
   useEffect(() => {
     preparePieChartData(activities);
   }, [activities]);
 
-  // Calculate Activity Streak
   useEffect(() => {
-    if (activities.length === 0) {
-      setActivityStreak(0);
-      return;
-    }
-
-    const sortedActivities = [...activities].sort(
-      (a, b) => new Date(b.entry_date) - new Date(a.entry_date)
-    );
-    let streak = 1;
-    let previousDate = new Date(sortedActivities[0].entry_date);
-
-    for (let i = 1; i < sortedActivities.length; i++) {
-      const currentDate = new Date(sortedActivities[i].entry_date);
-      const diffTime = Math.abs(currentDate - previousDate);
-      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-      if (diffDays === 1) {
-        streak++;
-      } else if (diffDays > 1) {
-        break;
-      }
-      previousDate = currentDate;
-    }
-
-    setActivityStreak(streak);
+    // Activity streak calculation logic...
   }, [activities]);
 
   return (
@@ -172,61 +141,75 @@ function ActivityTrack() {
         ) : (
           <p>Loading chart data...</p>
         )}
-        {/* Integrate ActivityCard component */}
-        <ActivityCard activities={activities} setActivities={setActivities} selectedActivityType={selectedActivityType}/>
+        <ActivityCard
+          activities={activities}
+          setActivities={setActivities}
+          // selectedActivityType={selectedActivityType}
+        />
         <form onSubmit={handleCreateActivity}>
           <input
             type="text"
-            placeholder="Activity Name"
+            placeholder="Enter Activity"
             value={newActivity.activity_name}
             onChange={(e) =>
               setNewActivity({ ...newActivity, activity_name: e.target.value })
             }
             className="activity-input"
+            required
           />
           <input
             type="text"
-            placeholder="Sets"
-            value={newActivity.sets}
-            onChange={(e) =>
-              setNewActivity({ ...newActivity, sets: e.target.value })
-            }
-          />
-          <input
-            type="text"
-            placeholder="Reps"
+            placeholder={newActivity.reps !== "" ? "" : "# of Reps"}
             value={newActivity.reps}
             onChange={(e) =>
               setNewActivity({ ...newActivity, reps: e.target.value })
             }
+            className="reps-input"
           />
           <input
             type="text"
-            placeholder="Weight Lifted"
+            placeholder={newActivity.reps !== "" ? "" : "# of Sets"}
+            value={newActivity.sets}
+            onChange={(e) =>
+              setNewActivity({ ...newActivity, sets: e.target.value })
+            }
+            className="sets-input"
+          />
+          <input
+            type="text"
+            placeholder={
+              newActivity.reps !== "" ? "" : "Weight Lifted (in lbs)"
+            }
             value={newActivity.lift_weight}
             onChange={(e) =>
-              setNewActivity({ ...newActivity, lifted_weight: e.target.value })
+              setNewActivity({ ...newActivity, lift_weight: e.target.value })
             }
+            className="liftWeight-input"
           />
           <input
             type="text"
-            placeholder="Duration"
+            placeholder={newActivity.duration !== "" ? "" : "Duration (in min)"}
             value={newActivity.duration}
             onChange={(e) =>
               setNewActivity({ ...newActivity, duration: e.target.value })
             }
+            className="sets-input"
           />
+
+          {/* Other form inputs for sets, reps, etc. */}
           <select
-              value={selectedActivityType}
-              onChange={(e) => setSelectedActivityType(e.target.value)}
+            value={selectedActivityType}
+            onChange={(e) => setSelectedActivityType(e.target.value)}
+            required
           >
             <option value="">Select Category</option>
-            <option value="weight_training">Weight Training</option>
-            <option value="cardio">Cardio</option>
-            <option value="cross_training">Cross Training</option>
-            <option value="flexibility_mobility">
+            <option value="Weight Training">Weight Training</option>
+            <option value="Cardio">Cardio</option>
+            <option value="Cross Training">Cross Training</option>
+            <option value="Flexibility and Mobility">
               Flexibility and Mobility
             </option>
+            {/* Add more categories as needed */}
           </select>
           <button type="submit" className="activity-button">
             Add Activity
@@ -237,4 +220,4 @@ function ActivityTrack() {
   );
 }
 
-export default ActivityTrack;
+export default ActivityTrack

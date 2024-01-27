@@ -1,172 +1,172 @@
 .auth-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-left: 450px;
-    justify-content: center;
-    min-height: 100vh;
-    color: rgba(255, 255, 255, 0.87);
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.8rem;
-    width: 100%; /* Ensure full width */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-left: 450px;
+  justify-content: center;
+  min-height: 100vh;
+  color: rgba(255, 255, 255, 0.87);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.8rem;
+  width: 100%; /* Ensure full width */
 }
 
-  
-  .auth-logo {
-    width: 300px; /* Adjust size as needed */
-    margin-bottom: 1rem;
-    border-radius: 30px;
-  }
-  
-  .auth-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 
-    gap: 1px;
+.auth-logo {
+  width: 300px; /* Adjust size as needed */
+  margin-bottom: 1rem;
+  border-radius: 30px;
+}
 
-    gap: 15px;
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  width: 45%;
+  max-width: 400px; /* Adjust width as needed */
+  padding: 2rem;
+  background-color: #131313; /* Background of the form */
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Optional: adds depth */
+  font-size: 16px;
+}
 
-    width: 45%;
-    max-width: 400px; /* Adjust width as needed */
-    padding: 2rem;
-    background-color: #131313; /* Background of the form */
-    border-radius: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Optional: adds depth */
-    font-size: 16px;
-  }
-  
-  .auth-form h1 {
-    margin-bottom: 0.9rem;
+.auth-form h1 {
+  margin-bottom: 0.9rem;
+  font-size: 21px;
+}
 
-    font-size: 25px;
 
-    font-size: 21px;
+.auth-form input {
+  width: 75%;
+  padding: 1rem;
+  border-radius: 10px;
+  border: 3px solid #002da9;
+  background-color: #484747; /* Input field background */
+  color: #fff; /* Input text color */
+}
 
-  }
-
-  
-  .auth-form input {
-    width: 75%;
-    padding: 1rem;
-    border-radius: 10px;
-    border: 3px solid #002da9;
-    background-color: #484747; /* Input field background */
-    color: #fff; /* Input text color */
-  }
-  
-  .button-container {
-    display: flex;
-    justify-content: center; /* Center buttons horizontally */
-    gap: 1rem; /* Space between buttons */
+.button-container {
+  display: flex;
+  justify-content: center; /* Center buttons horizontally */
+  gap: 1rem; /* Space between buttons */
 }
 
 .auth-form button {
-    margin-top: 15px;
-    padding: 0.7rem 3rem;
-    border-radius: 10px;
-    border: none;
-    background-color: #be0a0a; /* Button background */
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    /* Add any additional styles for individual buttons here */
+  margin-top: 15px;
+  padding: 0.7rem 3rem;
+  border-radius: 10px;
+  border: none;
+  background-color: #be0a0a; /* Button background */
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  /* Add any additional styles for individual buttons here */
 }
 
-  
-  .auth-form button:hover {
-    background-color: #535bf2;
-  }
-  /* Responsive adjustments */
-@media (max-width: 768px) {
-  .auth-form {
 
-    left: 200px;
-  }
+.auth-form button:hover {
+  background-color: #535bf2;
+}
+/* Responsive adjustments */
+@media (max-width: 768px) {
+.auth-form {
+
+  left: 200px;
+}
 }
 
 .logo-screen-container {
-  display: flex;
-  justify-content: flex-end; /* Aligns horizontally to the right */
-  align-items: center; /* Aligns vertically to the center */
-  height: 100vh;
-  padding-left: 770px;
-}
-
-.logo-animation {
-  width: 150px; /* Adjust the size of the logo */
-  animation: fadeInSpinPulse 6s ease-in-out infinite;
+display: flex;
+justify-content: flex-end; /* Aligns horizontally to the right */
+align-items: center; /* Aligns vertically to the center */
+height: 100vh;
+padding-left: 770px;
 }
 
 @keyframes fadeInSpinPulse {
-  0%, 10% {
-    opacity: 0;
-    transform: scale(0.5); /* Start smaller */
-  }
-  30% {
-    opacity: 1;
-    transform: scale(1) rotate(0deg); /* Fully visible and starts rotating */
-  }
-  50% {
-    transform: scale(1) rotate(360deg); /* Complete one full rotation */
-  }
-  60%, 100% {
-    transform: scale(1) rotate(360deg) scale(1.1); /* Pulse effect */
-  }
+0%, 100% {
+  opacity: 1;
+  transform: scale(1); /* Normal size */
+}
+50% {
+  transform: scale(1.1); /* Slightly enlarged */
+}
 }
 
+.logo-animation {
+width: 150px; /* Adjust the size of the logo */
+animation: fadeInSpinPulse 2s ease-in-out infinite;
+}
+
+
 .welcome-message {
-  position: absolute; /* Position the message absolutely within its parent */
-  top: 0; /* Aligns to the top of the container */
-  left: 0; /* Aligns to the left of the container */
-  font-size: 30px; /* Adjust font size as needed */
-  margin-left: 725px; /* Adjust to move message more to the left */
-  padding-top:320px;
-  color: #ffffff; /* Adjust text color as needed */
-  animation: fadeInMessage 3s ease-in-out;
+position: absolute; /* Position the message absolutely within its parent */
+top: 0; /* Aligns to the top of the container */
+left: 0; /* Aligns to the left of the container */
+font-size: 30px; /* Adjust font size as needed */
+margin-left: 725px;
+padding-top: 280px; /* Adjust to move message more to the left */
+color: #ffffff; /* Adjust text color as needed */
+animation: fadeInMessage 3s ease-in-out;
 }
 
 .signup-message {
-  position: absolute; /* Position the message absolutely within its parent */
-  top: 0; /* Aligns to the top of the container */
-  left: 0; /* Aligns to the left of the container */
-  font-size: 30px; /* Adjust font size as needed */
-  margin-left: 500px; /* Adjust to move message more to the left */
-  padding-top:318px;
-  color: #ffffff; /* Adjust text color as needed */
-  animation: fadeInMessage 3s ease-in-out;
+position: absolute; /* Position the message absolutely within its parent */
+top: 0; /* Aligns to the top of the container */
+left: 0; /* Aligns to the left of the container */
+font-size: 30px; /* Adjust font size as needed */
+margin-left: 500px; /* Adjust to move message more to the left */
+padding-top:318px;
+color: #ffffff; /* Adjust text color as needed */
+animation: fadeInMessage 3s ease-in-out;
 }
 
 @keyframes fadeInMessage {
-  from { opacity: 0; }
-  to { opacity: 1; }
+from { opacity: 0; }
+to { opacity: 1; }
 }
 
 .auth-form label {
-  display: block; /* Make labels block elements to take full width */
-  color: #fff; /* Label text color */
-  font-size: 16px; /* Adjust as needed */
-  margin-bottom: 10px; /* Space between label and select */
+display: block; /* Make labels block elements to take full width */
+color: #fff; /* Label text color */
+font-size: 16px; /* Adjust as needed */
+margin-bottom: 10px; /* Space between label and select */
 }
 
 
 .auth-form select {
-  width: 100%; /* Make selects take up full width of their parent container */
-  padding: 0.9rem; /* Padding for comfortable clicking */
-  margin-bottom: 1rem; /* Space between each form element */
-  border-radius: 10px; /* Rounded corners */
-  border: 3px solid #002da9; /* Border color to match your theme */
-  background-color: #484747; /* Background color to match your theme */
-  color: #fff; /* Text color inside the select */
-  -webkit-appearance: none; /* Removes the default arrow in WebKit browsers */
-  -moz-appearance: none; /* Removes the default arrow in Firefox */
-  appearance: none; /* Removes the default arrow in modern browsers */
-  background-repeat: no-repeat;
-  background-size: 12px; /* Size of the arrow icon */
+width: 100%; /* Make selects take up full width of their parent container */
+padding: 0.9rem; /* Padding for comfortable clicking */
+margin-bottom: 1rem; /* Space between each form element */
+border-radius: 10px; /* Rounded corners */
+border: 3px solid #002da9; /* Border color to match your theme */
+background-color: #484747; /* Background color to match your theme */
+color: #fff; /* Text color inside the select */
+-webkit-appearance: none; /* Removes the default arrow in WebKit browsers */
+-moz-appearance: none; /* Removes the default arrow in Firefox */
+appearance: none; /* Removes the default arrow in modern browsers */
+background-repeat: no-repeat;
+background-size: 12px; /* Size of the arrow icon */
 }
 
 /* Optionally, style the hover and focus states */
 .auth-form select:hover, .auth-form select:focus {
-  border-color: #0056b3; /* Darker border on hover/focus */
-  outline: none; /* Remove default focus outline */
+border-color: #0056b3; /* Darker border on hover/focus */
+outline: none; /* Remove default focus outline */
+}
+
+
+/* Media Query for smaller screens */
+@media (max-width: 768px) {
+.auth-form {
+  width: 80%; /* Wider form on smaller screens */
+  left: 10%; /* Centering */
+}
+.welcome-message, .signup-message {
+  font-size: 20px; /* Smaller font on smaller screens */
+  margin-left: 0; /* Remove fixed margin */
+  padding-top: 250px; /* Adjust position */
+}
 }

@@ -1,116 +1,97 @@
+/* ReminderTrack.css */
 
-.custom-calendar .react-calendar {
-    border: none;
-    border-radius: 8px; /* Slightly smaller radius */
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2); /* Less pronounced shadow */
-    font-family: 'Arial', sans-serif;
-    background-color: #1c1c1c;
-    padding: 1px; /* Reduced padding */
-    width: 100%;
-    max-width: 350px; /* Smaller maximum width */
-    margin: auto;
-
-    transition: all 0.3s ease;
-}
-
-.custom-calendar .react-calendar__tile {
-    padding: 8px; /* Slightly reduced padding */
-    margin: 7px; /* Reduced margin */
-    background-color: #121212d8;
-    border-radius: 6px;
-     /* Smaller radius for tiles */
-    text-align: center;
-    color: #ffffff99;
-    flex-grow: 1;
-    transition: background-color 0.3s ease;
-    cursor: pointer;
-    font-size: 14px /* Smaller font size for tiles */
-}
-
-.custom-calendar .react-calendar__navigation {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px; /* Reduced margin */
-    padding-top: 1px;
-}
-
-.custom-calendar .react-calendar__navigation button {
-    background-color: #2a2a2ae1;
-    font-size: 14px; /* Smaller font size for buttons */
-    color: rgba(255, 255, 255, 0.52);
-    border: none;
-}
-
-.custom-calendar .react-calendar__month-view__weekdays {
-    text-align: center;
-    padding: 10px 0;
-    margin-bottom: 8px; /* Reduced margin */
-    padding-top: 1px;
-}
-
-.custom-calendar .react-calendar__month-view__weekdays__weekday {
-    font-size: 14px; /* Smaller font size for weekdays */
-}
-
-.custom-calendar .react-calendar__month-view__days {
-    justify-content: space-between;
-}
-
-/* Responsive adjustments */
-@media (max-width: 600px) {
-    .custom-calendar .react-calendar {
-        padding: 15px;
-        max-width: 100%;
-    }
-
-    .custom-calendar .react-calendar__tile {
-        font-size: 0.8em;
-    }
-
-    .custom-calendar .react-calendar__navigation button {
-        font-size: 0.9em;
-    }
-}
-
-/* Additional styles for hover and active states as previously defined */
 .custom-calendar .rbc-calendar {
-    /* ... other styles ... */
-    background-color: #272a29; /* Slate black background */
-    font-family: 'Montserrat', sans-serif; /* Montserrat font for the calendar */
-}
-
-.custom-calendar .rbc-header {
-    background-color: #201f1f; /* Medical red for headers */
+    background-color: #1c1c1e; /* Dark slate black background */
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1); /* Subtle white glow for depth */
+    padding: 20px;
+    width: 100%;
+    overflow: hidden; /* Ensures the rounded corners */
+  }
+  
+  .custom-calendar .rbc-header {
+    background-color: #242426; /* Slightly lighter shade for headers */
+    color: #ffffffcc; /* Soft white */
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 10px 0;
+    border-bottom: 1px solid #37373d; /* Subtle separator */
+  }
+  
+  .custom-calendar .rbc-today {
+    background-color: #2f2f31; /* Highlight for today */
+    box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.2); /* Inner white glow for today */
+    color: #ffffffe6; /* Bright white for today's date */
+    font-weight: bold;
+  }
+  
+  .custom-calendar .rbc-date-cell {
+    color: #ffffff99; /* Soft white for dates */
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+  }
+  
+  .custom-calendar .rbc-date-cell:hover {
+    background-color: #37373d; /* Darker shade on hover */
+    color: #fff; /* Bright white on hover */
+    border-radius: 5px; /* Rounded corners on hover */
+  }
+  
+  .custom-calendar .rbc-event {
+    background-color: #4a4a4c; /* Dark gray for events */
+    color: #ffffff;
+    border-radius: 4px;
+    padding: 5px;
+    font-size: 0.85rem;
+    text-align: center;
+    transition: background-color 0.3s;
+  }
+  
+  
+  .custom-calendar .rbc-event:hover {
+    background-color: #626265; /* Lighter gray on hover */
+  }
+  
+  .custom-calendar .rbc-toolbar {
+    background-color: #242426; /* Toolbar background */
     color: white;
-    font-family: 'Montserrat', sans-serif; /* Montserrat font for headers */
-}
-
-.custom-calendar .rbc-today {
-    background-color: #383737; /* Medical red for today */
-}
-
-.custom-calendar .rbc-date-cell:hover {
-    background-color: #1c1c1c; /* Slightly darker slate black on hover */
-}
-
-.custom-calendar .rbc-event {
-    background-color: #373636; /* Medical red for events */
+    font-size: 1rem;
+    padding: 15px 10px;
+    border-radius: 12px; /* Rounded corners for the toolbar */
+    margin-bottom: 20px; /* Spacing from the calendar */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Depth shadow */
+  }
+  
+  .custom-calendar .rbc-toolbar button {
     color: white;
-}
-
-.custom-calendar .rbc-event:hover {
-    background-color: #c70d0d; /* Slightly darker slate black on hover */
-}
-
-.custom-calendar .rbc-toolbar {
-    background-color: #272a29; /* Slate black for the toolbar */
-    color: white;
-    font-family: 'Montserrat', sans-serif; /* Montserrat font for the toolbar */
-}
-
-.custom-calendar .rbc-toolbar button {
-    color: white;
-}
-
-/* Add other custom styles as needed */
-
+    background-color: transparent;
+    border: none;
+    outline: none;
+    padding: 5px 10px;
+    transition: all 0.3s;
+  }
+  
+  .custom-calendar .rbc-toolbar button:hover {
+    background-color: #37373d; /* Darker slate black on hover */
+    border-radius: 5px;
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 600px) {
+    .custom-calendar .rbc-calendar {
+      padding: 10px;
+    }
+    
+    .custom-calendar .rbc-header {
+      font-size: 1rem;
+    }
+  
+    .custom-calendar .rbc-toolbar {
+      font-size: 0.9rem;
+      padding: 10px;
+    }
+  
+    /* Additional responsive styles can be added here */
+  }
+  
+  /* Further custom styles can be added as needed */
+  

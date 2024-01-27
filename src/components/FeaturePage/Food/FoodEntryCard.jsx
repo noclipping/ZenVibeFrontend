@@ -1,64 +1,41 @@
 import { useState } from "react";
 
-export default function FoodEntryCard({
-    entry,
-    editFoodEntries,
-    deleteFoodEntries
-}) {
-    const [isEditing, setIsEditing] = useState(false)
-    const [updatedFoodName, setUpdatedFoodName] = useState("");
-    const [updatedCalories, setUpdatedCalories] = useState(0);
+export default function FoodEntryCard({ entry, editFoodEntries, deleteFoodEntries }) {
+    const [isEditing, setIsEditing] = useState(false);
+    const [updatedFoodName, setUpdatedFoodName] = useState(entry.food_name);
+    const [updatedCalories, setUpdatedCalories] = useState(entry.calories);
 
+    const handleUpdate = () => {
+        editFoodEntries(entry.entry_id, updatedFoodName, updatedCalories);
+        setIsEditing(false);
+    };
 
     return (
-        <div>
+        <div className="food-entry-card">
             {!isEditing ? (
-                <div>
-                    {/* <h3>Food Entries</h3> */}
-                    <p>{entry.food_name}</p>
-                    <p>{entry.calories}</p>
+                <div className="food-entry-display">
+                    <h3>{entry.food_name}</h3>
+                    <p className="calories">{entry.calories} calories</p>
+                    <button onClick={() => setIsEditing(true)}>✎ Edit</button>
+                    <button onClick={() => deleteFoodEntries(entry.entry_id)}>❌ Delete</button>
                 </div>
             ) : (
-                <div>
+                <div className="food-entry-edit">
                     <input
                         placeholder="Enter Food"
-                        onChange={(e) => {
-                            setUpdatedFoodName(e.target.value)
-                        }}
+                        value={updatedFoodName}
+                        onChange={(e) => setUpdatedFoodName(e.target.value)}
                     />
                     <input
                         placeholder="Enter Calories"
-                        onChange={(e) => {
-                            setUpdatedCalories(e.target.value)
-                        }}
+                        value={updatedCalories}
+                        onChange={(e) => setUpdatedCalories(e.target.value)}
+                        type="number"
                     />
-                    <button
-                        onClick={(e) => {
-                            editFoodEntries(entry.entry_id, updatedFoodName, updatedCalories)
-                            setIsEditing(!isEditing)
-                           
-                        }}
-                    > Update Food 
-                    </button>
-                    <button type="button" onClick={() => setIsEditing(false)}>Cancel
-                    </button>
+                    <button onClick={handleUpdate}>Update Food</button>
+                    <button type="button" onClick={() => setIsEditing(false)}>Cancel</button>
                 </div>
             )}
-
-            <button
-                onClick={() => {
-                    setIsEditing(!isEditing)
-                }}
-            >
-                ✎
-            </button>
-            <button
-                onClick={() => {
-                    deleteFoodEntries(entry.entry_id)
-                }}
-            >
-               ❌
-            </button>
         </div>
     );
-}    
+}
