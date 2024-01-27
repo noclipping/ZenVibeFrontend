@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import './UserProfile.css'; // Ensure this path is correct
@@ -55,33 +54,6 @@ function UserProfile() {
         className="profile-pic-btn"
         onClick={toggleIntermediateModal}
       />
-
-      {isProfileVisible && (
-        <div className="profile-modal">
-          <div className="profile-modal-row">
-            <span className="profile-modal-label">Username:</span>
-            <span className="profile-modal-value">{userData.username}</span>
-          </div>
-          <div className="profile-modal-row">
-            <span className="profile-modal-label">Original Weight:</span>
-            <span className="profile-modal-value">{userData.original_weight} lbs</span>
-          </div>
-          <div className="profile-modal-row">
-            <span className="profile-modal-label">Height:</span>
-            <span className="profile-modal-value">
-              {userData.feet}&apos;{userData.inches}&quot; ({userData.height_inches} inches)
-            </span>
-          </div>
-          <div className="profile-modal-row">
-            <span className="profile-modal-label">Age:</span>
-            <span className="profile-modal-value">{userData.age}</span>
-          </div>
-          <div className="profile-modal-row">
-            <span className="profile-modal-label">Goal Weight:</span>
-            <span className="profile-modal-value">{userData.goal_weight} lbs</span>
-          </div>
-          {/* Add more rows as needed */}
-=======
       {isIntermediateVisible && (
         <div className="intermediate-modal">
           <button onClick={toggleFullProfileModal} className="option-btn">
@@ -121,7 +93,6 @@ function UserProfile() {
       )}
     </div>
   );
-  
 }
 
 export default UserProfile;

@@ -112,27 +112,17 @@
 .profile-modal-row:hover {
   background-color: rgba(255, 255, 255, 0.1); /* subtle hover effect */
 }
-
-
-.profile-modal-label {
-  font-weight: bold;
-  margin-right: 10px;
-  color: #ac1c06; /* or any color of your choice */
-
 .profile-modal-label {
   font-weight: bold;
   margin-right: 15px; /* Increase margin for better spacing */
   color: #ac1c06; /* or any color of your choice */
   font-size: 16px; /* Increase font size for better visibility */
-
 }
 
 .profile-modal-value {
   font-weight: normal;
   color: #ffffff;
 }
-
-
 .intermediate-modal {
   position: absolute;
   right: 0;
@@ -199,7 +189,6 @@
   border: none;
   cursor: pointer;
 }
-
 
 /* Responsive adjustments */
 @media screen and (max-width: 480px) {

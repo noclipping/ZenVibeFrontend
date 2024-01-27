@@ -82,11 +82,6 @@ function RegisterPage() {
         <div className="auth-container">
             {error && <p className="error">{error}</p>}
 
-            
-            <form className="auth-form" onSubmit={stage === 1 ? handleFirstStageSubmit : handleFinalSubmit}>
-            <h1>Please enter your information to get started!</h1>
-
-
             <form className="auth-form" onSubmit={stage === 1 ? handleFirstStageSubmit : (stage === 2 ? handleSecondStageSubmit : handleFinalSubmit)}>
                 <h1>Become Part of Zen Vibe - Your Gateway to Healthier Living</h1>
                 <img src={logo} alt="ZenVibe Logo" className="auth-logo" />

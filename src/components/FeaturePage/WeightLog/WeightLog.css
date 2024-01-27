@@ -159,7 +159,6 @@
 
 .delete-entry-button:hover {
     background-color: #272626; /* Darker shade on hover */
-}
     box-shadow: #201f1f;
     margin: 10px;
     margin-left: 20px;

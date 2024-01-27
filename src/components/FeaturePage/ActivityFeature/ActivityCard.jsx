@@ -1,6 +1,7 @@
 import { useState } from "react";
+import PropTypes from "prop-types";
 
-export default function ActivityCard({ activities, setActivities}) {
+export default function ActivityCard({ activities, setActivities, selectedActivityType}) {
   const [isEditing, setIsEditing] = useState(false);
   const [updatedActivityName, setUpdatedActivityName] = useState("");
   const [updatedSets, setUpdatedSets] = useState(0);
@@ -96,6 +97,7 @@ export default function ActivityCard({ activities, setActivities}) {
   return (
     <div>
       <h3>Activities List</h3>
+      
       {activities.map((activity) => (
         <div key={activity.entry_id}>
           {!isEditing ? (
@@ -105,7 +107,7 @@ export default function ActivityCard({ activities, setActivities}) {
               <p>Reps: {activity.reps}</p>
               <p>Weight Lifted: {activity.lift_weight}</p>
               <p>Duration (in minutes): {activity.duration}</p>
-
+              <div>Selected Activity Type: {selectedActivityType}</div>
               {/* Additional details can be displayed here */}
             </div>
           ) : (
@@ -181,3 +183,9 @@ export default function ActivityCard({ activities, setActivities}) {
     </div>
   );
 }
+
+ActivityCard.propTypes = {
+  activities: PropTypes.array.isRequired,
+  setActivities: PropTypes.func.isRequired,
+  selectedActivityType: PropTypes.string.isRequired,
+};

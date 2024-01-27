@@ -137,7 +137,7 @@ export default function UserBMR({foodEntries}) {
 
 }
 
-  }
+  
   UserBMR.propTypes = {
     foodEntries: PropTypes.array.isRequired
   };
