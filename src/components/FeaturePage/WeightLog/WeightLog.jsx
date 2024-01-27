@@ -33,10 +33,10 @@ function WeightLog({ showInputs }) {
     datasets: [
       {
         label: "Weight (lb)",
-      data: [],
-      borderColor: "black", // Change line color to black
-      pointBackgroundColor: "red", // Change points to red
-      pointBorderColor: "black",
+        data: [],
+        borderColor: "black", // Change line color to black
+        pointBackgroundColor: "red", // Change points to red
+        pointBorderColor: "black",
       },
     ],
   });
@@ -58,8 +58,6 @@ function WeightLog({ showInputs }) {
         console.error("No user ID available.");
         return;
       }
-
-
 
       try {
         const userResponse = await fetch(`http://localhost:3000/user/${id}`, {
@@ -142,8 +140,6 @@ function WeightLog({ showInputs }) {
 
     const ctx = chartRef.current.getContext("2d");
     const goalValue = parseFloat(weightGoal);
-
-    
 
     const annotations = goalValue
       ? {
@@ -293,15 +289,13 @@ function WeightLog({ showInputs }) {
     if (bmi >= 25 && bmi <= 29.9) return "Overweight";
     return "Obese";
   }
- 
+
   return (
     <div className="weight-log-container">
-      <h1>Each Day is a step closer towards your goals</h1>
-
+      <h1>Each day is a stride towards a healthier you.</h1> 
       <div className="weight-log-chart">
         <canvas ref={chartRef} />
       </div>
-
       {showInputs && (
         <>
           <form onSubmit={handleWeightSubmit} className="weight-log-form">
@@ -319,7 +313,8 @@ function WeightLog({ showInputs }) {
             <div className="tooltip">
               Current BMI: {BMI.toFixed(2)}
               <span className="tooltipText">
-                Your BMI indicates that you are in the <strong>{getBMICategory(BMI)}</strong> category.
+                Your BMI indicates that you are in the{" "}
+                <strong>{getBMICategory(BMI)}</strong> category.
               </span>
             </div>
           </div>
@@ -334,7 +329,7 @@ function WeightLog({ showInputs }) {
     </div>
   );
 }
-  WeightLog.propTypes = {
-    showInputs: PropTypes.bool,
-  };  
-  export default WeightLog;
+WeightLog.propTypes = {
+  showInputs: PropTypes.bool,
+};
+export default WeightLog;
