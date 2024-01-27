@@ -14,19 +14,22 @@
   max-width: 600px; /* Adjust the width as needed */
   width: 100%; /* This will make the width up to 600px based on the max-width */
   height: auto; /* Height will adjust based on content */
+  padding-top: 20px;
+  padding-bottom: 30px;
 }
 
 .food-log-container h1 {
-  font-size: 35px;
+  font-size: 40px;
   margin-bottom: 20px;
 }
+
 
 /* Form Styling */
 .food-log-form {
   display: flex;
   flex-direction: column;
   width: 100%;
-  gap: 15px;
+  gap: 1px;
   margin-top: 15px;
 }
 
@@ -61,6 +64,52 @@
   background-color: #201f1f;
 }
 
+/* FoodEntryCard.css */
+
+.food-entry-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 10px 0;
+  background-color: #2f2e2e;
+  border-radius: 4px;
+}
+
+.food-entry-display,
+.food-entry-edit {
+  display: flex;
+  align-items: center;
+}
+
+.food-name,
+.calories {
+  margin-right: 10px;
+}
+
+.food-entry-edit input[type="text"],
+.food-entry-edit input[type="number"] {
+  margin-right: 10px;
+  padding: 5px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.food-entry-edit button {
+  padding: 5px 10px;
+  margin-right: 5px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.food-entry-edit button:hover {
+  background-color: #e0e0e0;
+}
+
+/* Add more styling as needed */
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .food-log-container {
@@ -68,3 +117,24 @@
     max-width: 100%;
   }
 }
+
+/* ProgressBar.css */
+
+.progress-bar-container {
+  width: 100%;
+  padding-top: 5px;
+  background-color: #373535; /* Light gray background for the container */
+  border-radius: 10px; /* Rounded corners */
+  margin: 10px 0; /* Margin around the progress bar container */
+}
+
+.progress-bar {
+  height: 30px; /* Height of the progress bar */
+  background-color: #4caf50; /* Green color for the progress bar */
+  border-radius: 10px; /* Rounded corners */
+  text-align: center; /* Center the text inside the progress bar */
+  color: white; /* Color of the text inside the progress bar */
+  transition: width 0.5s ease-in-out; /* Smooth transition for width change */
+}
+
+/* You can add media queries or additional styling as needed */

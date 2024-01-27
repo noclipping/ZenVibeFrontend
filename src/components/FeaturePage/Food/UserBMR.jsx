@@ -98,23 +98,20 @@ export default function UserBMR({foodEntries}) {
   };
 
   return (
-    <div>
-      <>
-        {/* <h2>Calorie Calculator</h2> */}
-       
-        <div className="progress-bar">
-    <div className="progress-bar-inner" style={{ ...updateProgressBar(), ...updateProgressBarColor() }}></div>
-  </div>
+    <div className="user-bmr-container">
+    <div className="progress-bar">
+        <div className="progress-bar-inner" style={{ ...updateProgressBar(), ...updateProgressBarColor() }}></div>
+    </div>
 
-        {/* <p>BMR: {BMR}</p>
-        <p>TDEE: {calculateTDEE()}</p> */}
-        <p>Daily Target Calories: {totalDailyCalories()}</p>
-        <p>Consumed Calories: {consumedCalories} </p>
-        <p>Remaining Daily Calories: {remainingDailyCalories}</p>
-
-        <label>
+    <div className="user-bmr-stats">
+                <p>Daily Target Calories: {totalDailyCalories()}</p>
+                <p>Consumed Calories: {consumedCalories}</p>
+                <p>Remaining Daily Calories: {remainingDailyCalories}</p>
+            </div>
+            <div className="label-group">
+            <label className="user-bmr-label">
           Activity Level:
-          <select value={activityLevel} onChange={(e) => setActivityLevel(e.target.value)}>
+          <select className="user-bmr-select" value={activityLevel} onChange={(e) => setActivityLevel(e.target.value)}>
             <option value="sedentary">Sedentary</option>
             <option value="lightlyActive">Lightly Active</option>
             <option value="moderatelyActive">Moderately Active</option>
@@ -131,7 +128,7 @@ export default function UserBMR({foodEntries}) {
             onChange={(e) => setCalorieDeficit(parseInt(e.target.value, 10))}
           />
         </label>
-      </>
+    </div>
     </div>
   );
 
