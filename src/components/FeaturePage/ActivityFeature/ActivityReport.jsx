@@ -8,6 +8,7 @@ import "../ActivityFeature/ActivityReport.css";
 
 function ActivityTrack() {
   const [activities, setActivities] = useState([]);
+  const [selectedActivityType, setSelectedActivityType] = useState(""); // Define selectedActivityType state
   const [newActivity, setNewActivity] = useState({
     activity_name: "",
     sets: 0,
@@ -16,15 +17,14 @@ function ActivityTrack() {
     duration: 0,
     entry_date: "",
   });
-  const [selectedActivityType, setSelectedActivityType] = useState(""); // Define selectedActivityType state
   const [activityStreak, setActivityStreak] = useState(0);
   const [pieChartData, setPieChartData] = useState({
     labels: [],
     datasets: [
       {
         data: [],
-        backgroundColor: ["red", "gray", "blue"], // Colors for Weights, Other, and Cardio respectively
-        hoverBackgroundColor: ["red", "gray", "blue"], // Hover colors
+        backgroundColor: ["red", "gray", "blue", "white"], // Colors for Weights, Other, and Cardio respectively
+        hoverBackgroundColor: ["red", "gray", "blue", "white"], // Hover colors
       },
     ],
   });
@@ -53,6 +53,7 @@ function ActivityTrack() {
     event.preventDefault();
     const activityData = {
       ...newActivity,
+      selectedActivityType: selectedActivityType,
       sets: newActivity.sets || null,
       reps: newActivity.reps || null,
       lift_weight: newActivity.lift_weight || null,
@@ -78,6 +79,7 @@ function ActivityTrack() {
         reps: 0,
         lift_weight: 0,
         duration: 0,
+        selectedActivityType: "",
         entry_date: "",
       });
       await fetchActivities();
@@ -86,38 +88,41 @@ function ActivityTrack() {
     }
   };
 
-  const preparePieChartData = (activities) => {
-    const activityCategories = {
-      Weights: 0,
-      Cardio: 0,
-      Other: 0,
+  const preparePieChartData = (activities, setPieChartData) => {
+    const activityTypes = {
+      "Weight Training": 0,
+      "Cardio": 0,
+      "Cross-Training": 0,
+      "Flexibility and Mobility": 0
     };
 
-    activities.forEach((activity) => {
-      const activityName = activity.activity_name || "Other"; // Default to 'Other' if no name is provided
-      const lowercaseActivityName = activityName.toLowerCase();
+    activities.forEach(selectedActivityType => {
 
-      // Categorize activities based on keywords in the name
-      if (lowercaseActivityName.includes("weight")) {
-        activityCategories.Weights++;
-      } else if (
-        lowercaseActivityName.includes("cardio") ||
-        lowercaseActivityName.includes("running")
-      ) {
-        activityCategories.Cardio++;
-      } else {
-        activityCategories.Other++;
+      switch(selectedActivityType) {
+        case "weight_training":
+        activityTypes["Weight Training"]++
+        break;
+        case "cardio":
+        activityTypes["Cardio"]++
+        break;
+        case "cross_training":
+        activityTypes["Cross-Training"]++
+        break;
+        case "flexibility_mobility":
+        activityTypes["Flexibility and Mobility"]++
+        break;
       }
-    });
+    })
+      console.log(activities, "activities")
 
     const chartData = {
-      labels: Object.keys(activityCategories),
+      labels: Object.keys(activityTypes),
       datasets: [
         {
           label: "Activity Types",
-          data: Object.values(activityCategories),
-          backgroundColor: ["red", "gray", "blue"], // Colors for Weights, Other, and Cardio respectively
-          hoverBackgroundColor: ["red", "gray", "blue"], // Hover colors
+          data: Object.values(activityTypes),
+          backgroundColor: ["red", "gray", "blue", "white"], // Colors for Weights, Other, and Cardio respectively
+          hoverBackgroundColor: ["red", "gray", "blue", "white"], // Hover colors
         },
       ],
     };
@@ -126,7 +131,7 @@ function ActivityTrack() {
   };
 
   useEffect(() => {
-    preparePieChartData(activities);
+    preparePieChartData(activities, setPieChartData);
   }, [activities]);
 
   // Calculate Activity Streak
@@ -205,7 +210,7 @@ function ActivityTrack() {
             placeholder="Weight Lifted"
             value={newActivity.lift_weight}
             onChange={(e) =>
-              setNewActivity({ ...newActivity, lifted_weight: e.target.value })
+              setNewActivity({ ...newActivity, lift_weight: e.target.value })
             }
           />
           <input
@@ -219,6 +224,7 @@ function ActivityTrack() {
           <select
               value={selectedActivityType}
               onChange={(e) => setSelectedActivityType(e.target.value)}
+              required
           >
             <option value="">Select Category</option>
             <option value="weight_training">Weight Training</option>
