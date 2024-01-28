@@ -60,18 +60,19 @@ function ActivityTrack() {
   useEffect(() => {
     fetchActivities();
   }, [fetchActivities, activities]);
-
+ 
   const handleCreateActivity = async (event) => {
     event.preventDefault();
     const activityData = {
-      activity_name: selectedActivityType,
+      activity_name: newActivity.activity_name, // Use the inputted activity name
       sets: newActivity.sets || null,
       reps: newActivity.reps || null,
       lift_weight: newActivity.lift_weight || null,
       duration: newActivity.duration || null,
       entry_date: new Date().toISOString().split("T")[0],
+      category: selectedActivityType, // Include the selected category
     };
-
+  
     try {
       const response = await fetch(`http://localhost:3000/activity/${userId}`, {
         method: "POST",
@@ -88,36 +89,27 @@ function ActivityTrack() {
       console.error("Create Activity Error:", error);
     }
   };
+  
 
   const preparePieChartData = (data) => {
     const counts = data.reduce((acc, activity) => {
-      acc[activity.activity_name] = (acc[activity.activity_name] || 0) + 1;
+      const name = activity.activity_name; // Use the actual activity name
+      acc[name] = (acc[name] || 0) + 1;
       return acc;
     }, {});
-
+  
     setPieChartData({
       labels: Object.keys(counts),
       datasets: [
         {
           data: Object.values(counts),
-          backgroundColor: [
-            "#FF6384",
-            "#36A2EB",
-            "#FFCE56",
-            "#4BC0C0",
-            "#9966FF",
-          ],
-          hoverBackgroundColor: [
-            "#FF6384",
-            "#36A2EB",
-            "#FFCE56",
-            "#4BC0C0",
-            "#9966FF",
-          ],
+          backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0", "#9966FF"],
+          hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0", "#9966FF"],
         },
       ],
     });
   };
+  
 
   useEffect(() => {
     preparePieChartData(activities);
@@ -220,4 +212,4 @@ function ActivityTrack() {
   );
 }
 
-export default ActivityTrack
+export default ActivityTrack;

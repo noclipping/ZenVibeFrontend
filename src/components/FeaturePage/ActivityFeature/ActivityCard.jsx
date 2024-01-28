@@ -1,31 +1,84 @@
-import { useState } from "react";
 import PropTypes from "prop-types";
+import { useState } from "react";
 
-export default function ActivityCard({
-  activities,
-  setActivities
-}) {
+export default function ActivityCard({ activities, setActivities, onActivitiesChange }) {
   const [isEditing, setIsEditing] = useState(false);
-  const [currentActivityId, setCurrentActivityId] = useState(null);
+  const [editActivityId, setEditActivityId] = useState(null);
   const [updatedActivity, setUpdatedActivity] = useState({
     activity_name: "",
-    sets: "",
-    reps: "",
-    lift_weight: "",
-    duration: "",
+    sets: 0,
+    reps: 0,
+    lift_weight: 0,
+    duration: 0,
   });
 
-  const deleteActivity = async (activityEntryId) => {
-    // Your deleteActivity function implementation here
+  // Update handler for each field
+  const handleUpdateField = (field, value) => {
+    setUpdatedActivity({ ...updatedActivity, [field]: value });
   };
 
-  const editActivity = async (activityEntryId) => {
-    // Your editActivity function implementation here
+  const deleteActivity = async (activityEntryId) => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/activity/${activityEntryId}`,
+        {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+        }
+      );
+
+      if (!response.ok) {
+        const errorMessage = await response.text();
+        throw new Error(
+          `HTTP error! status: ${response.status}, message: ${errorMessage}`
+        );
+      }
+
+      setActivities((prevActivities) =>
+        prevActivities.filter((activity) => activity.entry_id !== activityEntryId)
+      );
+
+      onActivitiesChange(); // Notify parent component to update the pie chart
+    } catch (error) {
+      console.error("Error deleting activity entry:", error);
+    }
+  };
+
+  const editActivity = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/activity/${editActivityId}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify(updatedActivity),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      setActivities((prevActivities) =>
+        prevActivities.map((activity) =>
+          activity.entry_id === editActivityId
+            ? { ...activity, ...updatedActivity }
+            : activity
+        )
+      );
+
+      setIsEditing(false);
+      setEditActivityId(null);
+      onActivitiesChange(); // Notify parent component to update the pie chart
+    } catch (error) {
+      console.error("Error updating activity entry:", error);
+    }
   };
 
   const startEditing = (activity) => {
-    setIsEditing(true);
-    setCurrentActivityId(activity.entry_id);
+    setEditActivityId(activity.entry_id);
     setUpdatedActivity({
       activity_name: activity.activity_name,
       sets: activity.sets,
@@ -33,66 +86,29 @@ export default function ActivityCard({
       lift_weight: activity.lift_weight,
       duration: activity.duration,
     });
-  };
-
-  const handleUpdate = () => {
-    editActivity(currentActivityId, updatedActivity);
-    setIsEditing(false);
+    setIsEditing(true);
   };
 
   return (
     <div>
       {activities.map((activity) => (
         <div key={activity.entry_id}>
-          {!isEditing || currentActivityId !== activity.entry_id ? (
+          {isEditing && editActivityId === activity.entry_id ? (
             <div>
-              <p>Activity Name: {activity.activity_name}</p>
-              <p>Sets: {activity.sets}</p>
-              <p>Reps: {activity.reps}</p>
-              <p>Weight Lifted: {activity.lift_weight}</p>
-              <p>Duration: {activity.duration}</p>
-              <button onClick={() => startEditing(activity)}>Edit</button>
-              <button onClick={() => deleteActivity(activity.entry_id)}>Delete</button>
+              <input
+                value={updatedActivity.activity_name}
+                onChange={(e) => handleUpdateField("activity_name", e.target.value)}
+              />
+              {/* Other input fields for sets, reps, etc. */}
+              <button onClick={editActivity}>Update Activity</button>
+              <button onClick={() => setIsEditing(false)}>Cancel</button>
             </div>
           ) : (
             <div>
-              <input
-                placeholder="Activity Name"
-                value={updatedActivity.activity_name}
-                onChange={(e) =>
-                  setUpdatedActivity({ ...updatedActivity, activity_name: e.target.value })
-                }
-              />
-              <input
-                placeholder="Sets"
-                value={updatedActivity.sets}
-                onChange={(e) =>
-                  setUpdatedActivity({ ...updatedActivity, sets: e.target.value })
-                }
-              />
-              <input
-                placeholder="Reps"
-                value={updatedActivity.reps}
-                onChange={(e) =>
-                  setUpdatedActivity({ ...updatedActivity, reps: e.target.value })
-                }
-              />
-              <input
-                placeholder="Weight Lifted"
-                value={updatedActivity.lift_weight}
-                onChange={(e) =>
-                  setUpdatedActivity({ ...updatedActivity, lift_weight: e.target.value })
-                }
-              />
-              <input
-                placeholder="Duration"
-                value={updatedActivity.duration}
-                onChange={(e) =>
-                  setUpdatedActivity({ ...updatedActivity, duration: e.target.value })
-                }
-              />
-              <button onClick={handleUpdate}>Save Changes</button>
-              <button type="button" onClick={() => setIsEditing(false)}>Cancel</button>
+              <p>Activity Name: {activity.activity_name}</p>
+              {/* Display other activity details */}
+              <button onClick={() => startEditing(activity)}>✎</button>
+              <button onClick={() => deleteActivity(activity.entry_id)}>❌</button>
             </div>
           )}
         </div>
@@ -104,4 +120,5 @@ export default function ActivityCard({
 ActivityCard.propTypes = {
   activities: PropTypes.array.isRequired,
   setActivities: PropTypes.func.isRequired,
+  onActivitiesChange: PropTypes.func.isRequired,
 };
