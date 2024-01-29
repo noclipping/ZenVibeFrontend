@@ -16,6 +16,14 @@
     justify-content: space-between; /* Distribute space */
 }
 
+.mood-log-container h1{
+    font-size: 40px;
+}
+
+.mood-log-container p{
+    font-size: 16px;
+}
+
 /* Form styling */
 .mood-log-form {
     display: flex;

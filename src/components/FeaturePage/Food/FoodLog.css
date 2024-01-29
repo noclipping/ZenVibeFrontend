@@ -28,7 +28,7 @@
 .food-log-form {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 50%;
   gap: 1px;
   margin-top: 15px;
 }

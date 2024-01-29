@@ -80,21 +80,19 @@ function ReminderTrack() {
     allDay: true,
   }));
 
-  // Additional functionality to handle reminder updates and deletions
-  const handleUpdateReminder = async (updatedReminder) => {
-    // Implement update logic here
-  };
-
-  const handleDeleteReminder = async (reminderId) => {
-    // Implement delete logic here
-  };
-
   return (
     <div className="App">
       <SideNav userId={userId} />
       <UserProfile userId={userId} />
       <div className="reminder-content">
         <h1>Health Reminders</h1>
+        <p>
+          Effortlessly log your health-related reminders and utilize our
+          interactive calendar to stay on top of your wellness journey. From
+          medication schedules to workout plans, let this space be your personal
+          assistant in tracking and managing all your health activities
+          efficiently.
+        </p>
         <Calendar
           localizer={localizer}
           events={calendarEvents}
@@ -104,13 +102,6 @@ function ReminderTrack() {
           selectable
           className="custom-calendar"
         />
-        <p>
-          Effortlessly log your health-related reminders and utilize our
-          interactive calendar to stay on top of your wellness journey. From
-          medication schedules to workout plans, let this space be your personal
-          assistant in tracking and managing all your health activities
-          efficiently.
-        </p>
       </div>
 
       {isModalOpen && (

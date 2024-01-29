@@ -7,7 +7,7 @@ function FoodPage(){
 
     return (
         <div className="App">
-            <FoodLog userId={userId} />
+            <FoodLog showInputs={true} />
             <SideNav userId={userId}  />
         </div>
     )
