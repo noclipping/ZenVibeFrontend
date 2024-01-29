@@ -46,12 +46,13 @@ function ProtectedPage() {
         {/* Add this class to your next content container */}
         <div className="top-bar">
           <div className="greeting-container">
-            Welcome!<span className="username-animation">{userData.username}</span>
-            , this is your view for today
+            Welcome!
+            <span className="username-animation">{userData.username}</span>,
+            this is your view for today
           </div>
         </div>
         <SideNav userId={userId} />
-        <ContentMain userName={userData.username} />
+        <ContentMain userId={userId} />
         <UserProfile userData={userData} />
       </div>
     </div>

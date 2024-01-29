@@ -1,67 +1,64 @@
-/* Overall container for Activity Track */
 .activity-content {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 50px;
-    background-color: #2d2c2c85; /* Dark background */
+    padding-left: 150px;
+    padding-right: 200px;
+    margin-left: 450px; /* Adjust the margin-left value to move it to the left */
+    background-color: #15151585;
     color: #fff; /* White text color for contrast */
     border-radius: 20px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    margin-right: auto;
-    max-width: 1000px;
-    margin-left: 400px;
-    height: 75vh; /* Adjust height to fill screen vertically */
-    justify-content: space-between; /* Distribute space */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 6px 6px rgba(0, 0, 0, 0.3);
+    max-width: 70%; /* Adjust the max-width to make it wider while staying in proportion */
+    height: auto;
+    margin-right: 250px;
+    justify-content: space-between;
 }
+
 
 /* Form styling for Activity */
 .activity-form {
     display: flex;
-    gap: 10px;
-    margin-top: 15px; /* Moved form to the bottom */
+    flex-direction: column; /* Updated to column layout */
+    gap: 20px; /* Increased spacing between input fields */
+    margin-top: 30px; /* Moved form to the bottom */
 }
 
 .activity-form input, .activity-form select {
     padding: 10px 25px;
     border: 3px solid #1e1d1d;
     border-radius: 15px;
-    width: 150px; /* Increased width of input */
     background-color: #424242; /* Darker input background */
     color: #fff; /* White input text for contrast */
 }
 
 .activity-form button {
     padding: 15px 25px;
-    background-color: #0e2853; /* Medical red color */
+    background-color: #ff3847; /* Medical red color */
     color: white;
     border: none;
     border-radius: 15px;
     cursor: pointer;
     transition: background-color 0.3s;
+    margin-top: 20px; /* Add spacing at the top of the button */
 }
 
 .activity-form button:hover {
-    background-color: #201f1f;
+    background-color: #d12f3a; /* Darker red on hover */
 }
 
-/* Activity items */
-.activity-item {
-    background-color: #191818c3; /* Slightly different background */
-    padding: 10px;
+.activity-input {
+    padding: 10px 25px;
+    border: 3px solid #1e1d1d;
     border-radius: 15px;
-    margin-top: 10px;
-    text-align: center; /* Center-align the text */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6), /* Outer shadow for depth */
-                0 6px 20px 0 rgba(0, 0, 0, 0.19); /* Inner shadow for more emphasis */
+    background-color: #424242; /* Darker input background */
+    color: #fff; /* White input text for contrast */
+    width: 50%; /* Adjust the width as needed */
+    margin-bottom: 10px; /* Add spacing at the bottom of the input */
 }
 
-.activity-item h3 {
-    font-family: 'Montserrat', sans-serif; /* Apply Montserrat font to headings */
-    font-size: 1.2rem;
-}
-
-.activity-item p {
-    font-family: 'Montserrat', sans-serif; /* Apply Montserrat font to paragraphs */
-    font-size: 1rem;
+/* Styling for spacing between pie chart and input form */
+.activity-spacing {
+    margin-top: 20px; /* Add spacing between pie chart and input form */
 }

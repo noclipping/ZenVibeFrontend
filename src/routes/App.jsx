@@ -8,6 +8,13 @@ import LoginPage from "../components/auth/LoginPage";
 import RegisterPage from "../components/auth/RegisterPage";
 import ReminderTracker from "../components/FeaturePage/ReminderFeature/ReminderTrack";
 import ActivityReport from "../components/FeaturePage/ActivityFeature/ActivityReport"
+import MoodTracker from "../pages/MoodTracker";
+import ZenAI from "../pages/ZenAI";
+
+
+
+
+
 
 
 function App() {
@@ -30,8 +37,9 @@ function App() {
         <Route path="/weight-goal/:id" element={<WeightGoal />} />
         <Route path="/food/:id" element={<FoodPage />} />
         <Route path="/reminders/:id" element={<ReminderTracker />} />
+        <Route path="/mood/:id" element={<MoodTracker />} />
         <Route path="/activity/:id" element={<ActivityReport/>} />
-
+        <Route path="/chat/:id" element={<ZenAI/>} />
       </Routes>
     </Router>
   );

@@ -1,16 +1,182 @@
-.weight-log-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 5px;
-    background-color: #2d2c2c85; /* Dark background */
-    color: #fff; /* White text color for contrast */
-    border-radius: 20px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    padding-left: 20px;
-    margin-right: auto;
-    max-width: 1000px;
-    margin-left: 400px;
-    height: 80vh; /* Adjust height to fill screen vertically */
-    justify-content: space-between; /* Distribute space */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+.food-log-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 160px; /* Adjust padding to your preference */
+  background-color: #15151585;
+  font-family: 'Montserrat', sans-serif;
+  color: #fff;
+  border-radius: 20px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 6px 6px rgba(0, 0, 0, 0.3);
+  margin-left: 500px;
+  max-width: 600px; /* Adjust the width as needed */
+  width: 100%; /* This will make the width up to 600px based on the max-width */
+  height: auto; /* Height will adjust based on content */
+  padding-top: 20px;
+  padding-bottom: 30px;
+}
+
+.food-log-container h1 {
+  font-size: 40px;
+  margin-bottom: 20px;
+}
+
+
+/* Form Styling */
+.food-log-form {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  gap: 1px;
+  margin-top: 15px;
+}
+
+.food-log-form label {
+  color: #fff;
+  font-size: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.food-log-form input {
+  padding: 10px 15px;
+  border: 2px solid #1e1d1d;
+  border-radius: 10px;
+  background-color: #424242;
+  color: #fff;
+  margin-top: 5px;
+}
+
+.food-log-form button {
+  padding: 10px 20px;
+  background-color: #0e2853;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  align-self: center; /* Center the button */
+}
+
+.food-log-form button:hover {
+  background-color: #201f1f;
+}
+
+/* FoodEntryCard.css */
+
+.food-entry-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 10px 0;
+  background-color: #2f2e2e;
+  border-radius: 4px;
+}
+
+.food-entry-display,
+.food-entry-edit {
+  display: flex;
+  align-items: center;
+}
+
+.food-name,
+.calories {
+  margin-right: 10px;
+}
+
+.food-entry-edit input[type="text"],
+.food-entry-edit input[type="number"] {
+  margin-right: 10px;
+  padding: 5px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.food-entry-edit button {
+  padding: 5px 10px;
+  margin-right: 5px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.food-entry-edit button:hover {
+  background-color: #e0e0e0;
+}
+
+/* Add more styling as needed */
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .food-log-container {
+    padding: 20px;
+    max-width: 100%;
+  }
+}
+
+/* ProgressBar.css */
+
+.progress-bar-container {
+  width: 100%;
+  padding: 5px; /* Padding around the progress bar */
+  background-color: #282828; /* Dark slate gray background for contrast */
+  border-radius: 15px; /* More pronounced rounded corners */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  margin: 15px 0; /* More space around the progress bar container */
+  overflow: hidden; /* Ensures the inner bar stays within the rounded corners */
+}
+
+.progress-bar {
+  height: 35px; /* Increased height for a more robust look */
+  background-color: #d32f2f; /* Rich red color for the progress bar */
+  border-radius: 12px; /* Slightly less round than the container */
+  text-align: center; /* Center the text inside the progress bar */
+  color: white; /* White text for better readability */
+  line-height: 35px; /* Align the text vertically in the center */
+  transition: width 0.5s ease-in-out; /* Smooth transition for width change */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25); /* Shadow for a 3D effect */
+}
+
+/* Additional styles for text or animations can be added here */
+
+
+/* You can add media queries or additional styling as needed */
+/* FoodEntryCard.css */
+
+.food-entry-card {
+  /* ... existing styles ... */
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #1c1c1c;
+}
+
+.food-entry-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.food-entry-header h3 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.food-entry-header button {
+  padding: 5px 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.food-entry-header button:hover {
+  background-color: #45a049;
 }

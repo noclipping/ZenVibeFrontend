@@ -1,7 +1,9 @@
 import "./LandingPage.css";
+import Spline from "@splinetool/react-spline";
 import Navbar from "./navbar/Navbar";
 import { useNavigate } from "react-router-dom";
-import dashboardImage from "../../../assets/dashboard.png";
+import dashboardImage from "../../../assets/dashpic.png";
+import logo from "../../../assets/zenvibe.png";
 
 function LandingPage() {
   const navigate = useNavigate();
@@ -16,7 +18,16 @@ function LandingPage() {
       <main className="hero-section" id="hero">
         <div className="image-container">
           <h1>Welcome to ZenVibe</h1>
-          <img src={dashboardImage} alt="Dashboard" className="dashboard-img" />
+          <div className="images-row">
+            {" "}
+            {/* New container for images */}
+            <img src={logo} alt="Dashboard" className="dashboard-img" />
+            <img
+              src={dashboardImage}
+              alt="Dashboard"
+              className="dashboard-img"
+            />
+          </div>
           <button onClick={handleGetStartedClick} className="get-started-btn">
             Get Started
           </button>
@@ -27,13 +38,30 @@ function LandingPage() {
       <section className="about-section" id="about">
         <h2 className="section-title">About ZenVibe</h2>
         <p className="section-content">
-          ZenVibe is a health and wellness tracker designed to help you embark
-          on a journey towards a healthier lifestyle. With a focus on simplicity
-          and user-friendliness, ZenVibe aims to be your companion in achieving
-          balance and wellness.
+          <div>
+            <p>
+              ZenVibe is an innovative health and wellness tracker, meticulously
+              crafted to guide and support individuals on their journey to a
+              healthier lifestyle. At its core, ZenVibe is more than just an
+              application; it&apos;s a dedicated companion in the pursuit of
+              balance and wellness. Designed with a keen focus on simplicity and
+              user-friendliness, this state-of-the-art tool seamlessly
+              integrates into daily life, ensuring that maintaining health and
+              wellness is not just achievable, but also enjoyable. Whether you
+              are a beginner embarking on the path of self-improvement or a
+              seasoned enthusiast seeking to optimize your routines, ZenVibe
+              adapts to your individual needs, offering personalized insights
+              and recommendations. Its intuitive interface and comprehensive
+              features make tracking your progress effortless, turning the often
+              daunting task of health management into an engaging and rewarding
+              experience. By choosing ZenVibe, you&apos;re not just selecting a
+              SaaS application; you&apos;re embracing a holistic approach to
+              health that&apos;s rooted in the latest technology and designed to
+              foster sustainable, long-term wellbeing.
+            </p>
+          </div>
         </p>
       </section>
-
       {/* Features Section */}
       <section className="features-section" id="features">
         <h2 className="section-title">Features</h2>
@@ -61,21 +89,14 @@ function LandingPage() {
           {/* Add more features as needed */}
         </ul>
       </section>
-
-      {/* Contact Section */}
-      <section className="contact-section" id="contact">
-        <h2 className="section-title">Contact Us</h2>
-        <form className="contact-form">
-          <input type="text" placeholder="Your Name" required />
-          <input type="email" placeholder="Your Email" required />
-          <textarea placeholder="Your Message" required></textarea>
-          <button type="submit">Send Message</button>
-        </form>
-      </section>
+      <div className="spline-container">
+        <Spline scene="https://prod.spline.design/tu6eflKMTtWTzuJE/scene.splinecode" />
+      </div>
 
       {/* Reviews Section */}
       <section className="reviews-section" id="reviews">
         <h2 className="section-title">User Reviews</h2>
+        <div className="reviews-container"></div>
         <div className="review-card">
           <p>
             &quot;ZenVibe has been a game-changer in my wellness journey. Highly
@@ -85,7 +106,7 @@ function LandingPage() {
         <div className="review-card">
           <p>
             &quot;I love the simplicity and effectiveness of ZenVibe. Its a
-            must-have for anyone serious about health.&quot;
+            must-have for anyone serious about health.&quot;e
           </p>
         </div>
         {/* Add more reviews as needed */}
