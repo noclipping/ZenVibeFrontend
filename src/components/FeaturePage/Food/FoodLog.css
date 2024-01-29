@@ -5,12 +5,12 @@
   flex-direction: column;
   align-items: center;
   padding: 160px; /* Adjust padding to your preference */
-  background-color: #15151585; /* Semi-transparent dark background */
+  background-color: #15151585;
   font-family: 'Montserrat', sans-serif;
   color: #fff;
   border-radius: 20px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 6px 6px rgba(0, 0, 0, 0.3);
-  margin-left: 400px;
+  margin-left: 500px;
   max-width: 600px; /* Adjust the width as needed */
   width: 100%; /* This will make the width up to 600px based on the max-width */
   height: auto; /* Height will adjust based on content */

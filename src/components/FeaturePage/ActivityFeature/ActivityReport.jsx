@@ -17,6 +17,7 @@ function ActivityTrack() {
     entry_date: "",
   });
   const [selectedActivityType, setSelectedActivityType] = useState("");
+
   const [activityStreak] = useState(0);
   const [pieChartData, setPieChartData] = useState({
     labels: [],
@@ -60,7 +61,7 @@ function ActivityTrack() {
   useEffect(() => {
     fetchActivities();
   }, [fetchActivities, activities]);
- 
+
   const handleCreateActivity = async (event) => {
     event.preventDefault();
     const activityData = {
@@ -72,7 +73,7 @@ function ActivityTrack() {
       entry_date: new Date().toISOString().split("T")[0],
       category: selectedActivityType, // Include the selected category
     };
-  
+
     try {
       const response = await fetch(`http://localhost:3000/activity/${userId}`, {
         method: "POST",
@@ -89,7 +90,6 @@ function ActivityTrack() {
       console.error("Create Activity Error:", error);
     }
   };
-  
 
   const preparePieChartData = (data) => {
     const counts = data.reduce((acc, activity) => {
@@ -97,19 +97,41 @@ function ActivityTrack() {
       acc[name] = (acc[name] || 0) + 1;
       return acc;
     }, {});
-  
+
     setPieChartData({
       labels: Object.keys(counts),
       datasets: [
         {
           data: Object.values(counts),
-          backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0", "#9966FF"],
-          hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0", "#9966FF"],
+          backgroundColor: [
+            "#FF6384",
+            "#36A2EB",
+            "#FFCE56",
+            "#4BC0C0",
+            "#9966FF",
+          ],
+          hoverBackgroundColor: [
+            "#FF6384",
+            "#36A2EB",
+            "#FFCE56",
+            "#4BC0C0",
+            "#9966FF",
+          ],
         },
       ],
     });
   };
-  
+
+  const pieChartOptions = {
+    responsive: true,
+    maintainAspectRatio: false, // Add this to prevent aspect ratio distortion
+    plugins: {
+      legend: {
+        display: true,
+        position: "right",
+      },
+    },
+  };
 
   useEffect(() => {
     preparePieChartData(activities);
@@ -125,10 +147,18 @@ function ActivityTrack() {
       <UserProfile userId={userId} />
       <div className="activity-content">
         <h2>Activities</h2>
+        <p>
+          Welcome to your activities dashboard! This section allows you to track
+          and manage your fitness activities. You can view your activity streak,
+          analyze your activity distribution through the pie chart, and add new
+          activities to your log. Stay motivated and achieve your fitness goals
+          with our easy-to-use tracking tool.
+        </p>
+
         <div>Activity Streak: {activityStreak} days</div>
         {pieChartData && pieChartData.labels.length > 0 ? (
           <div className="activity-spacing">
-            <Pie data={pieChartData} />
+            <Pie data={pieChartData} options={pieChartOptions} />
           </div>
         ) : (
           <p>Loading chart data...</p>
@@ -148,44 +178,6 @@ function ActivityTrack() {
             }
             className="activity-input"
             required
-          />
-          <input
-            type="text"
-            placeholder={newActivity.reps !== "" ? "" : "# of Reps"}
-            value={newActivity.reps}
-            onChange={(e) =>
-              setNewActivity({ ...newActivity, reps: e.target.value })
-            }
-            className="reps-input"
-          />
-          <input
-            type="text"
-            placeholder={newActivity.reps !== "" ? "" : "# of Sets"}
-            value={newActivity.sets}
-            onChange={(e) =>
-              setNewActivity({ ...newActivity, sets: e.target.value })
-            }
-            className="sets-input"
-          />
-          <input
-            type="text"
-            placeholder={
-              newActivity.reps !== "" ? "" : "Weight Lifted (in lbs)"
-            }
-            value={newActivity.lift_weight}
-            onChange={(e) =>
-              setNewActivity({ ...newActivity, lift_weight: e.target.value })
-            }
-            className="liftWeight-input"
-          />
-          <input
-            type="text"
-            placeholder={newActivity.duration !== "" ? "" : "Duration (in min)"}
-            value={newActivity.duration}
-            onChange={(e) =>
-              setNewActivity({ ...newActivity, duration: e.target.value })
-            }
-            className="sets-input"
           />
 
           {/* Other form inputs for sets, reps, etc. */}

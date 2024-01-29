@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
 
-export default function ActivityCard({ activities, setActivities, onActivitiesChange }) {
+export default function ActivityCard({ activities, setActivities, onActivitiesChange, userId }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editActivityId, setEditActivityId] = useState(null);
   const [updatedActivity, setUpdatedActivity] = useState({
@@ -17,38 +17,15 @@ export default function ActivityCard({ activities, setActivities, onActivitiesCh
     setUpdatedActivity({ ...updatedActivity, [field]: value });
   };
 
-  const deleteActivity = async (activityEntryId) => {
-    try {
-      const response = await fetch(
-        `http://localhost:3000/activity/${activityEntryId}`,
-        {
-          method: "DELETE",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-        }
-      );
-
-      if (!response.ok) {
-        const errorMessage = await response.text();
-        throw new Error(
-          `HTTP error! status: ${response.status}, message: ${errorMessage}`
-        );
-      }
-
-      setActivities((prevActivities) =>
-        prevActivities.filter((activity) => activity.entry_id !== activityEntryId)
-      );
-
-      onActivitiesChange(); // Notify parent component to update the pie chart
-    } catch (error) {
-      console.error("Error deleting activity entry:", error);
-    }
-  };
-
   const editActivity = async () => {
     try {
+      if (!userId) {
+        console.error("userId is undefined");
+        return;
+      }
+
       const response = await fetch(
-        `http://localhost:3000/activity/${editActivityId}`,
+        `http://localhost:3000/activity/${userId}/${editActivityId}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -77,6 +54,39 @@ export default function ActivityCard({ activities, setActivities, onActivitiesCh
     }
   };
 
+  const deleteActivity = async (entryId) => {
+    try {
+      if (!userId) {
+        console.error("userId is undefined");
+        return;
+      }
+
+      const response = await fetch(
+        `http://localhost:3000/activity/${userId}/${entryId}`,
+        {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+        }
+      );
+
+      if (!response.ok) {
+        const errorMessage = await response.text();
+        throw new Error(
+          `HTTP error! status: ${response.status}, message: ${errorMessage}`
+        );
+      }
+
+      setActivities((prevActivities) =>
+        prevActivities.filter((activity) => activity.entry_id !== entryId)
+      );
+
+      onActivitiesChange(); // Notify parent component to update the pie chart
+    } catch (error) {
+      console.error("Error deleting activity entry:", error);
+    }
+  };
+
   const startEditing = (activity) => {
     setEditActivityId(activity.entry_id);
     setUpdatedActivity({
@@ -91,7 +101,7 @@ export default function ActivityCard({ activities, setActivities, onActivitiesCh
 
   return (
     <div>
-      {activities.map((activity) => (
+      {activities && activities.map((activity) => (
         <div key={activity.entry_id}>
           {isEditing && editActivityId === activity.entry_id ? (
             <div>
@@ -121,4 +131,5 @@ ActivityCard.propTypes = {
   activities: PropTypes.array.isRequired,
   setActivities: PropTypes.func.isRequired,
   onActivitiesChange: PropTypes.func.isRequired,
+  userId: PropTypes.string.isRequired,
 };

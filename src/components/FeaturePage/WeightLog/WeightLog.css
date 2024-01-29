@@ -66,7 +66,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-bottom: 60px;
+    padding-bottom: 40px;
     width: 120%; /* Use 100% of the container's width */
     margin-right: 10px; /* Reset any specific margins */
 }
@@ -143,15 +143,16 @@
   .tooltip .tooltipText {
     visibility: hidden;
     width: 200px;
-    background-color: rgba(42, 41, 41, 0.927);
+    background-color: rgb(42, 41, 41);
     color: white;
     text-align: center;
     border-radius: 6px;
-    padding: 5px 0;
+    padding: 10px 40px;
     position: absolute;
     z-index: 1;
-    bottom: 125%;
-    left: 50%;
+    bottom: 100%;
+    left: 280%;
+    margin-bottom: 420px;
     margin-left: -100px;
     opacity: 0;
     transition: opacity 0.3s;
