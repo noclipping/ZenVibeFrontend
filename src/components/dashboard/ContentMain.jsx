@@ -13,7 +13,9 @@ const ContentMain = () => {
 
     const components = [
         <WeightLog showInputs={false} key="WeightLog" />,
+
         <MoodLog showInputs={false} key="MoodLog" />, // Add a comma here
+
         <ReminderTrack key="ReminderTrack" />,
         <ActivityTrack key="ActivityTrack" />,
         <FoodLog showInputs={false} key="FoodLog" />
@@ -37,6 +39,9 @@ const ContentMain = () => {
                 {showDropdown && (
                     <ul className="dropdown-menu">
                         <li onClick={() => handleDropdownChange(0)}>Weight Log</li>
+                        <li onClick={() => handleDropdownChange(1)}>Reminder Track</li>
+                        <li onClick={() => handleDropdownChange(2)}>Activity Track</li>
+                        <li onClick={() => handleDropdownChange(1)}>Mood Log</li>
                         <li onClick={() => handleDropdownChange(2)}>Reminder Track</li>
                         <li onClick={() => handleDropdownChange(1)}>Mood Log</li>
                         <li onClick={() => handleDropdownChange(3)}>Activity Report</li>

@@ -95,3 +95,4 @@ export default function UserBMR({ consumedCalories }) {
 UserBMR.propTypes = {
     consumedCalories: PropTypes.number.isRequired
 };
+
