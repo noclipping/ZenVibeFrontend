@@ -3,9 +3,10 @@ import { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import FoodEntryCard from "./FoodEntryCard";
 import UserBMR from "./UserBMR";
+import PropTypes from "prop-types"; 
 import "../../FeaturePage/Food/FoodLog.css";
 
-function FoodLog() {
+function FoodLog({ showInputs }) {
     const [foodName, setFoodName] = useState("");
     const [calories, setCalories] = useState(0);
     const [foodEntries, setFoodEntries] = useState([]);
@@ -129,9 +130,11 @@ function FoodLog() {
                 <div className="progress-bar" style={{ width: `${calculateProgressBarWidth()}%` }}></div>
             </div>
             <UserBMR consumedCalories={consumedCalories} />
-            <button onClick={toggleCollapse} className="collapse-toggle-button">
-                {isCollapsed ? 'Show Food Entries' : 'Hide Food Entries'}
-            </button>
+            {!showInputs && (
+        <button onClick={toggleCollapse} className="collapse-toggle-button">
+          {isCollapsed ? 'Show Food Entries' : 'Hide Food Entries'}
+        </button>
+      )}
             {!isCollapsed && (
                 <div className="food-entries">
                     {foodEntries.map((foodEntry) => (
@@ -144,21 +147,28 @@ function FoodLog() {
                     ))}
                 </div>
             )}
-            <form onSubmit={handleFoodSubmit} className="food-log-form">
-                <label>
-                    Food Name:
-                    <input type="text" value={foodName} onChange={(e) => setFoodName(e.target.value)} required />
-                </label>
-                <br />
-                <label>
-                    Calories:
-                    <input type="number" value={calories} onChange={(e) => setCalories(parseFloat(e.target.value))} required />
-                </label>
-                <br />
-                <button type="submit">Add Food</button>
-            </form>
-        </div>
-    );
+            {showInputs && (
+        <form onSubmit={handleFoodSubmit} className="food-log-form">
+          <label>
+            Food Name:
+            <input type="text" value={foodName} onChange={(e) => setFoodName(e.target.value)} required />
+          </label>
+          <br />
+          <label>
+            Calories:
+            <input type="number" value={calories} onChange={(e) => setCalories(parseFloat(e.target.value))} required />
+          </label>
+          <br />
+          <button type="submit">Add Food</button>
+        </form>
+      )}
+    </div>
+  );
 }
+
+FoodLog.propTypes = {
+    showInputs: PropTypes.bool.isRequired,
+  };
+
 
 export default FoodLog;

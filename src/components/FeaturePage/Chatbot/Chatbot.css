@@ -5,7 +5,7 @@
     flex-direction: column;
     align-items: center;
     padding: 60px;
-    background-color: #1c1b1b85; /* Dark background similar to weight log */
+    background-color: #15151585; /* Dark background similar to weight log */
     color: #e7e7e7; /* White text color for contrast */
     border-radius: 30px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 6px 6px rgba(0, 0, 0, 0.3); /* Outer shadow */

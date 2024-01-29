@@ -5,6 +5,7 @@ const Modal = ({ onClose, children }) => {
     return (
         <div className="modal-backdrop">
             <div className="modal">
+                <h1>Enter Your Reminder For Today!</h1>
                 {children}
                 <button onClick={onClose} className="close-modal">Close</button>
             </div>

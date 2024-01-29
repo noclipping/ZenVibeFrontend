@@ -1,34 +1,21 @@
-/* Overall container for Activity Track */
 .activity-content {
     display: flex;
     flex-direction: column;
     align-items: center;
-
-    padding: 100px;
-    
-    background-color: #2d2c2c85; /* Dark background */
-    color: #fff; /* White text color for contrast */
-    border-radius: 20px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    margin-right: auto;
-    max-width: 1000px;
-    margin-left: 700px;
-    height: 75vh; /* Adjust height to fill screen vertically */
-    justify-content: space-between; /* Distribute space */
-
-    padding: 40px; /* Adjusted padding for proportionality */
-    margin-left: 700px; /* Keep the current position */
-    background-color: #2d2c2c85; /* Dark background */
+    padding: 50px;
+    padding-left: 150px;
+    padding-right: 200px;
+    margin-left: 450px; /* Adjust the margin-left value to move it to the left */
+    background-color: #15151585;
     color: #fff; /* White text color for contrast */
     border-radius: 20px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 6px 6px rgba(0, 0, 0, 0.3);
-    max-width: 80%; /* Adjust the max-width to make it wider while staying in proportion */
+    max-width: 70%; /* Adjust the max-width to make it wider while staying in proportion */
     height: auto;
+    margin-right: 250px;
     justify-content: space-between;
-    /* Remove margin-right if you are pushing the container from the sidebar */
-    margin-right: 0; /* Or adjust it if you want to keep some space on the right as well */
-
 }
+
 
 /* Form styling for Activity */
 .activity-form {
@@ -48,7 +35,7 @@
 
 .activity-form button {
     padding: 15px 25px;
-    background-color: #0e2853; /* Medical red color */
+    background-color: #ff3847; /* Medical red color */
     color: white;
     border: none;
     border-radius: 15px;
@@ -58,7 +45,7 @@
 }
 
 .activity-form button:hover {
-    background-color: #201f1f;
+    background-color: #d12f3a; /* Darker red on hover */
 }
 
 .activity-input {

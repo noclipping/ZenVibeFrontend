@@ -3,6 +3,8 @@ import Spline from "@splinetool/react-spline";
 import Navbar from "./navbar/Navbar";
 import { useNavigate } from "react-router-dom";
 import dashboardImage from "../../../assets/dashpic.png";
+import logo from "../../../assets/zenvibe.png";
+
 
 function LandingPage() {
   const navigate = useNavigate();
@@ -15,14 +17,17 @@ function LandingPage() {
     <div className="landing-container">
       <Navbar />
       <main className="hero-section" id="hero">
-        <div className="image-container">
-          <h1>Welcome to ZenVibe</h1>
-          <img src={dashboardImage} alt="Dashboard" className="dashboard-img" />
-          <button onClick={handleGetStartedClick} className="get-started-btn">
-            Get Started
-          </button>
-        </div>
-      </main>
+  <div className="image-container">
+    <h1>Welcome to ZenVibe</h1>
+    <div className="images-row"> {/* New container for images */}
+      <img src={logo} alt="Dashboard" className="dashboard-img" />
+      <img src={dashboardImage} alt="Dashboard" className="dashboard-img" />
+    </div>
+    <button onClick={handleGetStartedClick} className="get-started-btn">
+      Get Started
+    </button>
+  </div>
+</main>
 
       {/* About Section */}
       <section className="about-section" id="about">
@@ -51,9 +56,6 @@ function LandingPage() {
             </p>
           </div>
         </p>
-        <div className="spline-container">
-          <Spline scene="https://prod.spline.design/R47T9roV3JNYA-0b/scene.splinecode" />
-        </div>
       </section>
       {/* Features Section */}
       <section className="features-section" id="features">
@@ -82,6 +84,9 @@ function LandingPage() {
           {/* Add more features as needed */}
         </ul>
       </section>
+      <div className="spline-container">
+        <Spline scene="https://prod.spline.design/tu6eflKMTtWTzuJE/scene.splinecode" />
+        </div>
 
       {/* Reviews Section */}
       <section className="reviews-section" id="reviews">

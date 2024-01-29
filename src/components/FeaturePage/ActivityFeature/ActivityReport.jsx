@@ -17,6 +17,7 @@ function ActivityTrack() {
     entry_date: "",
   });
   const [selectedActivityType, setSelectedActivityType] = useState("");
+
   const [activityStreak] = useState(0);
   const [pieChartData, setPieChartData] = useState({
     labels: [],
@@ -64,12 +65,13 @@ function ActivityTrack() {
   const handleCreateActivity = async (event) => {
     event.preventDefault();
     const activityData = {
-      activity_name: selectedActivityType,
+      activity_name: newActivity.activity_name, // Use the inputted activity name
       sets: newActivity.sets || null,
       reps: newActivity.reps || null,
       lift_weight: newActivity.lift_weight || null,
       duration: newActivity.duration || null,
       entry_date: new Date().toISOString().split("T")[0],
+      category: selectedActivityType, // Include the selected category
     };
 
     try {
@@ -91,7 +93,8 @@ function ActivityTrack() {
 
   const preparePieChartData = (data) => {
     const counts = data.reduce((acc, activity) => {
-      acc[activity.activity_name] = (acc[activity.activity_name] || 0) + 1;
+      const name = activity.activity_name; // Use the actual activity name
+      acc[name] = (acc[name] || 0) + 1;
       return acc;
     }, {});
 
@@ -119,6 +122,17 @@ function ActivityTrack() {
     });
   };
 
+  const pieChartOptions = {
+    responsive: true,
+    maintainAspectRatio: false, // Add this to prevent aspect ratio distortion
+    plugins: {
+      legend: {
+        display: true,
+        position: "right",
+      },
+    },
+  };
+
   useEffect(() => {
     preparePieChartData(activities);
   }, [activities]);
@@ -133,10 +147,18 @@ function ActivityTrack() {
       <UserProfile userId={userId} />
       <div className="activity-content">
         <h2>Activities</h2>
+        <p>
+          Welcome to your activities dashboard! This section allows you to track
+          and manage your fitness activities. You can view your activity streak,
+          analyze your activity distribution through the pie chart, and add new
+          activities to your log. Stay motivated and achieve your fitness goals
+          with our easy-to-use tracking tool.
+        </p>
+
         <div>Activity Streak: {activityStreak} days</div>
         {pieChartData && pieChartData.labels.length > 0 ? (
           <div className="activity-spacing">
-            <Pie data={pieChartData} />
+            <Pie data={pieChartData} options={pieChartOptions} />
           </div>
         ) : (
           <p>Loading chart data...</p>
@@ -156,44 +178,6 @@ function ActivityTrack() {
             }
             className="activity-input"
             required
-          />
-          <input
-            type="text"
-            placeholder={newActivity.reps !== "" ? "" : "# of Reps"}
-            value={newActivity.reps}
-            onChange={(e) =>
-              setNewActivity({ ...newActivity, reps: e.target.value })
-            }
-            className="reps-input"
-          />
-          <input
-            type="text"
-            placeholder={newActivity.reps !== "" ? "" : "# of Sets"}
-            value={newActivity.sets}
-            onChange={(e) =>
-              setNewActivity({ ...newActivity, sets: e.target.value })
-            }
-            className="sets-input"
-          />
-          <input
-            type="text"
-            placeholder={
-              newActivity.reps !== "" ? "" : "Weight Lifted (in lbs)"
-            }
-            value={newActivity.lift_weight}
-            onChange={(e) =>
-              setNewActivity({ ...newActivity, lift_weight: e.target.value })
-            }
-            className="liftWeight-input"
-          />
-          <input
-            type="text"
-            placeholder={newActivity.duration !== "" ? "" : "Duration (in min)"}
-            value={newActivity.duration}
-            onChange={(e) =>
-              setNewActivity({ ...newActivity, duration: e.target.value })
-            }
-            className="sets-input"
           />
 
           {/* Other form inputs for sets, reps, etc. */}
@@ -220,4 +204,4 @@ function ActivityTrack() {
   );
 }
 
-export default ActivityTrack
+export default ActivityTrack;
