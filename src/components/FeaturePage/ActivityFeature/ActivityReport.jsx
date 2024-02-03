@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import  { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import { Pie } from "react-chartjs-2";
 import ActivityCard from "../ActivityFeature/ActivityCard";
@@ -7,7 +7,11 @@ import UserProfile from "../../dashboard/UserProfile/UserProfile";
 import "../ActivityFeature/ActivityReport.css";
 
 function ActivityTrack() {
-  const [activities, setActivities] = useState([]);
+  const { id: userId } = useParams();
+  const [activities, setActivities] = useState(() => {
+    return JSON.parse(localStorage.getItem(`activities_${userId}`)) || [];
+  });
+
   const [newActivity, setNewActivity] = useState({
     activity_name: "",
     sets: "",
@@ -15,116 +19,84 @@ function ActivityTrack() {
     lift_weight: "",
     duration: "",
     entry_date: "",
+    category: "",
   });
+
   const [selectedActivityType, setSelectedActivityType] = useState("");
 
-  const [activityStreak] = useState(0);
   const [pieChartData, setPieChartData] = useState({
     labels: [],
     datasets: [
       {
         data: [],
         backgroundColor: [
-          "#FF6384",
-          "#36A2EB",
-          "#FFCE56",
-          "#4BC0C0",
-          "#9966FF",
+          "#007bff", // Blue
+          "#dc3545", // Red
+          "#28a745", // Light Green
         ],
         hoverBackgroundColor: [
-          "#FF6384",
-          "#36A2EB",
-          "#FFCE56",
-          "#4BC0C0",
-          "#9966FF",
+          "#0056b3", // Darker Blue
+          "#c82333", // Darker Red
+          "#1e7e34", // Darker Light Green
         ],
       },
     ],
   });
-  const { id: userId } = useParams();
 
-  const fetchActivities = useCallback(async () => {
-    try {
-      const response = await fetch(`http://localhost:3000/activity/${userId}`, {
-        method: "GET",
-        credentials: "include",
-      });
-      if (!response.ok) throw new Error("Failed to fetch activities");
-      const data = await response.json();
-      setActivities(data);
-      preparePieChartData(data);
-    } catch (error) {
-      console.error("Fetch Activities Error:", error);
-    }
-  }, [userId]);
-
-  useEffect(() => {
-    fetchActivities();
-  }, [fetchActivities, activities]);
-
-  const handleCreateActivity = async (event) => {
-    event.preventDefault();
-    const activityData = {
-      activity_name: newActivity.activity_name, // Use the inputted activity name
-      sets: newActivity.sets || null,
-      reps: newActivity.reps || null,
-      lift_weight: newActivity.lift_weight || null,
-      duration: newActivity.duration || null,
-      entry_date: new Date().toISOString().split("T")[0],
-      category: selectedActivityType, // Include the selected category
-    };
-
-    try {
-      const response = await fetch(`http://localhost:3000/activity/${userId}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(activityData),
-        credentials: "include",
-      });
-      if (!response.ok) {
-        const errorResponse = await response.json();
-        throw new Error(errorResponse.error || "Failed to create activity");
-      }
-      await fetchActivities();
-    } catch (error) {
-      console.error("Create Activity Error:", error);
-    }
-  };
-
-  const preparePieChartData = (data) => {
-    const counts = data.reduce((acc, activity) => {
-      const name = activity.activity_name; // Use the actual activity name
-      acc[name] = (acc[name] || 0) + 1;
+  const preparePieChartData = useCallback(() => {
+    const categoryCounts = activities.reduce((acc, activity) => {
+      acc[activity.category] = (acc[activity.category] || 0) + 1;
       return acc;
     }, {});
 
-    setPieChartData({
-      labels: Object.keys(counts),
-      datasets: [
-        {
-          data: Object.values(counts),
-          backgroundColor: [
-            "#FF6384",
-            "#36A2EB",
-            "#FFCE56",
-            "#4BC0C0",
-            "#9966FF",
-          ],
-          hoverBackgroundColor: [
-            "#FF6384",
-            "#36A2EB",
-            "#FFCE56",
-            "#4BC0C0",
-            "#9966FF",
-          ],
-        },
-      ],
+    setPieChartData((prevData) => ({
+      ...prevData,
+      labels: Object.keys(categoryCounts),
+      datasets: prevData.datasets.map((dataset) => ({
+        ...dataset,
+        data: Object.values(categoryCounts),
+      })),
+    }));
+  }, [activities]);
+
+  useEffect(() => {
+    preparePieChartData();
+  // Including preparePieChartData in the dependency array as it's defined outside but used inside useEffect
+  }, [activities, preparePieChartData]);
+
+  const handleCreateActivity = (event) => {
+    event.preventDefault();
+    const activityWithId = {
+      ...newActivity,
+      entry_id: Date.now().toString(),
+      category: selectedActivityType,
+    };
+    const updatedActivities = [...activities, activityWithId];
+    updateLocalStorageActivities(updatedActivities);
+    resetNewActivityForm();
+  };
+
+  const updateLocalStorageActivities = (updatedActivities) => {
+    localStorage.setItem(`activities_${userId}`, JSON.stringify(updatedActivities));
+    setActivities(updatedActivities);
+  };
+
+  const resetNewActivityForm = () => {
+    setNewActivity({
+      activity_name: "",
+      sets: "",
+      reps: "",
+      lift_weight: "",
+      duration: "",
+      entry_date: "",
+      category: "",
     });
+    setSelectedActivityType("");
   };
 
   const pieChartOptions = {
     responsive: true,
-    maintainAspectRatio: false, // Add this to prevent aspect ratio distortion
+    maintainAspectRatio: false,
     plugins: {
       legend: {
         display: true,
@@ -133,71 +105,57 @@ function ActivityTrack() {
     },
   };
 
-  useEffect(() => {
-    preparePieChartData(activities);
-  }, [activities]);
-
-  useEffect(() => {
-    // Activity streak calculation logic...
-  }, [activities]);
-
   return (
     <div className="App">
       <SideNav userId={userId} />
       <UserProfile userId={userId} />
       <div className="activity-content">
         <h2>Activities</h2>
-        <p>
-          Welcome to your activities dashboard! This section allows you to track
-          and manage your fitness activities. You can view your activity streak,
-          analyze your activity distribution through the pie chart, and add new
-          activities to your log. Stay motivated and achieve your fitness goals
-          with our easy-to-use tracking tool.
-        </p>
-
-        <div>Activity Streak: {activityStreak} days</div>
+        <p>Welcome to your activities dashboard! This section allows you to track and manage your fitness activities.</p>
         {pieChartData && pieChartData.labels.length > 0 ? (
           <div className="activity-spacing">
             <Pie data={pieChartData} options={pieChartOptions} />
           </div>
         ) : (
-          <p>Loading chart data...</p>
+          <p>No activity data available.</p>
         )}
         <ActivityCard
           activities={activities}
           setActivities={setActivities}
-          // selectedActivityType={selectedActivityType}
+          onDeleteActivity={(entryId) => {
+            const updatedActivities = activities.filter((activity) => activity.entry_id !== entryId);
+            updateLocalStorageActivities(updatedActivities);
+          }}
+          onUpdateActivity={(updatedActivity) => {
+            const updatedActivities = activities.map((activity) =>
+              activity.entry_id === updatedActivity.entry_id ? updatedActivity : activity
+            );
+            updateLocalStorageActivities(updatedActivities);
+          }}
+          userId={userId}
         />
-        <form onSubmit={handleCreateActivity}>
+        <form onSubmit={handleCreateActivity} className="activity-form">
           <input
             type="text"
             placeholder="Enter Activity"
             value={newActivity.activity_name}
-            onChange={(e) =>
-              setNewActivity({ ...newActivity, activity_name: e.target.value })
-            }
+            onChange={(e) => setNewActivity({ ...newActivity, activity_name: e.target.value })}
             className="activity-input"
             required
           />
-
-          {/* Other form inputs for sets, reps, etc. */}
           <select
             value={selectedActivityType}
             onChange={(e) => setSelectedActivityType(e.target.value)}
+            className="activity-input"
             required
           >
             <option value="">Select Category</option>
-            <option value="Weight Training">Weight Training</option>
             <option value="Cardio">Cardio</option>
+            <option value="Weight Training">Weight Training</option>
             <option value="Cross Training">Cross Training</option>
-            <option value="Flexibility and Mobility">
-              Flexibility and Mobility
-            </option>
-            {/* Add more categories as needed */}
+            <option value="Flexibility and Mobility">Flexibility and Mobility</option>
           </select>
-          <button type="submit" className="activity-button">
-            Add Activity
-          </button>
+          <button type="submit" className="activity-button">Add Activity</button>
         </form>
       </div>
     </div>

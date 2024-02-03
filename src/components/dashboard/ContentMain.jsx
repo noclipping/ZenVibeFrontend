@@ -41,9 +41,9 @@ const ContentMain = () => {
         {showDropdown && (
           <ul className="dropdown-menu">
             <li onClick={() => handleDropdownChange(0)}>Weight Log</li>
-            <li onClick={() => handleDropdownChange(1)}>Reminder Track</li>
+            <li onClick={() => handleDropdownChange(2)}>Reminder Track</li>
             <li onClick={() => handleDropdownChange(1)}>Mood Log</li>
-            <li onClick={() => handleDropdownChange(2)}>Activity Track</li>
+            <li onClick={() => handleDropdownChange(3)}>Activity Track</li>
             <li onClick={() => handleDropdownChange(4)}>Food Log</li>
           </ul>
         )}

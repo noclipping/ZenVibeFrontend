@@ -48,13 +48,6 @@ export const getSidebarData = (userId) => [
         icon: <FaBolt />, // Using a lightning bolt icon to symbolize energy or power
         cName: 'nav-text'
     },
-    {
-
-        title: 'Settings',
-        path: `/settings/${userId}`,
-        icon: <AiIcons.AiFillSetting />, // Icon for settings
-        cName: 'nav-text'
-    }
     // Add more items as needed
 ];
 

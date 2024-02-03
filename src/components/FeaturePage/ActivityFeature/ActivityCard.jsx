@@ -1,9 +1,10 @@
-import { useState } from "react";
+import  { useState } from "react";
 import PropTypes from "prop-types";
 
-export default function ActivityCard({ activities, setActivities, onActivitiesChange, userId }) {
+function ActivityCard({ activities, setActivities, userId }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editActivityId, setEditActivityId] = useState(null);
+  const [isCollapsed, setIsCollapsed] = useState(true); // State to manage collapsible section
   const [updatedActivity, setUpdatedActivity] = useState({
     activity_name: "",
     sets: 0,
@@ -12,79 +13,26 @@ export default function ActivityCard({ activities, setActivities, onActivitiesCh
     duration: 0,
   });
 
-  // Update handler for each field
+  const toggleCollapse = () => setIsCollapsed(!isCollapsed);
+
   const handleUpdateField = (field, value) => {
     setUpdatedActivity({ ...updatedActivity, [field]: value });
   };
 
-  const editActivity = async () => {
-    try {
-      if (!userId) {
-        console.error("userId is undefined");
-        return;
-      }
-
-      const response = await fetch(
-        `http://localhost:3000/activity/${userId}/${editActivityId}`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-          body: JSON.stringify(updatedActivity),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      setActivities((prevActivities) =>
-        prevActivities.map((activity) =>
-          activity.entry_id === editActivityId
-            ? { ...activity, ...updatedActivity }
-            : activity
-        )
-      );
-
-      setIsEditing(false);
-      setEditActivityId(null);
-      onActivitiesChange(); // Notify parent component to update the pie chart
-    } catch (error) {
-      console.error("Error updating activity entry:", error);
-    }
+  const editActivity = () => {
+    const updatedActivities = activities.map((activity) =>
+      activity.entry_id === editActivityId ? { ...activity, ...updatedActivity } : activity
+    );
+    setActivities(updatedActivities);
+    localStorage.setItem(`activities_${userId}`, JSON.stringify(updatedActivities));
+    setIsEditing(false);
+    setEditActivityId(null);
   };
 
-  const deleteActivity = async (entryId) => {
-    try {
-      if (!userId) {
-        console.error("userId is undefined");
-        return;
-      }
-
-      const response = await fetch(
-        `http://localhost:3000/activity/${userId}/${entryId}`,
-        {
-          method: "DELETE",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-        }
-      );
-
-      if (!response.ok) {
-        const errorMessage = await response.text();
-        throw new Error(
-          `HTTP error! status: ${response.status}, message: ${errorMessage}`
-        );
-      }
-
-      setActivities((prevActivities) =>
-        prevActivities.filter((activity) => activity.entry_id !== entryId)
-      );
-
-      onActivitiesChange(); // Notify parent component to update the pie chart
-    } catch (error) {
-      console.error("Error deleting activity entry:", error);
-    }
+  const deleteActivity = (entryId) => {
+    const updatedActivities = activities.filter((activity) => activity.entry_id !== entryId);
+    setActivities(updatedActivities);
+    localStorage.setItem(`activities_${userId}`, JSON.stringify(updatedActivities));
   };
 
   const startEditing = (activity) => {
@@ -101,24 +49,28 @@ export default function ActivityCard({ activities, setActivities, onActivitiesCh
 
   return (
     <div>
-      {activities && activities.map((activity) => (
-        <div key={activity.entry_id}>
+      <button onClick={toggleCollapse} className="collapse-toggle-button">
+        {isCollapsed ? "Show Activities" : "Hide Activities"}
+      </button>
+      {!isCollapsed && activities.map((activity) => (
+        <div key={activity.entry_id} className="activity-entry">
           {isEditing && editActivityId === activity.entry_id ? (
             <div>
               <input
+                type="text"
                 value={updatedActivity.activity_name}
                 onChange={(e) => handleUpdateField("activity_name", e.target.value)}
               />
-              {/* Other input fields for sets, reps, etc. */}
+              {/* Insert additional input fields for sets, reps, etc., here as needed */}
               <button onClick={editActivity}>Update Activity</button>
               <button onClick={() => setIsEditing(false)}>Cancel</button>
             </div>
           ) : (
             <div>
               <p>Activity Name: {activity.activity_name}</p>
-              {/* Display other activity details */}
-              <button onClick={() => startEditing(activity)}>✎</button>
-              <button onClick={() => deleteActivity(activity.entry_id)}>❌</button>
+              {/* Insert display of other activity details here */}
+              <button onClick={() => startEditing(activity)}>Edit ✎</button>
+              <button onClick={() => deleteActivity(activity.entry_id)}>Delete ❌</button>
             </div>
           )}
         </div>
@@ -130,6 +82,7 @@ export default function ActivityCard({ activities, setActivities, onActivitiesCh
 ActivityCard.propTypes = {
   activities: PropTypes.array.isRequired,
   setActivities: PropTypes.func.isRequired,
-  onActivitiesChange: PropTypes.func.isRequired,
   userId: PropTypes.string.isRequired,
 };
+
+export default ActivityCard;

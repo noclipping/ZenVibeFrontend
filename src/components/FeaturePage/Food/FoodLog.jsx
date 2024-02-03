@@ -160,7 +160,7 @@ function FoodLog({ showInputs }) {
         ></div>
       </div>
       <UserBMR consumedCalories={consumedCalories} />
-      {!showInputs && (
+      {showInputs && (
         <button onClick={toggleCollapse} className="collapse-toggle-button">
           {isCollapsed ? "Show Food Entries" : "Hide Food Entries"}
         </button>

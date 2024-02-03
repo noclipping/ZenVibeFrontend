@@ -12,9 +12,13 @@
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 6px 6px rgba(0, 0, 0, 0.3);
     max-width: 70%; /* Adjust the max-width to make it wider while staying in proportion */
     height: auto;
+    font-size: 18px;
     margin-right: 250px;
     justify-content: space-between;
 }
+
+
+
 
 
 /* Form styling for Activity */
@@ -61,4 +65,42 @@
 /* Styling for spacing between pie chart and input form */
 .activity-spacing {
     margin-top: 20px; /* Add spacing between pie chart and input form */
+}
+
+/* Collapsible toggle button styling */
+.collapse-toggle-button {
+    padding: 12px 24px;
+    background-color: #252626; /* Primary button color */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    margin-bottom: 20px; /* Maintain spacing below the button */
+    margin-top: 40px; /* Increase top margin to push the button down */
+}
+
+
+.activity-form input,
+.activity-form select {
+    padding: 10px 25px;
+    border: 3px solid #1e1d1d;
+    border-radius: 15px;
+    background-color: #424242; /* Darker input background */
+    color: #fff; /* White input text for contrast */
+}
+
+/* Adjust the width of the select element */
+.activity-form select {
+    width: 90%; /* Adjust the width as needed */
+}
+
+.collapse-toggle-button:hover {
+    background-color: #313233; /* Darker shade on hover */
+    transform: translateY(-2px); /* Slight lift effect */
+}
+
+.collapse-toggle-button:focus {
+    outline: none; /* Remove focus outline for cleaner look */
 }
